@@ -24,12 +24,151 @@
             margin: 0 auto;
         }
 
+        /* Login Screen Styles */
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: #111b21;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid #2a3942;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00a884 0%, #008069 100%);
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .login-title {
+            text-align: center;
+            font-size: 24px;
+            color: #e9edef;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #8696a0;
+            margin-bottom: 30px;
+        }
+
+        .login-form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-label {
+            display: block;
+            font-size: 14px;
+            color: #8696a0;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #1a252e;
+            border: 1px solid #2a3942;
+            border-radius: 8px;
+            color: #e9edef;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #00a884;
+            background: #0f1a20;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #00a884;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background: #008069;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,168,132,0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            background: #dc3545;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .password-hint {
+            background: #1a252e;
+            border: 1px solid #2a3942;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #8696a0;
+            text-align: center;
+        }
+
+        .password-hint strong {
+            color: #00a884;
+        }
+
+        /* Admin Panel Styles */
+        .admin-panel {
+            display: none;
+        }
+
         .header {
             background: linear-gradient(135deg, #00a884 0%, #008069 100%);
             padding: 30px 20px;
             border-radius: 12px;
             margin-bottom: 30px;
             text-align: center;
+            position: relative;
         }
 
         .header h1 {
@@ -41,6 +180,25 @@
         .header p {
             font-size: 14px;
             color: #d1f4e8;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
         }
 
         .form-card {
@@ -120,6 +278,9 @@
             color: #e9edef;
             margin-bottom: 15px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .post-item {
@@ -129,9 +290,51 @@
             margin-bottom: 12px;
             border: 1px solid #2a3942;
             display: flex;
-            justify-content: space-between;
             align-items: start;
-            gap: 15px;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .post-item.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .post-item:hover {
+            border-color: #3a4952;
+        }
+
+        .drag-handle {
+            cursor: grab;
+            color: #667781;
+            font-size: 20px;
+            padding: 8px;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            transition: color 0.2s ease;
+        }
+
+        .drag-handle:hover {
+            color: #00a884;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .drag-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .drag-dot {
+            width: 4px;
+            height: 4px;
+            background: currentColor;
+            border-radius: 50%;
         }
 
         .post-info {
@@ -169,21 +372,43 @@
             overflow: hidden;
         }
 
-        .delete-btn {
-            background: #dc3545;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
+        .post-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .action-btn {
+            background: #1a252e;
+            color: #8696a0;
+            border: 1px solid #2a3942;
+            padding: 8px 12px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             white-space: nowrap;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .action-btn:hover {
+            background: #2a3942;
+            color: #e9edef;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: #fff;
+            border-color: #dc3545;
         }
 
         .delete-btn:hover {
             background: #c82333;
+            border-color: #c82333;
         }
 
         .back-btn {
@@ -240,9 +465,30 @@
             }
         }
 
+        .drag-hint {
+            background: #1a252e;
+            border: 1px solid #2a3942;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #8696a0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .drag-hint-icon {
+            font-size: 20px;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 15px;
+            }
+
+            .login-card {
+                padding: 30px 25px;
             }
 
             .form-card {
@@ -250,65 +496,162 @@
             }
 
             .post-item {
-                flex-direction: column;
+                flex-wrap: wrap;
             }
 
-            .delete-btn {
+            .post-actions {
+                flex-direction: row;
                 width: 100%;
+            }
+
+            .action-btn {
+                flex: 1;
+            }
+
+            .logout-btn {
+                position: static;
+                display: block;
+                width: 100%;
+                margin-top: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-btn">
-            <span>→</span>
-            <span>العودة للصفحة الرئيسية</span>
-        </a>
-
-        <div class="header">
-            <h1>إدارة المنشورات</h1>
-            <p>أضف روابط مقالاتك ومنشوراتك هنا</p>
-        </div>
-
-        <div id="successMessage" class="success-message">
-            تم إضافة المنشور بنجاح! ✓
-        </div>
-
-        <div class="form-card">
-            <form id="addPostForm">
-                <div class="form-group">
-                    <label class="form-label">عنوان المقال *</label>
-                    <input type="text" class="form-input" id="postTitle" required placeholder="أدخل عنوان المقال">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-card">
+            <div class="login-icon">🔐</div>
+            <h2 class="login-title">تسجيل الدخول</h2>
+            <p class="login-subtitle">أدخل كلمة المرور للوصول إلى لوحة التحكم</p>
+            
+            <form id="loginForm">
+                <div class="login-form-group">
+                    <label class="login-label">كلمة المرور</label>
+                    <input type="password" class="login-input" id="passwordInput" placeholder="••••••••" required>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">رابط المقال *</label>
-                    <input type="url" class="form-input" id="postUrl" required placeholder="https://example.com/article">
+                <button type="submit" class="login-btn">دخول</button>
+                <div id="loginError" class="error-message">
+                    كلمة المرور غير صحيحة!
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">وصف مختصر</label>
-                    <textarea class="form-textarea" id="postExcerpt" placeholder="وصف موجز للمقال (اختياري)"></textarea>
-                </div>
-
-                <button type="submit" class="btn">إضافة المنشور</button>
             </form>
-        </div>
 
-        <div class="posts-list">
-            <h2 class="section-title">المنشورات المضافة (<span id="postCount">0</span>)</h2>
-            <div id="postsListContainer">
-                <!-- Posts will be loaded here -->
+            <div class="password-hint">
+                💡 كلمة المرور الافتراضية: <strong>admin123</strong><br>
+                يمكنك تغييرها من السكريبت
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="container">
+            <a href="index.html" class="back-btn">
+                <span>→</span>
+                <span>العودة للصفحة الرئيسية</span>
+            </a>
+
+            <div class="header">
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+                <h1>إدارة المنشورات</h1>
+                <p>أضف روابط مقالاتك ومنشوراتك هنا</p>
+            </div>
+
+            <div id="successMessage" class="success-message">
+                تم إضافة المنشور بنجاح! ✓
+            </div>
+
+            <div class="form-card">
+                <form id="addPostForm">
+                    <div class="form-group">
+                        <label class="form-label">عنوان المقال *</label>
+                        <input type="text" class="form-input" id="postTitle" required placeholder="أدخل عنوان المقال">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">رابط المقال *</label>
+                        <input type="url" class="form-input" id="postUrl" required placeholder="https://example.com/article">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">وصف مختصر</label>
+                        <textarea class="form-textarea" id="postExcerpt" placeholder="وصف موجز للمقال (اختياري)"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">إضافة المنشور</button>
+                </form>
+            </div>
+
+            <div class="posts-list">
+                <h2 class="section-title">
+                    <span>المنشورات المضافة (<span id="postCount">0</span>)</span>
+                </h2>
+                
+                <div class="drag-hint">
+                    <span class="drag-hint-icon">☝️</span>
+                    <span>اسحب المنشورات لإعادة ترتيبها</span>
+                </div>
+
+                <div id="postsListContainer">
+                    <!-- Posts will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Initialize posts from data
+        const ADMIN_PASSWORD = 'admin123';
         let posts = [];
+        let draggedElement = null;
+        let draggedIndex = null;
 
-        // Load posts from storage
+        // Check if user is logged in
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+            if (isLoggedIn === 'true') {
+                showAdminPanel();
+            } else {
+                showLoginScreen();
+            }
+        }
+
+        function showLoginScreen() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        function showAdminPanel() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadPosts();
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('loginError');
+
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                showAdminPanel();
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 3000);
+            }
+        });
+
+        function logout() {
+            if (confirm('هل تريد تسجيل الخروج؟')) {
+                sessionStorage.removeItem('adminLoggedIn');
+                showLoginScreen();
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
         function loadPosts() {
             const savedPosts = localStorage.getItem('blogPosts');
             if (savedPosts) {
@@ -317,12 +660,10 @@
             displayPosts();
         }
 
-        // Save posts to storage
         function savePosts() {
             localStorage.setItem('blogPosts', JSON.stringify(posts));
         }
 
-        // Display posts
         function displayPosts() {
             const container = document.getElementById('postsListContainer');
             const countElement = document.getElementById('postCount');
@@ -341,18 +682,121 @@
             }
 
             container.innerHTML = posts.map((post, index) => `
-                <div class="post-item">
+                <div class="post-item" draggable="true" data-index="${index}">
+                    <div class="drag-handle">
+                        <div class="drag-icon">
+                            <div class="drag-dot"></div>
+                            <div class="drag-dot"></div>
+                            <div class="drag-dot"></div>
+                        </div>
+                        <div class="drag-icon">
+                            <div class="drag-dot"></div>
+                            <div class="drag-dot"></div>
+                            <div class="drag-dot"></div>
+                        </div>
+                    </div>
                     <div class="post-info">
                         <div class="post-item-title">${post.title}</div>
                         <a href="${post.url}" target="_blank" class="post-item-url">${post.url}</a>
                         ${post.excerpt ? `<div class="post-item-excerpt">${post.excerpt}</div>` : ''}
                     </div>
-                    <button class="delete-btn" onclick="deletePost(${index})">حذف</button>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="moveUp(${index})" ${index === 0 ? 'disabled' : ''}>
+                            <span>↑</span>
+                        </button>
+                        <button class="action-btn" onclick="moveDown(${index})" ${index === posts.length - 1 ? 'disabled' : ''}>
+                            <span>↓</span>
+                        </button>
+                        <button class="action-btn delete-btn" onclick="deletePost(${index})">
+                            <span>🗑️</span>
+                        </button>
+                    </div>
                 </div>
             `).join('');
+
+            // Add drag and drop event listeners
+            addDragListeners();
         }
 
-        // Add post
+        function addDragListeners() {
+            const items = document.querySelectorAll('.post-item');
+            
+            items.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('drop', handleDrop);
+                item.addEventListener('dragend', handleDragEnd);
+                item.addEventListener('dragenter', handleDragEnter);
+                item.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            draggedIndex = parseInt(this.getAttribute('data-index'));
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            if (this !== draggedElement) {
+                this.style.borderColor = '#00a884';
+            }
+        }
+
+        function handleDragLeave(e) {
+            this.style.borderColor = '#2a3942';
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            const dropIndex = parseInt(this.getAttribute('data-index'));
+            
+            if (draggedIndex !== dropIndex) {
+                const draggedPost = posts[draggedIndex];
+                posts.splice(draggedIndex, 1);
+                posts.splice(dropIndex, 0, draggedPost);
+                savePosts();
+                displayPosts();
+            }
+            
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.post-item').forEach(item => {
+                item.style.borderColor = '#2a3942';
+            });
+        }
+
+        function moveUp(index) {
+            if (index > 0) {
+                [posts[index], posts[index - 1]] = [posts[index - 1], posts[index]];
+                savePosts();
+                displayPosts();
+            }
+        }
+
+        function moveDown(index) {
+            if (index < posts.length - 1) {
+                [posts[index], posts[index + 1]] = [posts[index + 1], posts[index]];
+                savePosts();
+                displayPosts();
+            }
+        }
+
         document.getElementById('addPostForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -372,10 +816,8 @@
             savePosts();
             displayPosts();
 
-            // Reset form
             this.reset();
 
-            // Show success message
             const successMsg = document.getElementById('successMessage');
             successMsg.style.display = 'block';
             setTimeout(() => {
@@ -383,7 +825,6 @@
             }, 3000);
         });
 
-        // Delete post
         function deletePost(index) {
             if (confirm('هل أنت متأكد من حذف هذا المنشور؟')) {
                 posts.splice(index, 1);
@@ -392,8 +833,7 @@
             }
         }
 
-        // Load posts on page load
-        loadPosts();
+        checkAuth();
     </script>
 </body>
 </html>
