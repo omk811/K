@@ -1,6 +1,6 @@
 async function loadPosts() {
     console.log('جاري تحميل المنشورات...');
-    
+  
     try {
         const response = await fetch('posts.json');
         console.log('حالة الاستجابة:', response.status);
