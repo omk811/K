@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>دروس الصف الخامس | الأستاذ خليل البلوشي</title>
 
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8b5cf6">
+
   <!-- خط -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
@@ -54,6 +58,28 @@
       margin-top:10px;
       color:#cbd5e1;
       font-size:15px;
+    }
+
+    /* ===== شريط تثبيت الموقع ===== */
+    #installBar{
+      display:none;
+      background:#1f2937;
+      color:#e5e7eb;
+      padding:12px;
+      border-radius:14px;
+      margin-bottom:20px;
+      text-align:center;
+    }
+
+    #installBar button{
+      margin-top:8px;
+      padding:8px 20px;
+      border:none;
+      border-radius:20px;
+      background:#8b5cf6;
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
     }
 
     /* ===== قائمة الدروس ===== */
@@ -137,9 +163,7 @@
     }
   </style>
 </head>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#8b5cf6">
-  
+
 <body>
 
 <div class="container">
@@ -159,6 +183,13 @@
     </div>
   </div>
 
+  <!-- شريط تثبيت الموقع -->
+  <div id="installBar">
+    📱 هل ترغب في تثبيت الموقع على هاتفك للوصول السريع؟
+    <br>
+    <button onclick="installSite()">تثبيت الموقع</button>
+  </div>
+
   <!-- قائمة الدروس -->
   <ul id="lessons">
     <li>⏳ جاري تحميل الدروس...</li>
@@ -166,13 +197,13 @@
 
 </div>
 
-<!-- زر الدخول للأدمن -->
+<!-- زر الأدمن -->
 <a href="admin.html" class="admin-btn" title="لوحة الإدارة">⚙️</a>
 
 <script>
-  /* ضع رابط Google Apps Script هنا */
   const API_URL = "https://script.google.com/macros/s/AKfycbx61Y4tVA1j_L2c2_3EoVQX7hb5Ysh5tbFvavj2M48ZwCmWvH78Qd5uwYtUwiV-BkD5tQ/exec";
 
+  /* ===== جلب الدروس ===== */
   fetch(API_URL)
     .then(res => res.json())
     .then(data => {
@@ -184,13 +215,13 @@
         return;
       }
 
-      // ترتيب حسب تاريخ النشر (الأحدث أولًا)
+      // ترتيب حسب تاريخ النشر
       data.sort((a,b)=> new Date(b.publish_date) - new Date(a.publish_date));
 
-      data.forEach((lesson, index) => {
+      data.forEach((lesson,index)=>{
         list.innerHTML += `
           <li>
-            <a class="lesson-link ${index === 0 ? 'featured' : ''}"
+            <a class="lesson-link ${index===0 ? 'featured' : ''}"
                href="${lesson.url}"
                onclick="countView('${lesson.id}')">
 
@@ -205,28 +236,37 @@
           </li>
         `;
       });
-    })
-    .catch(() => {
-      document.getElementById("lessons").innerHTML =
-        "<li>❌ تعذّر تحميل الدروس</li>";
     });
 
   function countView(id){
     fetch(API_URL,{
       method:"POST",
-      body:JSON.stringify({
-        action:"view",
-        id:id
-      })
+      body:JSON.stringify({ action:"view", id })
     });
   }
-</script>
-  
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    .then(() => console.log("Service Worker Registered"));
-}
+
+  /* ===== PWA: تثبيت الموقع ===== */
+  let deferredPrompt;
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById("installBar").style.display = "block";
+  });
+
+  function installSite(){
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(()=>{
+        deferredPrompt = null;
+        document.getElementById("installBar").style.display = "none";
+      });
+    }
+  }
+
+  /* تسجيل Service Worker */
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
 </script>
 
 </body>
