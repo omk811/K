@@ -50,36 +50,10 @@
       font-weight:700;
     }
 
-    .top-links a:hover{
-      text-decoration:underline;
-    }
-
     .subtitle{
       margin-top:10px;
       color:#cbd5e1;
       font-size:15px;
-    }
-
-    /* ===== شريط تثبيت الموقع ===== */
-    #installBar{
-      display:none;
-      background:#1f2937;
-      color:#e5e7eb;
-      padding:12px;
-      border-radius:14px;
-      margin-bottom:20px;
-      text-align:center;
-    }
-
-    #installBar button{
-      margin-top:8px;
-      padding:8px 20px;
-      border:none;
-      border-radius:20px;
-      background:#8b5cf6;
-      color:#fff;
-      font-weight:700;
-      cursor:pointer;
     }
 
     /* ===== قائمة الدروس ===== */
@@ -110,7 +84,7 @@
       transform:translateY(-2px);
     }
 
-    /* ===== تمييز الموضوع الجديد ===== */
+    /* ===== تمييز أحدث موضوع ===== */
     .featured{
       border:2px solid #facc15;
       background:linear-gradient(135deg, rgba(250,204,21,.15), rgba(139,92,246,.25));
@@ -179,15 +153,8 @@
     </div>
 
     <div class="subtitle">
-      اختر الدرس للانتقال إلى الشرح مباشرة
+      المواضيع مرتبة من الأحدث إلى الأقدم
     </div>
-  </div>
-
-  <!-- شريط تثبيت الموقع -->
-  <div id="installBar">
-    📱 هل ترغب في تثبيت الموقع على هاتفك للوصول السريع؟
-    <br>
-    <button onclick="installSite()">تثبيت الموقع</button>
   </div>
 
   <!-- قائمة الدروس -->
@@ -203,7 +170,6 @@
 <script>
   const API_URL = "https://script.google.com/macros/s/AKfycbx61Y4tVA1j_L2c2_3EoVQX7hb5Ysh5tbFvavj2M48ZwCmWvH78Qd5uwYtUwiV-BkD5tQ/exec";
 
-  /* ===== جلب الدروس ===== */
   fetch(API_URL)
     .then(res => res.json())
     .then(data => {
@@ -211,25 +177,29 @@
       list.innerHTML = "";
 
       if (!data || data.length === 0) {
-        list.innerHTML = "<li>لا توجد دروس متاحة حاليًا</li>";
+        list.innerHTML = "<li>لا توجد مواضيع حاليًا</li>";
         return;
       }
 
-      // ترتيب حسب تاريخ النشر
-      data.sort((a,b)=> new Date(b.publish_date) - new Date(a.publish_date));
+      /* الفرز: الأحدث أولًا (تاريخ + زمن الإرسال) */
+      data.sort((a, b) => {
+        const dateDiff = new Date(b.publish_date) - new Date(a.publish_date);
+        return dateDiff !== 0 ? dateDiff : b.id - a.id;
+      });
 
-      data.forEach((lesson,index)=>{
+      data.forEach((lesson, index) => {
         list.innerHTML += `
           <li>
-            <a class="lesson-link ${index===0 ? 'featured' : ''}"
+            <a class="lesson-link ${index === 0 ? 'featured' : ''}"
                href="${lesson.url}"
                onclick="countView('${lesson.id}')">
 
               ${lesson.title}
 
               <div class="lesson-meta">
-                ${lesson.publish_date ? "🗓️ " + lesson.publish_date : ""}
-                ${lesson.author ? " | ✍️ " + lesson.author : ""}
+                🗓️ ${lesson.publish_date}
+                &nbsp; | &nbsp;
+                ✍️ ${lesson.author}
               </div>
 
             </a>
@@ -245,25 +215,7 @@
     });
   }
 
-  /* ===== PWA: تثبيت الموقع ===== */
-  let deferredPrompt;
-  window.addEventListener("beforeinstallprompt", e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    document.getElementById("installBar").style.display = "block";
-  });
-
-  function installSite(){
-    if(deferredPrompt){
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(()=>{
-        deferredPrompt = null;
-        document.getElementById("installBar").style.display = "none";
-      });
-    }
-  }
-
-  /* تسجيل Service Worker */
+  /* تسجيل Service Worker (للتثبيت) */
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js");
   }
