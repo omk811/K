@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دروس الصف الخامس | الأستاذ خليل البلوشي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Cairo,sans-serif;background:#0a0a14;color:#f1f5f9}
+.container{max-width:900px;margin:auto;padding:20px}
+h1{text-align:center;color:#a78bfa}
+p{text-align:center;color:#cbd5e1}
+ul{list-style:none;padding:0}
+li{margin-bottom:14px}
+a.lesson{display:block;padding:16px;background:rgba(139,92,246,.15);border-radius:14px;color:#fff;text-decoration:none;font-weight:700}
+a.lesson:hover{background:rgba(139,92,246,.3)}
+.contact-btn{
+position:fixed;bottom:20px;left:20px;
+width:56px;height:56px;border-radius:50%;
+background:#8b5cf6;color:#fff;
+display:flex;align-items:center;justify-content:center;
+font-size:24px;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>📚 دروس الصف الخامس</h1>
+  <p>اختر الدرس للانتقال إلى الشرح</p>
+  <ul id="lessons"><li>جاري التحميل...</li></ul>
+</div>
+
+<!-- زر البريد -->
+<a href="mailto:omk456456@gmail.com?subject=استفسار%20حول%20دروس%20الصف%20الخامس"
+   class="contact-btn" title="التواصل عبر البريد">📧</a>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbwiGfw7FYsWNxmzY_r8Ipc4-fgZLF5Ei4VN74vhI4Ar6c67RDlXBN9EDb1_YdJDZOpgGA/exec";
+
+fetch(API)
+.then(r=>r.json())
+.then(data=>{
+  const ul=document.getElementById("lessons");
+  ul.innerHTML="";
+  data.forEach(l=>{
+    ul.innerHTML+=`
+      <li>
+        <a class="lesson" href="${l.url}" onclick="countView('${l.id}')">
+          ${l.title}
+        </a>
+      </li>`;
+  });
+});
+
+function countView(id){
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({action:"view",id:id})
+  });
+}
+</script>
+
+</body>
+</html>
