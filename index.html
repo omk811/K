@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>مواضيع مهمة في اللغة العربية للصف الخامس | الأستاذ خليل البلوشي</title>
+  <title>دروس الصف الخامس | الأستاذ خليل البلوشي</title>
 
   <!-- خط -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
@@ -22,19 +22,41 @@
       padding:20px;
     }
 
-    h1{
+    /* ===== رأس الصفحة ===== */
+    .header{
       text-align:center;
-      color:#a78bfa;
-      margin-bottom:8px;
-    }
-
-    p.subtitle{
-      text-align:center;
-      color:#cbd5e1;
-      font-size:15px;
       margin-bottom:30px;
     }
 
+    h1{
+      margin:0;
+      color:#a78bfa;
+      font-size:26px;
+    }
+
+    .top-links{
+      margin-top:6px;
+      font-size:14px;
+      color:#cbd5e1;
+    }
+
+    .top-links a{
+      color:#a78bfa;
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    .top-links a:hover{
+      text-decoration:underline;
+    }
+
+    .subtitle{
+      margin-top:10px;
+      color:#cbd5e1;
+      font-size:15px;
+    }
+
+    /* ===== قائمة الدروس ===== */
     ul#lessons{
       list-style:none;
       padding:0;
@@ -42,18 +64,19 @@
     }
 
     ul#lessons li{
-      margin-bottom:14px;
+      margin-bottom:16px;
     }
 
     a.lesson-link{
       display:block;
-      padding:16px;
+      padding:18px;
       background:rgba(139,92,246,0.15);
-      border-radius:14px;
+      border-radius:16px;
       color:#ffffff;
       text-decoration:none;
       font-weight:700;
       transition:0.3s;
+      position:relative;
     }
 
     a.lesson-link:hover{
@@ -61,26 +84,33 @@
       transform:translateY(-2px);
     }
 
-    /* زر البريد */
-    .contact-btn{
-      position:fixed;
-      bottom:20px;
-      left:20px;
-      width:56px;
-      height:56px;
-      border-radius:50%;
-      background:#8b5cf6;
-      color:#fff;
-      font-size:24px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      box-shadow:0 10px 25px rgba(0,0,0,0.4);
-      z-index:100;
+    /* ===== تمييز الموضوع الجديد ===== */
+    .featured{
+      border:2px solid #facc15;
+      background:linear-gradient(135deg, rgba(250,204,21,.15), rgba(139,92,246,.25));
     }
 
-    /* زر الأدمن */
+    .featured::before{
+      content:"🌟 الموضوع الجديد";
+      position:absolute;
+      top:-12px;
+      right:16px;
+      background:#facc15;
+      color:#000;
+      font-size:12px;
+      font-weight:700;
+      padding:4px 12px;
+      border-radius:20px;
+    }
+
+    .lesson-meta{
+      margin-top:8px;
+      font-size:13px;
+      color:#e5e7eb;
+      font-weight:400;
+    }
+
+    /* ===== زر الأدمن ===== */
     .admin-btn{
       position:fixed;
       bottom:20px;
@@ -105,107 +135,89 @@
       opacity:1;
       transform:rotate(90deg);
     }
-    .featured{
-  border:2px solid #facc15;
-  background:linear-gradient(135deg, rgba(250,204,21,.15), rgba(139,92,246,.2));
-  position:relative;
-}
-
-.featured::before{
-  content:"🌟 الموضوع الجديد";
-  position:absolute;
-  top:-12px;
-  right:16px;
-  background:#facc15;
-  color:#000;
-  font-size:12px;
-  font-weight:700;
-  padding:4px 10px;
-  border-radius:20px;
-}
-
-.lesson-meta{
-  margin-top:8px;
-  font-size:13px;
-  color:#e5e7eb;
-}
-
   </style>
 </head>
 
 <body>
 
 <div class="container">
-  <h1>📚 دروس الصف الخامس</h1>
-  <p class="subtitle">اختر الدرس للانتقال إلى الشرح مباشرة</p>
 
+  <!-- رأس الصفحة -->
+  <div class="header">
+    <h1>📚 دروس الصف الخامس</h1>
+
+    <div class="top-links">
+      <a href="mailto:omk456456@gmail.com?subject=استفسار%20حول%20دروس%20الصف%20الخامس">
+        مراسلة الأستاذ خليل البلوشي عبر البريد الإلكتروني
+      </a>
+    </div>
+
+    <div class="subtitle">
+      اختر الدرس للانتقال إلى الشرح مباشرة
+    </div>
+  </div>
+
+  <!-- قائمة الدروس -->
   <ul id="lessons">
     <li>⏳ جاري تحميل الدروس...</li>
   </ul>
+
 </div>
 
-<!-- زر التواصل بالبريد -->
-<a
-  href="mailto:omk456456@gmail.com?subject=استفسار%20حول%20دروس%20الصف%20الخامس"
-  class="contact-btn"
-  title="التواصل عبر البريد الإلكتروني"
->
-  📧
-</a>
-
 <!-- زر الدخول للأدمن -->
-<a
-  href="admin.html"
-  class="admin-btn"
-  title="لوحة الإدارة"
->
-  ⚙️
-</a>
+<a href="admin.html" class="admin-btn" title="لوحة الإدارة">⚙️</a>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbwiGfw7FYsWNxmzY_r8Ipc4-fgZLF5Ei4VN74vhI4Ar6c67RDlXBN9EDb1_YdJDZOpgGA/exec";
+  /* ضع رابط Google Apps Script هنا */
+  const API_URL = "https://script.google.com/macros/s/AKfycbwiGfw7FYsWNxmzY_r8Ipc4-fgZLF5Ei4VN74vhI4Ar6c67RDlXBN9EDb1_YdJDZOpgGA/exec";
 
-fetch(API_URL)
-  .then(r => r.json())
-  .then(data => {
-    const list = document.getElementById("lessons");
-    list.innerHTML = "";
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById("lessons");
+      list.innerHTML = "";
 
-    if (!data || data.length === 0) {
-      list.innerHTML = "<li>لا توجد دروس</li>";
-      return;
-    }
+      if (!data || data.length === 0) {
+        list.innerHTML = "<li>لا توجد دروس متاحة حاليًا</li>";
+        return;
+      }
 
-    // ترتيب حسب تاريخ النشر (الأحدث أولًا)
-    data.sort((a,b)=> new Date(b.publish_date) - new Date(a.publish_date));
+      // ترتيب حسب تاريخ النشر (الأحدث أولًا)
+      data.sort((a,b)=> new Date(b.publish_date) - new Date(a.publish_date));
 
-    data.forEach((lesson,index) => {
-      list.innerHTML += `
-        <li>
-          <a class="lesson-link ${index===0 ? 'featured' : ''}"
-             href="${lesson.url}"
-             onclick="countView('${lesson.id}')">
-             
-            ${lesson.title}
+      data.forEach((lesson, index) => {
+        list.innerHTML += `
+          <li>
+            <a class="lesson-link ${index === 0 ? 'featured' : ''}"
+               href="${lesson.url}"
+               onclick="countView('${lesson.id}')">
 
-            <div class="lesson-meta">
-              🗓️ ${lesson.publish_date}
-              &nbsp; | &nbsp;
-              ✍️ ${lesson.author}
-            </div>
+              ${lesson.title}
 
-          </a>
-        </li>
-      `;
+              <div class="lesson-meta">
+                ${lesson.publish_date ? "🗓️ " + lesson.publish_date : ""}
+                ${lesson.author ? " | ✍️ " + lesson.author : ""}
+              </div>
+
+            </a>
+          </li>
+        `;
+      });
+    })
+    .catch(() => {
+      document.getElementById("lessons").innerHTML =
+        "<li>❌ تعذّر تحميل الدروس</li>";
     });
-  });
 
-function countView(id){
-  fetch(API_URL,{
-    method:"POST",
-    body:JSON.stringify({ action:"view", id })
-  });
-}
+  function countView(id){
+    fetch(API_URL,{
+      method:"POST",
+      body:JSON.stringify({
+        action:"view",
+        id:id
+      })
+    });
+  }
 </script>
 
 </body>
