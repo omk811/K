@@ -105,6 +105,31 @@
       opacity:1;
       transform:rotate(90deg);
     }
+    .featured{
+  border:2px solid #facc15;
+  background:linear-gradient(135deg, rgba(250,204,21,.15), rgba(139,92,246,.2));
+  position:relative;
+}
+
+.featured::before{
+  content:"🌟 الموضوع الجديد";
+  position:absolute;
+  top:-12px;
+  right:16px;
+  background:#facc15;
+  color:#000;
+  font-size:12px;
+  font-weight:700;
+  padding:4px 10px;
+  border-radius:20px;
+}
+
+.lesson-meta{
+  margin-top:8px;
+  font-size:13px;
+  color:#e5e7eb;
+}
+
   </style>
 </head>
 
@@ -138,47 +163,49 @@
 </a>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbz2sbh3WUW0wxsxui6URZr6D7x9d8WkmnbyQhtQLKiMnwwSi_fOKUASbeuQ9dCyetuERQ/exec";
+const API_URL = "PUT_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
 
-  // جلب الدروس
-  fetch(API_URL)
-    .then(response => response.json())
-    .then(data => {
-      const lessonsList = document.getElementById("lessons");
-      lessonsList.innerHTML = "";
+fetch(API_URL)
+  .then(r => r.json())
+  .then(data => {
+    const list = document.getElementById("lessons");
+    list.innerHTML = "";
 
-      if (!data || data.length === 0) {
-        lessonsList.innerHTML = "<li>لا توجد دروس متاحة حاليًا</li>";
-        return;
-      }
+    if (!data || data.length === 0) {
+      list.innerHTML = "<li>لا توجد دروس</li>";
+      return;
+    }
 
-      data.forEach(lesson => {
-        lessonsList.innerHTML += `
-          <li>
-            <a class="lesson-link"
-               href="${lesson.url}"
-               onclick="countView('${lesson.id}')">
-              ${lesson.title}
-            </a>
-          </li>
-        `;
-      });
-    })
-    .catch(() => {
-      document.getElementById("lessons").innerHTML =
-        "<li>❌ تعذر تحميل الدروس</li>";
+    // ترتيب حسب تاريخ النشر (الأحدث أولًا)
+    data.sort((a,b)=> new Date(b.publish_date) - new Date(a.publish_date));
+
+    data.forEach((lesson,index) => {
+      list.innerHTML += `
+        <li>
+          <a class="lesson-link ${index===0 ? 'featured' : ''}"
+             href="${lesson.url}"
+             onclick="countView('${lesson.id}')">
+             
+            ${lesson.title}
+
+            <div class="lesson-meta">
+              🗓️ ${lesson.publish_date}
+              &nbsp; | &nbsp;
+              ✍️ ${lesson.author}
+            </div>
+
+          </a>
+        </li>
+      `;
     });
+  });
 
-  // عدّاد الزيارات
-  function countView(id){
-    fetch(API_URL,{
-      method:"POST",
-      body:JSON.stringify({
-        action:"view",
-        id:id
-      })
-    });
-  }
+function countView(id){
+  fetch(API_URL,{
+    method:"POST",
+    body:JSON.stringify({ action:"view", id })
+  });
+}
 </script>
 
 </body>
