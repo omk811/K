@@ -3,126 +3,551 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>التحكم في الدروس ونشرها </title>
+<title>لوحة التحكم - إدارة الدروس</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 
 <style>
-body{
-  font-family:"Cairo",sans-serif;
-  background:#0a0a14;
-  color:#f1f5f9;
-  margin:0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.card{
-  max-width:800px;
-  margin:40px auto;
-  background:rgba(139,92,246,.15);
-  padding:25px;
-  border-radius:20px;
+body {
+  font-family: "Cairo", sans-serif;
+  background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+  color: #f1f5f9;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
 }
 
-h2{
-  margin-top:0;
-  color:#a78bfa;
+body::before {
+  content: '';
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
+  top: -250px;
+  right: -250px;
+  z-index: 0;
+  pointer-events: none;
 }
 
-input,button{
-  width:100%;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:12px;
-  border:none;
-  font-family:inherit;
+body::after {
+  content: '';
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 70%);
+  bottom: -200px;
+  left: -200px;
+  z-index: 0;
+  pointer-events: none;
 }
 
-button{
-  background:#8b5cf6;
-  color:#fff;
-  font-weight:700;
-  cursor:pointer;
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-button.secondary{
-  background:#374151;
+/* بطاقة تسجيل الدخول */
+.login-card {
+  background: rgba(30, 30, 46, 0.8);
+  backdrop-filter: blur(20px);
+  padding: 50px 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border: 1px solid rgba(139,92,246,0.3);
+  animation: slideIn 0.5s ease-out;
 }
 
-button.refresh{
-  background:#0ea5e9;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-button.success{
-  background:#10b981;
+.login-card h2 {
+  text-align: center;
+  color: #a78bfa;
+  font-size: 2em;
+  margin-bottom: 10px;
+  font-weight: 900;
 }
 
-.lesson{
-  background:rgba(0,0,0,.3);
-  padding:12px;
-  border-radius:14px;
-  margin-bottom:10px;
+.login-card .subtitle {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.95em;
+  margin-bottom: 35px;
 }
 
-.lesson small{
-  color:#cbd5e1;
-  font-size:13px;
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
 }
 
-.on{background:#10b981;}
-.off{background:#ef4444;}
+.input-group input {
+  width: 100%;
+  padding: 16px 50px 16px 20px;
+  border-radius: 14px;
+  border: 2px solid rgba(139,92,246,0.3);
+  background: rgba(15, 15, 30, 0.6);
+  color: #f1f5f9;
+  font-family: inherit;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
 
-.hidden{display:none;}
+.input-group input:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
+}
 
-.status-msg{
-  text-align:center;
-  margin-top:10px;
-  font-weight:700;
+.input-group .icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3em;
+}
+
+.btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  font-family: inherit;
+  font-size: 1.05em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(139,92,246,0.4);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(55,65,81,0.4);
+}
+
+.btn-refresh {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #fff;
+}
+
+.btn-refresh:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(14,165,233,0.4);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16,185,129,0.4);
+}
+
+.error-msg {
+  text-align: center;
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(239,68,68,0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239,68,68,0.3);
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* لوحة التحكم */
+.panel {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.panel-header {
+  background: linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(16,185,129,0.2) 100%);
+  backdrop-filter: blur(20px);
+  padding: 35px;
+  border-radius: 24px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(139,92,246,0.3);
+  text-align: center;
+}
+
+.panel-header h2 {
+  font-size: 2.2em;
+  color: #a78bfa;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.panel-header p {
+  color: #94a3b8;
+  font-size: 1em;
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: rgba(30, 30, 46, 0.8);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(139,92,246,0.2);
+  margin-bottom: 25px;
+}
+
+.card h3 {
+  color: #a78bfa;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #cbd5e1;
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 2px solid rgba(139,92,246,0.3);
+  background: rgba(15, 15, 30, 0.6);
+  color: #f1f5f9;
+  font-family: inherit;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
+}
+
+.status-msg {
+  text-align: center;
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-msg.success {
+  background: rgba(16,185,129,0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16,185,129,0.3);
+}
+
+.status-msg.error {
+  background: rgba(239,68,68,0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239,68,68,0.3);
+}
+
+.lessons-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.lesson-card {
+  background: linear-gradient(135deg, rgba(15,15,30,0.8) 0%, rgba(30,30,46,0.6) 100%);
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(139,92,246,0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.lesson-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #8b5cf6 0%, #10b981 100%);
+  transition: width 0.3s ease;
+}
+
+.lesson-card:hover {
+  transform: translateX(-5px);
+  border-color: rgba(139,92,246,0.5);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.lesson-card:hover::before {
+  width: 100%;
+  opacity: 0.1;
+}
+
+.lesson-title {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin-bottom: 12px;
+}
+
+.lesson-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #94a3b8;
+  font-size: 0.9em;
+}
+
+.lesson-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-toggle {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-toggle.on {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+}
+
+.btn-toggle.off {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+}
+
+.btn-toggle:hover {
+  transform: scale(1.05);
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #94a3b8;
+  font-size: 1.1em;
+}
+
+.loading::after {
+  content: '...';
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* تحسينات للموبايل */
+@media (max-width: 768px) {
+  .login-card, .card {
+    padding: 25px 20px;
+  }
+  
+  .panel-header h2 {
+    font-size: 1.7em;
+  }
+  
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .lesson-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- تسجيل الدخول -->
-<div id="loginBox" class="card">
-  <h2>🔐 دخول لوحة الإدارة</h2>
-  <input type="password" id="pass" placeholder="كلمة المرور">
-  <button onclick="login()">دخول</button>
-  <p id="loginMsg"></p>
-</div>
+<div class="container">
+  <!-- تسجيل الدخول -->
+  <div id="loginBox" class="login-card">
+    <h2>🔐</h2>
+    <h2>لوحة التحكم الإدارية</h2>
+    <p class="subtitle">أدخل كلمة المرور للوصول إلى نظام إدارة الدروس</p>
+    
+    <div class="input-group">
+      <input type="password" id="pass" placeholder="كلمة المرور">
+      <span class="icon">🔑</span>
+    </div>
+    
+    <button class="btn btn-primary" onclick="login()">
+      <span style="position: relative; z-index: 1;">دخول</span>
+    </button>
+    
+    <div id="loginMsg"></div>
+  </div>
 
-<!-- لوحة التحكم -->
-<div id="panel" class="card hidden">
+  <!-- لوحة التحكم -->
+  <div id="panel" class="panel hidden">
+    
+    <div class="panel-header">
+      <h2>📚 نظام إدارة الدروس</h2>
+      <p>إدارة شاملة لجميع الدروس والمحتوى التعليمي</p>
+    </div>
 
-  <h2>📚 إدارة الدروس</h2>
+    <div class="action-buttons">
+      <button class="btn btn-secondary" onclick="goHome()">
+        <span style="position: relative; z-index: 1;">🏠 الصفحة الرئيسية</span>
+      </button>
+      <button class="btn btn-refresh" onclick="loadLessons()">
+        <span style="position: relative; z-index: 1;">🔄 تحديث البيانات</span>
+      </button>
+    </div>
 
-  <!-- أزرار التحكم -->
-  <button class="secondary" onclick="goHome()">🏠 العودة للصفحة الرئيسية</button>
-  <button class="refresh" onclick="loadLessons()">🔄 تحديث البيانات يدويًا</button>
+    <!-- إضافة درس جديد -->
+    <div class="card">
+      <h3>➕ إضافة درس جديد</h3>
+      
+      <div class="form-group">
+        <label>عنوان الدرس</label>
+        <input id="title" placeholder="أدخل عنوان الدرس">
+      </div>
+      
+      <div class="form-group">
+        <label>رابط الدرس</label>
+        <input id="url" placeholder="أدخل رابط الدرس">
+      </div>
+      
+      <div class="form-group">
+        <label>اسم الأستاذ</label>
+        <input id="author" placeholder="الأستاذ خليل البلوشي" value="الأستاذ خليل البلوشي">
+      </div>
 
-  <hr>
+      <button class="btn btn-success" onclick="addLesson()">
+        <span style="position: relative; z-index: 1;">➕ إضافة الدرس</span>
+      </button>
 
-  <!-- إضافة درس -->
-  <input id="title" placeholder="عنوان الدرس">
-  <input id="url" placeholder="رابط الدرس">
-  <input id="author" placeholder="الأستاذ خليل البلوشي">
+      <div id="status"></div>
+    </div>
 
-  <button class="success" onclick="addLesson()">➕ إضافة درس</button>
+    <!-- قائمة الدروس -->
+    <div class="card">
+      <h3>📋 قائمة الدروس المنشورة</h3>
+      <div id="list" class="lessons-grid">
+        <div class="loading">جاري تحميل الدروس</div>
+      </div>
+    </div>
 
-  <div id="status" class="status-msg"></div>
-
-  <hr>
-
-  <!-- قائمة الدروس -->
-  <div id="list">جاري التحميل...</div>
-
+  </div>
 </div>
 
 <script>
 const API = "https://script.google.com/macros/s/AKfycbx61Y4tVA1j_L2c2_3EoVQX7hb5Ysh5tbFvavj2M48ZwCmWvH78Qd5uwYtUwiV-BkD5tQ/exec";
 let ADMIN_PASS = "";
 
-/* تسجيل الدخول */
 function login(){
   ADMIN_PASS = document.getElementById("pass").value.trim();
   if(!ADMIN_PASS) return;
@@ -137,7 +562,9 @@ function login(){
   .then(r=>r.json())
   .then(d=>{
     if(d.error){
-      document.getElementById("loginMsg").textContent = "❌ كلمة المرور غير صحيحة";
+      const msg = document.getElementById("loginMsg");
+      msg.className = "error-msg";
+      msg.textContent = "❌ كلمة المرور غير صحيحة";
     }else{
       document.getElementById("loginBox").classList.add("hidden");
       document.getElementById("panel").classList.remove("hidden");
@@ -146,9 +573,8 @@ function login(){
   });
 }
 
-/* جلب الدروس */
 function loadLessons(){
-  document.getElementById("list").innerHTML = "⏳ جاري التحديث...";
+  document.getElementById("list").innerHTML = '<div class="loading">جاري تحديث البيانات</div>';
   fetch(API,{
     method:"POST",
     body:JSON.stringify({
@@ -161,23 +587,27 @@ function loadLessons(){
     const box = document.getElementById("list");
     box.innerHTML = "";
     data.forEach(l=>{
-      box.innerHTML += `
-        <div class="lesson">
-          <strong>${l.title}</strong><br>
-          <small>👁️ ${l.views} زيارة</small><br>
-          <small>🗓️ ${l.publish_date || ""}</small><br>
-          <small>✍️ ${l.author || ""}</small><br><br>
-          <button class="${l.status=="ON"?"on":"off"}"
+      const card = document.createElement("div");
+      card.className = "lesson-card";
+      card.innerHTML = `
+        <div class="lesson-title">${l.title}</div>
+        <div class="lesson-meta">
+          <div class="meta-item">👁️ <strong>${l.views}</strong> زيارة</div>
+          <div class="meta-item">🗓️ ${l.publish_date || "غير محدد"}</div>
+          <div class="meta-item">✍️ ${l.author || "غير محدد"}</div>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-toggle ${l.status=="ON"?"on":"off"}"
             onclick="toggleLesson('${l.id}','${l.status=="ON"?"OFF":"ON"}')">
-            ${l.status}
+            ${l.status=="ON"?"🟢 منشور":"🔴 غير منشور"}
           </button>
         </div>
       `;
+      box.appendChild(card);
     });
   });
 }
 
-/* إضافة درس */
 function addLesson(){
   const title = document.getElementById("title").value.trim();
   const url   = document.getElementById("url").value.trim();
@@ -201,16 +631,15 @@ function addLesson(){
   .then(r=>r.json())
   .then(res=>{
     if(res.success){
-      setStatus("✅ تم الإرسال بنجاح", true);
+      setStatus("✅ تم إضافة الدرس بنجاح", true);
       document.getElementById("title").value="";
       document.getElementById("url").value="";
-      document.getElementById("author").value="";
+      document.getElementById("author").value="الأستاذ خليل البلوشي";
       loadLessons();
     }
   });
 }
 
-/* تغيير حالة الدرس */
 function toggleLesson(id,status){
   fetch(API,{
     method:"POST",
@@ -224,15 +653,13 @@ function toggleLesson(id,status){
   .then(()=>loadLessons());
 }
 
-/* رسالة حالة */
 function setStatus(msg, success){
   const s = document.getElementById("status");
+  s.className = success ? "status-msg success" : "status-msg error";
   s.textContent = msg;
-  s.style.color = success ? "#10b981" : "#ef4444";
   setTimeout(()=>{ s.textContent=""; }, 3000);
 }
 
-/* العودة للرئيسية */
 function goHome(){
   window.location.href = "index.html";
 }
