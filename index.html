@@ -10,130 +10,494 @@
   <meta name="theme-color" content="#8b5cf6">
 
   <!-- خط -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
-    body{
-      margin:0;
-      font-family:"Cairo", sans-serif;
-      background:#0a0a14;
-      color:#f1f5f9;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .container{
-      max-width:900px;
-      margin:auto;
-      padding:20px;
+    body {
+      font-family: "Cairo", sans-serif;
+      background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* تأثيرات الخلفية */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
+      top: -300px;
+      right: -300px;
+      z-index: 0;
+      pointer-events: none;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 70%);
+      bottom: -250px;
+      left: -250px;
+      z-index: 0;
+      pointer-events: none;
+      animation: float 15s infinite ease-in-out reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(50px, 50px) scale(1.1); }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px 20px;
+      position: relative;
+      z-index: 1;
     }
 
     /* ===== رأس الصفحة ===== */
-    .header{
-      text-align:center;
-      margin-bottom:30px;
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeInDown 0.8s ease-out;
     }
 
-    h1{
-      margin:0;
-      color:#a78bfa;
-      font-size:26px;
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .top-links{
-      margin-top:6px;
-      font-size:14px;
-      color:#cbd5e1;
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(139,92,246,0.3) 0%, rgba(16,185,129,0.3) 100%);
+      border: 2px solid rgba(139,92,246,0.5);
+      padding: 12px 30px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #a78bfa;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+      animation: pulse 2s infinite;
     }
 
-    .top-links a{
-      color:#a78bfa;
-      text-decoration:none;
-      font-weight:700;
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
     }
 
-    .subtitle{
-      margin-top:10px;
-      color:#cbd5e1;
-      font-size:15px;
+    h1 {
+      font-size: 3em;
+      color: #ffffff;
+      margin: 0 0 15px 0;
+      font-weight: 900;
+      background: linear-gradient(135deg, #a78bfa 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .teacher-info {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(30, 30, 46, 0.8);
+      backdrop-filter: blur(20px);
+      padding: 15px 30px;
+      border-radius: 50px;
+      margin: 20px 0;
+      border: 1px solid rgba(139,92,246,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .teacher-info:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(139,92,246,0.3);
+    }
+
+    .teacher-avatar {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #8b5cf6 0%, #10b981 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .teacher-details h3 {
+      font-size: 16px;
+      color: #e2e8f0;
+      margin-bottom: 3px;
+    }
+
+    .teacher-details p {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .contact-link {
+      display: inline-block;
+      margin-top: 15px;
+      color: #a78bfa;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 10px 25px;
+      border: 2px solid rgba(139,92,246,0.4);
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      background: rgba(139,92,246,0.1);
+    }
+
+    .contact-link:hover {
+      background: rgba(139,92,246,0.3);
+      border-color: #8b5cf6;
+      transform: translateY(-2px);
+    }
+
+    .subtitle {
+      margin-top: 25px;
+      color: #94a3b8;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      background: rgba(30, 30, 46, 0.6);
+      backdrop-filter: blur(10px);
+      padding: 15px 25px;
+      border-radius: 15px;
+      border: 1px solid rgba(139,92,246,0.2);
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 24px;
+      font-weight: 900;
+      color: #10b981;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 5px;
     }
 
     /* ===== قائمة الدروس ===== */
-    ul#lessons{
-      list-style:none;
-      padding:0;
-      margin:0;
+    .lessons-section {
+      animation: fadeInUp 0.8s ease-out 0.2s both;
     }
 
-    ul#lessons li{
-      margin-bottom:16px;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    a.lesson-link{
-      display:block;
-      padding:18px;
-      background:rgba(139,92,246,0.15);
-      border-radius:16px;
-      color:#ffffff;
-      text-decoration:none;
-      font-weight:700;
-      transition:0.3s;
-      position:relative;
+    .section-title {
+      font-size: 1.8em;
+      color: #e2e8f0;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    a.lesson-link:hover{
-      background:rgba(139,92,246,0.3);
-      transform:translateY(-2px);
+    .section-title::before {
+      content: '';
+      width: 5px;
+      height: 35px;
+      background: linear-gradient(180deg, #8b5cf6 0%, #10b981 100%);
+      border-radius: 5px;
+    }
+
+    ul#lessons {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 18px;
+    }
+
+    ul#lessons li {
+      animation: slideInRight 0.5s ease-out both;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* تأخير تدريجي للعناصر */
+    ul#lessons li:nth-child(1) { animation-delay: 0.1s; }
+    ul#lessons li:nth-child(2) { animation-delay: 0.2s; }
+    ul#lessons li:nth-child(3) { animation-delay: 0.3s; }
+    ul#lessons li:nth-child(4) { animation-delay: 0.4s; }
+    ul#lessons li:nth-child(5) { animation-delay: 0.5s; }
+
+    a.lesson-link {
+      display: block;
+      padding: 25px;
+      background: rgba(30, 30, 46, 0.8);
+      backdrop-filter: blur(20px);
+      border-radius: 18px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1em;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      border: 1px solid rgba(139,92,246,0.2);
+      overflow: hidden;
+    }
+
+    a.lesson-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(180deg, #8b5cf6 0%, #10b981 100%);
+      transition: width 0.4s ease;
+    }
+
+    a.lesson-link:hover {
+      background: rgba(30, 30, 46, 0.95);
+      border-color: rgba(139,92,246,0.5);
+      transform: translateX(-8px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    a.lesson-link:hover::before {
+      width: 100%;
+      opacity: 0.15;
     }
 
     /* ===== تمييز أحدث موضوع ===== */
-    .featured{
-      border:2px solid #facc15;
-      background:linear-gradient(135deg, rgba(250,204,21,.15), rgba(139,92,246,.25));
+    .featured {
+      border: 2px solid #facc15;
+      background: linear-gradient(135deg, rgba(250,204,21,0.15) 0%, rgba(139,92,246,0.25) 100%);
+      position: relative;
+      animation: glow 2s infinite alternate;
     }
 
-    .featured::before{
-      content:"🌟 الموضوع الجديد";
-      position:absolute;
-      top:-12px;
-      right:16px;
-      background:#facc15;
-      color:#000;
-      font-size:12px;
-      font-weight:700;
-      padding:4px 12px;
-      border-radius:20px;
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 20px rgba(250,204,21,0.3);
+      }
+      to {
+        box-shadow: 0 0 30px rgba(250,204,21,0.5);
+      }
     }
 
-    .lesson-meta{
-      margin-top:8px;
-      font-size:13px;
-      color:#e5e7eb;
-      font-weight:400;
+    .featured::after {
+      content: "🌟 الموضوع الجديد";
+      position: absolute;
+      top: -15px;
+      right: 25px;
+      background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%);
+      color: #000;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 6px 18px;
+      border-radius: 25px;
+      box-shadow: 0 5px 15px rgba(250,204,21,0.4);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .lesson-title {
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .lesson-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(139,92,246,0.2);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-icon {
+      font-size: 16px;
+    }
+
+    /* ===== حالة التحميل ===== */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: #94a3b8;
+      font-size: 1.1em;
+    }
+
+    .loading::before {
+      content: '⏳';
+      display: block;
+      font-size: 48px;
+      margin-bottom: 15px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: #94a3b8;
+    }
+
+    .empty-state-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+      opacity: 0.5;
     }
 
     /* ===== زر الأدمن ===== */
-    .admin-btn{
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      width:46px;
-      height:46px;
-      background:#1f2937;
-      color:#e5e7eb;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      text-decoration:none;
-      box-shadow:0 8px 20px rgba(0,0,0,0.4);
-      opacity:0.6;
-      transition:0.3s;
-      z-index:100;
+    .admin-btn {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+      color: #e5e7eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: all 0.3s ease;
+      z-index: 100;
+      border: 2px solid rgba(139,92,246,0.3);
     }
 
-    .admin-btn:hover{
-      opacity:1;
-      transform:rotate(90deg);
+    .admin-btn:hover {
+      transform: scale(1.1) rotate(90deg);
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      box-shadow: 0 15px 40px rgba(139,92,246,0.5);
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding: 30px 20px;
+      color: #64748b;
+      font-size: 14px;
+      border-top: 1px solid rgba(139,92,246,0.2);
+    }
+
+    /* ===== تحسينات للموبايل ===== */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      .teacher-info {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .stats-bar {
+        gap: 15px;
+      }
+
+      .stat-item {
+        min-width: 100px;
+        padding: 12px 20px;
+      }
+
+      a.lesson-link {
+        padding: 20px;
+        font-size: 1em;
+      }
+
+      .lesson-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .admin-btn {
+        width: 55px;
+        height: 55px;
+        bottom: 20px;
+        left: 20px;
+      }
+
+      .featured::after {
+        right: 15px;
+        font-size: 11px;
+        padding: 5px 14px;
+      }
     }
   </style>
 </head>
@@ -144,23 +508,53 @@
 
   <!-- رأس الصفحة -->
   <div class="header">
+    <div class="hero-badge">✨ منصة التعليم الإلكتروني</div>
+    
     <h1>📚 دروس الصف الخامس</h1>
 
-    <div class="top-links">
-      <a href="mailto:omk456456@gmail.com?subject=استفسار%20حول%20دروس%20الصف%20الخامس">
-        مراسلة الأستاذ خليل البلوشي عبر البريد الإلكتروني
-      </a>
+    <div class="teacher-info">
+      <div class="teacher-avatar">👨‍🏫</div>
+      <div class="teacher-details">
+        <h3>الأستاذ خليل البلوشي</h3>
+        <p>معلم اللغة العربية</p>
+      </div>
+    </div>
+
+    <a href="mailto:omk456456@gmail.com?subject=استفسار%20حول%20دروس%20الصف%20الخامس" class="contact-link">
+      📧 تواصل معنا
+    </a>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-number" id="totalLessons">0</span>
+        <span class="stat-label">درس منشور</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="totalViews">0</span>
+        <span class="stat-label">مشاهدة</span>
+      </div>
     </div>
 
     <div class="subtitle">
-      المواضيع مرتبة من الأحدث إلى الأقدم
+      <span>🗂️</span>
+      <span>المواضيع مرتبة من الأحدث إلى الأقدم</span>
     </div>
   </div>
 
   <!-- قائمة الدروس -->
-  <ul id="lessons">
-    <li>⏳ جاري تحميل الدروس...</li>
-  </ul>
+  <div class="lessons-section">
+    <h2 class="section-title">الدروس المتاحة</h2>
+    
+    <ul id="lessons">
+      <li class="loading">جاري تحميل الدروس</li>
+    </ul>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2024 جميع الحقوق محفوظة | الأستاذ خليل البلوشي</p>
+    <p style="margin-top: 10px;">صُمم بـ 💜 لطلاب الصف الخامس</p>
+  </div>
 
 </div>
 
@@ -177,47 +571,85 @@
       list.innerHTML = "";
 
       if (!data || data.length === 0) {
-        list.innerHTML = "<li>لا توجد مواضيع حاليًا</li>";
+        list.innerHTML = `
+          <li class="empty-state">
+            <div class="empty-state-icon">📭</div>
+            <div>لا توجد دروس منشورة حاليًا</div>
+            <div style="margin-top: 10px; font-size: 14px; color: #64748b;">
+              سيتم إضافة دروس جديدة قريبًا
+            </div>
+          </li>
+        `;
         return;
       }
 
-      /* الفرز: الأحدث أولًا (تاريخ + زمن الإرسال) */
+      /* الفرز: الأحدث أولًا */
       data.sort((a, b) => {
         const dateDiff = new Date(b.publish_date) - new Date(a.publish_date);
         return dateDiff !== 0 ? dateDiff : b.id - a.id;
       });
 
+      /* تحديث الإحصائيات */
+      document.getElementById("totalLessons").textContent = data.length;
+      const totalViews = data.reduce((sum, lesson) => sum + (parseInt(lesson.views) || 0), 0);
+      document.getElementById("totalViews").textContent = totalViews.toLocaleString('ar-EG');
+
+      /* عرض الدروس */
       data.forEach((lesson, index) => {
-        list.innerHTML += `
-          <li>
-            <a class="lesson-link ${index === 0 ? 'featured' : ''}"
-               href="${lesson.url}"
-               onclick="countView('${lesson.id}')">
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <a class="lesson-link ${index === 0 ? 'featured' : ''}"
+             href="${lesson.url}"
+             onclick="countView('${lesson.id}')">
 
-              ${lesson.title}
+            <div class="lesson-title">${lesson.title}</div>
 
-              <div class="lesson-meta">
-                🗓️ ${lesson.publish_date}
-                &nbsp; | &nbsp;
-                ✍️ ${lesson.author}
+            <div class="lesson-meta">
+              <div class="meta-item">
+                <span class="meta-icon">🗓️</span>
+                <span>${lesson.publish_date || 'غير محدد'}</span>
               </div>
+              <div class="meta-item">
+                <span class="meta-icon">✍️</span>
+                <span>${lesson.author || 'الأستاذ خليل البلوشي'}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">👁️</span>
+                <span>${lesson.views || 0} مشاهدة</span>
+              </div>
+            </div>
 
-            </a>
-          </li>
+          </a>
         `;
+        list.appendChild(li);
       });
+    })
+    .catch(error => {
+      const list = document.getElementById("lessons");
+      list.innerHTML = `
+        <li class="empty-state">
+          <div class="empty-state-icon">⚠️</div>
+          <div>حدث خطأ في تحميل الدروس</div>
+          <div style="margin-top: 10px; font-size: 14px; color: #64748b;">
+            يرجى المحاولة مرة أخرى لاحقًا
+          </div>
+        </li>
+      `;
+      console.error('Error:', error);
     });
 
-  function countView(id){
-    fetch(API_URL,{
-      method:"POST",
-      body:JSON.stringify({ action:"view", id })
-    });
+  function countView(id) {
+    fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({ action: "view", id })
+    }).catch(err => console.error('View count error:', err));
   }
 
-  /* تسجيل Service Worker (للتثبيت) */
+  /* تسجيل Service Worker */
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
+    navigator.serviceWorker.register("sw.js").catch(err => {
+      console.log('SW registration failed:', err);
+    });
   }
 </script>
 
