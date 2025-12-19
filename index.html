@@ -866,260 +866,187 @@
       });
     }
   </script>
-  <!-- ✅ Popup دعاء + نصائح (Responsive) -->
-<style>
-  :root{
-    --pop-bg: rgba(0,0,0,.58);
-    --card: #0f0f10;
-    --card2:#151517;
-    --text:#f7f7f7;
-    --muted:#cfcfd4;
-    --gold:#d4af37;
-    --danger:#ff4d4d;
-    --shadow: 0 18px 60px rgba(0,0,0,.45);
-    --radius: 18px;
-  }
-  #examPopupOverlay{
-    position: fixed; inset: 0;
-    background: var(--pop-bg);
-    display: none;
-    align-items: center; justify-content: center;
-    padding: 14px;
-    z-index: 99999;
-    backdrop-filter: blur(6px);
-  }
-  #examPopup{
-    width: min(560px, 100%);
-    background: linear-gradient(180deg, var(--card) 0%, var(--card2) 100%);
-    color: var(--text);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(212,175,55,.25);
-    overflow: hidden;
-    transform: translateY(14px);
-    opacity: 0;
-    transition: .25s ease;
-  }
-  #examPopupOverlay.show #examPopup{
-    transform: translateY(0);
-    opacity: 1;
-  }
-  .pop-head{
-    padding: 16px 16px 10px;
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    gap: 10px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-  }
-  .pop-title{
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.4;
-    font-weight: 800;
-    letter-spacing: .2px;
-  }
-  .badge{
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(212,175,55,.14);
-    color: var(--gold);
-    border: 1px solid rgba(212,175,55,.28);
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 800;
-    margin-top: 8px;
-    width: fit-content;
-  }
-  .close-btn{
-    background: transparent;
-    border: 0;
-    color: var(--muted);
-    font-size: 22px;
-    cursor: pointer;
-    line-height: 1;
-    padding: 6px 10px;
-    border-radius: 10px;
-  }
-  .close-btn:hover{ background: rgba(255,255,255,.08); color: var(--text); }
-  .pop-body{ padding: 14px 16px 6px; }
-  .dua{
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.10);
-    border-radius: 14px;
-    padding: 12px 12px;
-    margin-bottom: 12px;
-    font-size: 14px;
-    line-height: 1.9;
-  }
-  .dua strong{ color: var(--gold); }
-  .tips{
-    margin: 0;
-    padding: 0 18px 0 0;
-    list-style: none;
-    display: grid;
-    gap: 10px;
-  }
-  .tips li{
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 14px;
-    padding: 10px 12px;
-    font-size: 14px;
-    line-height: 1.8;
-  }
-  .tips li b{ color: var(--gold); }
-  .pop-foot{
-    padding: 12px 16px 16px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .btn{
-    appearance: none;
-    border: 0;
-    cursor: pointer;
-    border-radius: 14px;
-    padding: 10px 12px;
-    font-weight: 800;
-    font-size: 14px;
-    transition: .2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    user-select: none;
-    white-space: nowrap;
-  }
-  .btn-primary{
-    background: linear-gradient(135deg, var(--gold), #f3d06a);
-    color: #111;
-    box-shadow: 0 10px 24px rgba(212,175,55,.22);
-  }
-  .btn-primary:hover{ transform: translateY(-1px); }
-  .btn-ghost{
-    background: rgba(255,255,255,.06);
-    color: var(--text);
-    border: 1px solid rgba(255,255,255,.12);
-  }
-  .btn-ghost:hover{ background: rgba(255,255,255,.10); }
-  .dont-show{
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 12.5px;
-  }
-  .dont-show input{ width: 16px; height: 16px; accent-color: var(--gold); }
+ <!-- ✅ إعلان منبثق (Popup) للمدونة — متجاوب + لا يؤثر على القالب -->
+<div id="khalilPopup" class="khalil-popup" aria-hidden="true">
+  <div class="khalil-popup__backdrop" data-kp-close></div>
 
-  /* ✅ RTL + Mobile tweaks */
-  .rtl{ direction: rtl; font-family: "Cairo", Tahoma, Arial, sans-serif; }
-  @media (max-width: 420px){
-    .pop-title{ font-size: 16px; }
-    .tips li, .dua{ font-size: 13.5px; }
-    .btn{ width: 100%; justify-content: center; }
-    .pop-foot{ gap: 8px; }
-  }
-</style>
+  <div class="khalil-popup__card" role="dialog" aria-modal="true" aria-labelledby="kpTitle">
+    <button class="khalil-popup__close" type="button" aria-label="إغلاق" data-kp-close>×</button>
 
-<div id="examPopupOverlay" class="rtl" aria-hidden="true">
-  <div id="examPopup" role="dialog" aria-modal="true" aria-labelledby="examPopupTitle">
-    <div class="pop-head">
-      <div>
-        <h3 class="pop-title" id="examPopupTitle">  دعاء  📘</h3>
-        <div class="badge">⭐ بالتوفيق والنجاح بإذن الله</div>
-      </div>
-      <button class="close-btn" id="examPopupClose" aria-label="إغلاق">×</button>
+    <div class="khalil-popup__badge">بث مباشر • مراجعة ختامية</div>
+
+    <h2 id="kpTitle" class="khalil-popup__title">السلام عليكم 👋</h2>
+
+    <p class="khalil-popup__text">
+      <b>غدًا السبت 20 ديسمبر 2025</b> — الساعة <b>9:00 صباحًا</b><br>
+      <span class="khalil-popup__gold">حصة مراجعة ختامية</span> في مادة اللغة العربية للصف الخامس بإذن الله.
+      <br>نراجع <b>نماذج من ورقة الامتحان النهائي</b>.
+    </p>
+
+    <div class="khalil-popup__actions">
+      <a class="khalil-popup__btn khalil-popup__btn--primary"
+         href="https://www.youtube.com/@teacherKhalil811"
+         target="_blank" rel="noopener">
+        افتح القناة الآن
+      </a>
+
+      <button class="khalil-popup__btn khalil-popup__btn--ghost" type="button" data-kp-close>
+        تم ✅
+      </button>
     </div>
 
-    <div class="pop-body">
-      <div class="dua">
-        <strong>اللهم</strong> افتح عليهم فتوح العارفين، ووفّقهم في امتحانهم، وبارك في فهمهم ووقتِهم،
-        واجعل ما تعلموه نورًا لهم، ونتائجهم فرحة لهم ولوالديهم. <strong>آمين</strong>.
-      </div>
-      
+    <div class="khalil-popup__hint">
+      لا تضيعون الإشعار 👇<br>
+      <b>اشتركوا</b> و <b>فعّلوا جرس التنبيه</b> عشان توصلكم رسالة ببداية البث.
     </div>
 
-    <div class="pop-foot">
-      <label class="dont-show">
-        <input type="checkbox" id="examPopupDontShow">
-        لا تُظهرها مرة أخرى
-      </label>
-
-      <div style="display:flex; gap:10px; flex-wrap:wrap; width:100%; justify-content:space-between;">
-        <button class="btn btn-ghost" id="examPopupLater">لاحقًا</button>
-        <button class="btn btn-primary" id="examPopupOk">جاهزون للنجاح 🚀</button>
-      </div>
-    </div>
+    <label class="khalil-popup__dontshow">
+      <input type="checkbox" id="kpDontShow">
+      لا تُظهر هذا الإعلان مرة أخرى
+    </label>
   </div>
 </div>
 
+<style>
+  /* Scoped styles: ما تمس القالب */
+  .khalil-popup{direction:rtl;font-family:inherit; position:fixed; inset:0; z-index:999999; display:none}
+  .khalil-popup.is-open{display:block}
+  .khalil-popup__backdrop{
+    position:absolute; inset:0;
+    background:rgba(0,0,0,.65);
+    backdrop-filter: blur(3px);
+  }
+  .khalil-popup__card{
+    position:relative;
+    width:min(92vw, 520px);
+    margin: min(10vh, 90px) auto 0;
+    background: linear-gradient(135deg,#0f0f0f 0%, #151515 55%, #0b0b0b 100%);
+    color:#fff;
+    border-radius:18px;
+    padding:18px 16px 16px;
+    box-shadow:0 18px 50px rgba(0,0,0,.45);
+    border:1px solid rgba(212,175,55,.25);
+  }
+  .khalil-popup__close{
+    position:absolute; top:10px; left:10px;
+    width:38px; height:38px; border-radius:12px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.06);
+    color:#fff; font-size:22px; line-height:1;
+    cursor:pointer;
+  }
+  .khalil-popup__badge{
+    display:inline-block;
+    background:rgba(212,175,55,.16);
+    border:1px solid rgba(212,175,55,.35);
+    color:#d4af37;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.2px;
+    margin-bottom:10px;
+  }
+  .khalil-popup__title{
+    margin:0 0 8px;
+    font-size:20px;
+    font-weight:800;
+  }
+  .khalil-popup__text{
+    margin:0 0 12px;
+    font-size:14.5px;
+    line-height:1.9;
+    color:rgba(255,255,255,.92);
+  }
+  .khalil-popup__gold{color:#d4af37; font-weight:800}
+  .khalil-popup__actions{
+    display:flex; gap:10px; flex-wrap:wrap;
+    margin: 10px 0 12px;
+  }
+  .khalil-popup__btn{
+    appearance:none; border:0; cursor:pointer;
+    border-radius:14px;
+    padding:12px 12px;
+    font-weight:800;
+    font-size:14px;
+    text-decoration:none;
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width: 140px;
+  }
+  .khalil-popup__btn--primary{
+    background:linear-gradient(135deg,#d4af37 0%, #b98f17 100%);
+    color:#111;
+    box-shadow:0 10px 25px rgba(212,175,55,.22);
+  }
+  .khalil-popup__btn--ghost{
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    border:1px solid rgba(255,255,255,.14);
+  }
+  .khalil-popup__hint{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:14px;
+    padding:10px 12px;
+    font-size:13.5px;
+    line-height:1.8;
+    color:rgba(255,255,255,.92);
+  }
+  .khalil-popup__dontshow{
+    display:flex; align-items:center; gap:8px;
+    margin-top:10px;
+    font-size:12.8px;
+    color:rgba(255,255,255,.8);
+    user-select:none;
+  }
+  .khalil-popup__dontshow input{transform: scale(1.05); cursor:pointer}
+
+  /* تحسين للجوال */
+  @media (max-width:420px){
+    .khalil-popup__card{padding:16px 14px}
+    .khalil-popup__title{font-size:19px}
+    .khalil-popup__btn{min-width: 100%; }
+    .khalil-popup__close{top:8px; left:8px}
+  }
+</style>
+
 <script>
   (function(){
-    const KEY_HIDE = "examPopup_hide";
-    const KEY_SHOWN_AT = "examPopup_shownAt";
-    const SHOW_AFTER_HOURS = 24; // ✅ إن لم يضع "لا تُظهرها"، تظهر مرة كل 24 ساعة
+    const POPUP_ID = "khalilPopup";
+    const STORAGE_KEY = "khalil_popup_hide_v1";
+    const popup = document.getElementById(POPUP_ID);
+    if(!popup) return;
 
-    const overlay = document.getElementById("examPopupOverlay");
-    const btnClose = document.getElementById("examPopupClose");
-    const btnOk = document.getElementById("examPopupOk");
-    const btnLater = document.getElementById("examPopupLater");
-    const dontShow = document.getElementById("examPopupDontShow");
+    const dontShow = document.getElementById("kpDontShow");
 
-    function now(){ return Date.now(); }
-    function hoursSince(ts){ return (now() - ts) / (1000*60*60); }
+    // لا تعرضه إذا المستخدم اختار عدم الإظهار
+    if (localStorage.getItem(STORAGE_KEY) === "1") return;
 
-    function openPopup(){
-      overlay.style.display = "flex";
-      requestAnimationFrame(()=> overlay.classList.add("show"));
-      overlay.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    }
+    // افتح الإعلان بعد ثانية (مريح وغير مزعج)
+    const openPopup = () => {
+      popup.classList.add("is-open");
+      popup.setAttribute("aria-hidden","false");
+      document.documentElement.style.overflow = "hidden";
+    };
 
-    function closePopup(){
-      overlay.classList.remove("show");
-      overlay.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      setTimeout(()=> { overlay.style.display = "none"; }, 180);
-    }
+    const closePopup = () => {
+      popup.classList.remove("is-open");
+      popup.setAttribute("aria-hidden","true");
+      document.documentElement.style.overflow = "";
+      if (dontShow && dontShow.checked) localStorage.setItem(STORAGE_KEY, "1");
+    };
 
-    // ✅ شروط الإظهار
-    const hide = localStorage.getItem(KEY_HIDE) === "1";
-    const shownAt = parseInt(localStorage.getItem(KEY_SHOWN_AT) || "0", 10);
-
-    if(!hide){
-      if(!shownAt || hoursSince(shownAt) >= SHOW_AFTER_HOURS){
-        // تأخير بسيط حتى لا يزعج تحميل الصفحة
-        setTimeout(()=>{
-          openPopup();
-          localStorage.setItem(KEY_SHOWN_AT, String(now()));
-        }, 800);
-      }
-    }
-
-    function handleExit(){
-      if(dontShow.checked){
-        localStorage.setItem(KEY_HIDE, "1");
-      }
-      closePopup();
-    }
-
-    btnClose.addEventListener("click", handleExit);
-    btnOk.addEventListener("click", handleExit);
-    btnLater.addEventListener("click", handleExit);
-
-    // ✅ إغلاق بالنقر خارج البطاقة
-    overlay.addEventListener("click", (e)=>{
-      if(e.target === overlay) handleExit();
+    // إغلاق بالنقر على الخلفية أو زر الإغلاق
+    popup.addEventListener("click", (e) => {
+      if (e.target && e.target.hasAttribute("data-kp-close")) closePopup();
     });
 
-    // ✅ إغلاق بزر ESC
-    document.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape" && overlay.style.display === "flex") handleExit();
+    // إغلاق بزر Esc
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && popup.classList.contains("is-open")) closePopup();
     });
+
+    setTimeout(openPopup, 900);
   })();
 </script>
 
