@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>لوحة التحكم - إدارة الدروس</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 
 <style>
@@ -16,52 +15,26 @@
 
 body {
   font-family: "Cairo", sans-serif;
-  background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
   color: #f1f5f9;
   min-height: 100vh;
   padding: 20px;
-  position: relative;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
-  top: -250px;
-  right: -250px;
-  z-index: 0;
-  pointer-events: none;
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 70%);
-  bottom: -200px;
-  left: -200px;
-  z-index: 0;
-  pointer-events: none;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
-  position: relative;
-  z-index: 1;
 }
 
-/* بطاقة تسجيل الدخول */
+/* صفحة تسجيل الدخول */
 .login-card {
-  background: rgba(30, 30, 46, 0.8);
+  max-width: 450px;
+  margin: 100px auto;
+  background: rgba(30, 30, 46, 0.95);
   backdrop-filter: blur(20px);
   padding: 50px 40px;
   border-radius: 24px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.5);
   border: 1px solid rgba(139,92,246,0.3);
   animation: slideIn 0.5s ease-out;
 }
@@ -69,7 +42,7 @@ body::after {
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-30px);
   }
   to {
     opacity: 1;
@@ -77,10 +50,22 @@ body::after {
   }
 }
 
+.login-icon {
+  text-align: center;
+  font-size: 5em;
+  margin-bottom: 20px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
 .login-card h2 {
   text-align: center;
   color: #a78bfa;
-  font-size: 2em;
+  font-size: 2.2em;
   margin-bottom: 10px;
   font-weight: 900;
 }
@@ -88,48 +73,49 @@ body::after {
 .login-card .subtitle {
   text-align: center;
   color: #94a3b8;
-  font-size: 0.95em;
-  margin-bottom: 35px;
+  font-size: 1em;
+  margin-bottom: 40px;
 }
 
 .input-group {
   position: relative;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .input-group input {
   width: 100%;
-  padding: 16px 50px 16px 20px;
+  padding: 18px 55px 18px 20px;
   border-radius: 14px;
   border: 2px solid rgba(139,92,246,0.3);
-  background: rgba(15, 15, 30, 0.6);
+  background: rgba(15, 15, 30, 0.7);
   color: #f1f5f9;
   font-family: inherit;
-  font-size: 1em;
+  font-size: 1.05em;
   transition: all 0.3s ease;
 }
 
 .input-group input:focus {
   outline: none;
   border-color: #8b5cf6;
-  box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
+  box-shadow: 0 0 0 4px rgba(139,92,246,0.2);
+  background: rgba(15, 15, 30, 0.9);
 }
 
 .input-group .icon {
   position: absolute;
-  left: 18px;
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.3em;
+  font-size: 1.4em;
 }
 
 .btn {
   width: 100%;
-  padding: 16px;
+  padding: 18px;
   border-radius: 14px;
   border: none;
   font-family: inherit;
-  font-size: 1.05em;
+  font-size: 1.1em;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -151,18 +137,19 @@ body::after {
 }
 
 .btn:hover::before {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
   color: #fff;
+  box-shadow: 0 10px 30px rgba(139,92,246,0.3);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(139,92,246,0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(139,92,246,0.5);
 }
 
 .btn-secondary {
@@ -172,17 +159,7 @@ body::after {
 
 .btn-secondary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(55,65,81,0.4);
-}
-
-.btn-refresh {
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-  color: #fff;
-}
-
-.btn-refresh:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(14,165,233,0.4);
+  box-shadow: 0 10px 30px rgba(55,65,81,0.4);
 }
 
 .btn-success {
@@ -192,7 +169,7 @@ body::after {
 
 .btn-success:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(16,185,129,0.4);
+  box-shadow: 0 10px 30px rgba(16,185,129,0.4);
 }
 
 .btn-warning {
@@ -202,17 +179,27 @@ body::after {
 
 .btn-warning:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(245,158,11,0.4);
+  box-shadow: 0 10px 30px rgba(245,158,11,0.4);
+}
+
+.btn-refresh {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #fff;
+}
+
+.btn-refresh:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(14,165,233,0.4);
 }
 
 .error-msg {
   text-align: center;
-  margin-top: 20px;
-  padding: 12px;
-  border-radius: 10px;
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 12px;
   background: rgba(239,68,68,0.2);
   color: #fca5a5;
-  border: 1px solid rgba(239,68,68,0.3);
+  border: 2px solid rgba(239,68,68,0.3);
   animation: shake 0.5s;
 }
 
@@ -228,80 +215,81 @@ body::after {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .panel-header {
   background: linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(16,185,129,0.2) 100%);
   backdrop-filter: blur(20px);
-  padding: 35px;
+  padding: 40px;
   border-radius: 24px;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   border: 1px solid rgba(139,92,246,0.3);
   text-align: center;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.3);
 }
 
 .panel-header h2 {
-  font-size: 2.2em;
+  font-size: 2.5em;
   color: #a78bfa;
   font-weight: 900;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .panel-header p {
-  color: #94a3b8;
-  font-size: 1em;
+  color: #cbd5e1;
+  font-size: 1.1em;
 }
 
 .action-buttons {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 }
 
 .card {
-  background: rgba(30, 30, 46, 0.8);
+  background: rgba(30, 30, 46, 0.9);
   backdrop-filter: blur(20px);
-  padding: 30px;
+  padding: 35px;
   border-radius: 20px;
   border: 1px solid rgba(139,92,246,0.2);
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
 }
 
 .card h3 {
   color: #a78bfa;
-  font-size: 1.5em;
-  margin-bottom: 20px;
+  font-size: 1.7em;
+  margin-bottom: 25px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  font-weight: 700;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(139,92,246,0.2);
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: #cbd5e1;
   font-weight: 600;
-  font-size: 0.95em;
+  font-size: 1em;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 14px 18px;
+  padding: 16px 20px;
   border-radius: 12px;
   border: 2px solid rgba(139,92,246,0.3);
-  background: rgba(15, 15, 30, 0.6);
+  background: rgba(15, 15, 30, 0.7);
   color: #f1f5f9;
   font-family: inherit;
   font-size: 1em;
@@ -312,13 +300,14 @@ body::after {
 .form-group select:focus {
   outline: none;
   border-color: #8b5cf6;
-  box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
+  box-shadow: 0 0 0 4px rgba(139,92,246,0.2);
+  background: rgba(15, 15, 30, 0.9);
 }
 
 .status-msg {
   text-align: center;
-  margin-top: 20px;
-  padding: 14px;
+  margin-top: 25px;
+  padding: 16px;
   border-radius: 12px;
   font-weight: 700;
   animation: slideDown 0.4s ease-out;
@@ -327,7 +316,7 @@ body::after {
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-15px);
   }
   to {
     opacity: 1;
@@ -338,26 +327,61 @@ body::after {
 .status-msg.success {
   background: rgba(16,185,129,0.2);
   color: #6ee7b7;
-  border: 1px solid rgba(16,185,129,0.3);
+  border: 2px solid rgba(16,185,129,0.3);
 }
 
 .status-msg.error {
   background: rgba(239,68,68,0.2);
   color: #fca5a5;
-  border: 1px solid rgba(239,68,68,0.3);
+  border: 2px solid rgba(239,68,68,0.3);
 }
 
+/* فلاتر الدروس */
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 2px solid rgba(139,92,246,0.3);
+  background: rgba(15, 15, 30, 0.7);
+  color: #cbd5e1;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95em;
+}
+
+.filter-btn:hover {
+  background: rgba(139,92,246,0.2);
+  transform: translateY(-2px);
+  border-color: rgba(139,92,246,0.5);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  color: white;
+  border-color: #8b5cf6;
+  box-shadow: 0 8px 25px rgba(139,92,246,0.4);
+}
+
+/* قائمة الدروس */
 .lessons-grid {
   display: grid;
-  gap: 18px;
+  gap: 20px;
 }
 
 .lesson-card {
-  background: linear-gradient(135deg, rgba(15,15,30,0.8) 0%, rgba(30,30,46,0.6) 100%);
-  padding: 22px;
-  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(15,15,30,0.9) 0%, rgba(30,30,46,0.8) 100%);
+  padding: 28px;
+  border-radius: 18px;
   border: 1px solid rgba(139,92,246,0.2);
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
 }
@@ -370,86 +394,102 @@ body::after {
   width: 4px;
   height: 100%;
   background: linear-gradient(180deg, #8b5cf6 0%, #10b981 100%);
-  transition: width 0.3s ease;
+  transition: width 0.4s ease;
 }
 
 .lesson-card:hover {
   transform: translateX(-5px);
   border-color: rgba(139,92,246,0.5);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 15px 40px rgba(139,92,246,0.3);
 }
 
 .lesson-card:hover::before {
   width: 100%;
-  opacity: 0.1;
+  opacity: 0.05;
 }
 
 .lesson-title {
-  font-size: 1.2em;
+  font-size: 1.3em;
   font-weight: 700;
   color: #e2e8f0;
-  margin-bottom: 12px;
-}
-
-.lesson-meta {
+  margin-bottom: 18px;
+  line-height: 1.5;
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #94a3b8;
-  font-size: 0.9em;
+  align-items: start;
+  gap: 10px;
 }
 
 .semester-badge {
   display: inline-block;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 20px;
-  font-size: 0.85em;
+  font-size: 0.7em;
   font-weight: 700;
-  margin-right: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .semester-1 {
   background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   color: white;
+  box-shadow: 0 4px 15px rgba(59,130,246,0.3);
 }
 
 .semester-2 {
   background: linear-gradient(135deg, #10b981 0%, #047857 100%);
   color: white;
+  box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+}
+
+.lesson-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  font-size: 0.95em;
+}
+
+.meta-item strong {
+  color: #cbd5e1;
 }
 
 .lesson-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 15px;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
 }
 
 .btn-toggle {
   flex: 1;
-  padding: 12px;
-  border-radius: 10px;
+  min-width: 150px;
+  padding: 14px 20px;
+  border-radius: 12px;
   border: none;
   font-family: inherit;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 0.95em;
 }
 
 .btn-toggle.on {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #fff;
+  box-shadow: 0 6px 20px rgba(16,185,129,0.3);
 }
 
 .btn-toggle.off {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: #fff;
+  box-shadow: 0 6px 20px rgba(239,68,68,0.3);
 }
 
 .btn-toggle:hover {
@@ -460,93 +500,68 @@ body::after {
   background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
   color: #fff;
   border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 14px 20px;
+  border-radius: 12px;
   cursor: pointer;
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 700;
   transition: all 0.3s ease;
+  font-size: 0.95em;
 }
 
 .btn-edit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(139,92,246,0.4);
+  box-shadow: 0 8px 25px rgba(139,92,246,0.5);
 }
 
 .loading {
   text-align: center;
-  padding: 40px;
+  padding: 60px 20px;
   color: #94a3b8;
-  font-size: 1.1em;
+  font-size: 1.2em;
 }
 
 .loading::after {
-  content: '...';
-  animation: dots 1.5s infinite;
+  content: '';
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: 25px auto;
+  border: 4px solid rgba(139,92,246,0.3);
+  border-top-color: #8b5cf6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-@keyframes dots {
-  0%, 20% { content: '.'; }
-  40% { content: '..'; }
-  60%, 100% { content: '...'; }
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .hidden {
   display: none !important;
 }
 
-/* فلتر الدروس */
-.filters {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  padding: 10px 20px;
-  border-radius: 10px;
-  border: 1px solid rgba(139,92,246,0.3);
-  background: rgba(15, 15, 30, 0.6);
-  color: #cbd5e1;
-  font-family: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-  background: rgba(139,92,246,0.2);
-  transform: translateY(-2px);
-}
-
-.filter-btn.active {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  color: white;
-  border-color: #8b5cf6;
-}
-
-/* تحسينات للموبايل */
+/* تحسينات الموبايل */
 @media (max-width: 768px) {
-  .login-card, .card {
-    padding: 25px 20px;
+  .login-card {
+    margin: 50px auto;
+    padding: 35px 25px;
+  }
+  
+  .panel-header {
+    padding: 30px 20px;
   }
   
   .panel-header h2 {
-    font-size: 1.7em;
+    font-size: 1.8em;
+  }
+  
+  .card {
+    padding: 25px 20px;
   }
   
   .action-buttons {
     grid-template-columns: 1fr;
-  }
-  
-  .lesson-meta {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .lesson-actions {
-    flex-direction: column;
   }
   
   .filters {
@@ -556,6 +571,14 @@ body::after {
   .filter-btn {
     width: 100%;
   }
+  
+  .lesson-actions {
+    flex-direction: column;
+  }
+  
+  .btn-toggle {
+    min-width: 100%;
+  }
 }
 </style>
 </head>
@@ -563,19 +586,20 @@ body::after {
 <body>
 
 <div class="container">
-  <!-- تسجيل الدخول -->
+  
+  <!-- صفحة تسجيل الدخول -->
   <div id="loginBox" class="login-card">
-    <h2>🔐</h2>
+    <div class="login-icon">🔐</div>
     <h2>لوحة التحكم الإدارية</h2>
     <p class="subtitle">أدخل كلمة المرور للوصول إلى نظام إدارة الدروس</p>
     
     <div class="input-group">
-      <input type="password" id="pass" placeholder="كلمة المرور">
+      <input type="password" id="pass" placeholder="كلمة المرور" onkeypress="if(event.key==='Enter') login()">
       <span class="icon">🔑</span>
     </div>
     
     <button class="btn btn-primary" onclick="login()">
-      <span style="position: relative; z-index: 1;">دخول</span>
+      <span style="position: relative; z-index: 1;">🚀 دخول</span>
     </button>
     
     <div id="loginMsg"></div>
@@ -606,30 +630,30 @@ body::after {
       <h3>➕ إضافة درس جديد</h3>
       
       <div class="form-group">
-        <label>عنوان الدرس</label>
-        <input id="title" placeholder="أدخل عنوان الدرس">
+        <label>📝 عنوان الدرس</label>
+        <input id="title" placeholder="مثال: الدرس الأول - مقدمة في الرياضيات">
       </div>
       
       <div class="form-group">
-        <label>رابط الدرس</label>
-        <input id="url" placeholder="أدخل رابط الدرس">
+        <label>🔗 رابط الدرس</label>
+        <input id="url" placeholder="https://example.com/lesson">
       </div>
       
       <div class="form-group">
-        <label>اسم الأستاذ</label>
+        <label>✍️ اسم الأستاذ</label>
         <input id="author" placeholder="الأستاذ خليل البلوشي" value="الأستاذ خليل البلوشي">
       </div>
 
       <div class="form-group">
-        <label>الفصل الدراسي</label>
+        <label>📚 الفصل الدراسي</label>
         <select id="semester">
-          <option value="1">الفصل الدراسي الأول</option>
-          <option value="2">الفصل الدراسي الثاني</option>
+          <option value="1">📘 الفصل الدراسي الأول</option>
+          <option value="2">📗 الفصل الدراسي الثاني</option>
         </select>
       </div>
 
       <button class="btn btn-success" onclick="addLesson()">
-        <span style="position: relative; z-index: 1;">➕ إضافة الدرس</span>
+        <span style="position: relative; z-index: 1;">✅ إضافة الدرس</span>
       </button>
 
       <div id="status"></div>
@@ -639,17 +663,17 @@ body::after {
     <div class="card">
       <h3>🎯 تصفية الدروس</h3>
       <div class="filters">
-        <button class="filter-btn active" onclick="filterLessons('all')">الكل</button>
-        <button class="filter-btn" onclick="filterLessons('1')">الفصل الدراسي الأول</button>
-        <button class="filter-btn" onclick="filterLessons('2')">الفصل الدراسي الثاني</button>
-        <button class="filter-btn" onclick="filterLessons('ON')">منشور فقط</button>
-        <button class="filter-btn" onclick="filterLessons('OFF')">غير منشور</button>
+        <button class="filter-btn active" onclick="filterLessons('all')">📖 الكل</button>
+        <button class="filter-btn" onclick="filterLessons('1')">📘 الفصل الأول</button>
+        <button class="filter-btn" onclick="filterLessons('2')">📗 الفصل الثاني</button>
+        <button class="filter-btn" onclick="filterLessons('ON')">🟢 منشور</button>
+        <button class="filter-btn" onclick="filterLessons('OFF')">🔴 غير منشور</button>
       </div>
     </div>
 
     <!-- قائمة الدروس -->
     <div class="card">
-      <h3>📋 قائمة الدروس المنشورة</h3>
+      <h3>📋 قائمة الدروس</h3>
       <div id="list" class="lessons-grid">
         <div class="loading">جاري تحميل الدروس</div>
       </div>
@@ -662,91 +686,140 @@ body::after {
 const API = "https://script.google.com/macros/s/AKfycbx61Y4tVA1j_L2c2_3EoVQX7hb5Ysh5tbFvavj2M48ZwCmWvH78Qd5uwYtUwiV-BkD5tQ/exec";
 let ADMIN_PASS = "";
 let allLessons = [];
-let currentFilter = 'all';
 
-function login(){
+function login() {
   ADMIN_PASS = document.getElementById("pass").value.trim();
-  if(!ADMIN_PASS) return;
+  if (!ADMIN_PASS) {
+    showLoginError("يرجى إدخال كلمة المرور");
+    return;
+  }
 
-  fetch(API,{
-    method:"POST",
-    body:JSON.stringify({
-      action:"get",
-      password:ADMIN_PASS
+  // إظهار حالة التحميل
+  const loginBtn = event.target;
+  const originalText = loginBtn.innerHTML;
+  loginBtn.innerHTML = '<span style="position: relative; z-index: 1;">⏳ جاري التحقق...</span>';
+  loginBtn.disabled = true;
+
+  fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "get",
+      password: ADMIN_PASS
     })
   })
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.error){
-      const msg = document.getElementById("loginMsg");
-      msg.className = "error-msg";
-      msg.textContent = "❌ كلمة المرور غير صحيحة";
-    }else{
+  .then(r => r.json())
+  .then(d => {
+    if (d.error) {
+      showLoginError("❌ كلمة المرور غير صحيحة");
+      loginBtn.innerHTML = originalText;
+      loginBtn.disabled = false;
+    } else {
       document.getElementById("loginBox").classList.add("hidden");
       document.getElementById("panel").classList.remove("hidden");
       loadLessons();
     }
+  })
+  .catch(err => {
+    showLoginError("❌ حدث خطأ في الاتصال");
+    loginBtn.innerHTML = originalText;
+    loginBtn.disabled = false;
   });
 }
 
-function loadLessons(){
+function showLoginError(msg) {
+  const msgDiv = document.getElementById("loginMsg");
+  msgDiv.className = "error-msg";
+  msgDiv.textContent = msg;
+}
+
+function loadLessons() {
   document.getElementById("list").innerHTML = '<div class="loading">جاري تحديث البيانات</div>';
-  fetch(API,{
-    method:"POST",
-    body:JSON.stringify({
-      action:"get",
-      password:ADMIN_PASS
+  
+  fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "get",
+      password: ADMIN_PASS
     })
   })
-  .then(r=>r.json())
-  .then(data=>{
-    allLessons = data;
-    displayLessons(data);
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) {
+      document.getElementById("list").innerHTML = `
+        <div style="text-align:center; padding:40px; color:#fca5a5">
+          ❌ حدث خطأ في تحميل البيانات
+        </div>
+      `;
+    } else {
+      allLessons = data;
+      displayLessons(data);
+    }
+  })
+  .catch(err => {
+    document.getElementById("list").innerHTML = `
+      <div style="text-align:center; padding:40px; color:#fca5a5">
+        ❌ حدث خطأ في الاتصال
+      </div>
+    `;
   });
 }
 
-function displayLessons(lessons){
+function displayLessons(lessons) {
   const box = document.getElementById("list");
-  if(lessons.length === 0){
-    box.innerHTML = '<div style="text-align:center; padding:40px; color:#94a3b8">لا توجد دروس لعرضها</div>';
+  
+  if (lessons.length === 0) {
+    box.innerHTML = `
+      <div style="text-align:center; padding:50px; color:#94a3b8">
+        <div style="font-size: 4em; margin-bottom: 15px; opacity: 0.5;">📭</div>
+        <p style="font-size: 1.1em;">لا توجد دروس لعرضها</p>
+      </div>
+    `;
     return;
   }
   
   box.innerHTML = "";
-  lessons.forEach(l=>{
-    const semesterText = l.semester === "1" ? "الفصل الأول" : "الفصل الثاني";
-    const semesterClass = l.semester === "1" ? "semester-1" : "semester-2";
+  
+  lessons.forEach((lesson, index) => {
+    const semesterText = lesson.semester === "1" ? "الفصل الأول" : "الفصل الثاني";
+    const semesterClass = lesson.semester === "1" ? "semester-1" : "semester-2";
     
     const card = document.createElement("div");
     card.className = "lesson-card";
+    card.style.animationDelay = `${index * 0.05}s`;
+    
     card.innerHTML = `
       <div class="lesson-title">
-        ${l.title}
         <span class="semester-badge ${semesterClass}">${semesterText}</span>
+        <span>${lesson.title}</span>
       </div>
       <div class="lesson-meta">
-        <div class="meta-item">👁️ <strong>${l.views}</strong> زيارة</div>
-        <div class="meta-item">🗓️ ${l.publish_date || "غير محدد"}</div>
-        <div class="meta-item">✍️ ${l.author || "غير محدد"}</div>
+        <div class="meta-item">
+          👁️ <strong>${lesson.views || 0}</strong> مشاهدة
+        </div>
+        <div class="meta-item">
+          📅 ${lesson.publish_date || "غير محدد"}
+        </div>
+        <div class="meta-item">
+          ✍️ ${lesson.author || "غير محدد"}
+        </div>
       </div>
       <div class="lesson-actions">
-        <button class="btn-toggle ${l.status=="ON"?"on":"off"}"
-          onclick="toggleLesson('${l.id}','${l.status=="ON"?"OFF":"ON"}')">
-          ${l.status=="ON"?"🟢 منشور":"🔴 غير منشور"}
+        <button class="btn-toggle ${lesson.status === "ON" ? "on" : "off"}"
+          onclick="toggleLesson('${lesson.id}', '${lesson.status === "ON" ? "OFF" : "ON"}')">
+          ${lesson.status === "ON" ? "🟢 منشور" : "🔴 غير منشور"}
         </button>
-        <button class="btn-edit" onclick="editLesson('${l.id}')">
-          ✏️ تعديل الفصل
+        <button class="btn-edit" onclick="editLesson('${lesson.id}')">
+          ✏️ تعديل
         </button>
       </div>
     `;
+    
     box.appendChild(card);
   });
 }
 
-function filterLessons(filter){
-  currentFilter = filter;
-  
-  // تحديد الأزرار النشطة
+function filterLessons(filter) {
+  // تحديث الأزرار
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.remove('active');
   });
@@ -754,121 +827,48 @@ function filterLessons(filter){
   
   let filtered = allLessons;
   
-  if(filter === '1' || filter === '2'){
+  if (filter === '1' || filter === '2') {
     filtered = allLessons.filter(l => l.semester === filter);
-  } else if(filter === 'ON' || filter === 'OFF'){
+  } else if (filter === 'ON' || filter === 'OFF') {
     filtered = allLessons.filter(l => l.status === filter);
   }
   
   displayLessons(filtered);
 }
 
-function addLesson(){
+function addLesson() {
   const title = document.getElementById("title").value.trim();
-  const url   = document.getElementById("url").value.trim();
-  const author= document.getElementById("author").value.trim();
+  const url = document.getElementById("url").value.trim();
+  const author = document.getElementById("author").value.trim();
   const semester = document.getElementById("semester").value;
 
-  if(!title || !url){
+  if (!title || !url) {
     setStatus("❌ يرجى إدخال العنوان والرابط", false);
     return;
   }
 
-  fetch(API,{
-    method:"POST",
-    body:JSON.stringify({
-      action:"add",
-      password:ADMIN_PASS,
-      title:title,
-      url:url,
-      author:author,
-      semester:semester
+  const btn = event.target;
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '<span style="position: relative; z-index: 1;">⏳ جاري الإضافة...</span>';
+  btn.disabled = true;
+
+  fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "add",
+      password: ADMIN_PASS,
+      title: title,
+      url: url,
+      author: author,
+      semester: semester
     })
   })
-  .then(r=>r.json())
-  .then(res=>{
-    if(res.success){
+  .then(r => r.json())
+  .then(res => {
+    if (res.success) {
       setStatus("✅ تم إضافة الدرس بنجاح", true);
-      document.getElementById("title").value="";
-      document.getElementById("url").value="";
-      document.getElementById("author").value="الأستاذ خليل البلوشي";
-      document.getElementById("semester").value="1";
+      document.getElementById("title").value = "";
+      document.getElementById("url").value = "";
+      document.getElementById("author").value = "الأستاذ خليل البلوشي";
+      document.getElementById("semester").value = "1";
       loadLessons();
-    }
-  });
-}
-
-function editLesson(id){
-  const lesson = allLessons.find(l => l.id === id);
-  if(!lesson) return;
-  
-  const newSemester = prompt(`تعديل الفصل الدراسي للدرس:\n"${lesson.title}"\n\nأدخل 1 للفصل الأول أو 2 للفصل الثاني:`, lesson.semester || "1");
-  
-  if(newSemester !== null && (newSemester === "1" || newSemester === "2")){
-    fetch(API,{
-      method:"POST",
-      body:JSON.stringify({
-        action:"update",
-        password:ADMIN_PASS,
-        id:id,
-        semester:newSemester
-      })
-    })
-    .then(r=>r.json())
-    .then(res=>{
-      if(res.success){
-        setStatus("✅ تم تحديث الفصل الدراسي بنجاح", true);
-        loadLessons();
-      }
-    });
-  }
-}
-
-function toggleLesson(id,status){
-  fetch(API,{
-    method:"POST",
-    body:JSON.stringify({
-      action:"toggle",
-      password:ADMIN_PASS,
-      id:id,
-      status:status
-    })
-  })
-  .then(()=>loadLessons());
-}
-
-function showSemesterStats(){
-  const semester1 = allLessons.filter(l => l.semester === "1");
-  const semester2 = allLessons.filter(l => l.semester === "2");
-  const published1 = semester1.filter(l => l.status === "ON");
-  const published2 = semester2.filter(l => l.status === "ON");
-  
-  alert(`📊 إحصائيات الفصول الدراسية:
-  
-الفصل الدراسي الأول:
-- إجمالي الدروس: ${semester1.length}
-- الدروس المنشورة: ${published1.length}
-- الدروس المخفية: ${semester1.length - published1.length}
-
-الفصل الدراسي الثاني:
-- إجمالي الدروس: ${semester2.length}
-- الدروس المنشورة: ${published2.length}
-- الدروس المخفية: ${semester2.length - published2.length}
-
-المجموع الكلي: ${allLessons.length} درس`);
-}
-
-function setStatus(msg, success){
-  const s = document.getElementById("status");
-  s.className = success ? "status-msg success" : "status-msg error";
-  s.textContent = msg;
-  setTimeout(()=>{ s.textContent=""; }, 3000);
-}
-
-function goHome(){
-  window.location.href = "index.html";
-}
-</script>
-
-</body>
-</html>
