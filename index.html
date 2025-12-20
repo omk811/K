@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>دروسنا التعليمية</title>
-  <!-- ✅ تم إصلاح المسافة الزائدة في رابط الخط -->
+  <!-- ✅ رابط الخط بدون مسافات -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     * {
@@ -49,6 +49,35 @@
       max-width: 700px;
       margin: 0 auto;
       line-height: 1.6;
+    }
+
+    /* ✅ نمط زر لوحة التحكم */
+    .admin-link {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95em;
+      box-shadow: 0 4px 12px rgba(139,92,246,0.3);
+      transition: all 0.3s ease;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .admin-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(139,92,246,0.5);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
     .filters {
@@ -210,6 +239,9 @@
       header h1 {
         font-size: 2em;
       }
+      .header-top {
+        justify-content: center;
+      }
       .filters {
         flex-direction: column;
         align-items: center;
@@ -225,7 +257,13 @@
 
 <div class="container">
   <header>
-    <h1>📚 دروسنا التعليمية</h1>
+    <!-- ✅ شريط العنوان مع زر لوحة التحكم -->
+    <div class="header-top">
+      <h1>📚 دروسنا التعليمية</h1>
+      <a href="admin.html" class="admin-link">
+        🛠️ لوحة التحكم
+      </a>
+    </div>
     <p>مرحباً بك! إليك أحدث الدروس المنشورة من قبل الأستاذ خليل البلوشي. اختر درسك وابدأ رحلتك التعليمية.</p>
   </header>
 
@@ -245,7 +283,7 @@
 </div>
 
 <script>
-  // ✅ رابط API بدون مسافات زائدة
+  // ✅ رابط API صحيح بدون مسافات
   const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
   
   let allLessons = [];
@@ -298,7 +336,7 @@
           <span class="semester-badge ${semesterClass}">${semesterText}</span>
           <h3 class="lesson-title">${lesson.title}</h3>
           
-          <div class "lesson-meta">
+          <div class="lesson-meta">
             <span>👁️ ${lesson.views || 0} مشاهدة</span>
             <span>📅 ${lesson.publish_date || "غير محدد"}</span>
             <span>✍️ ${lesson.author || "الأستاذ خليل البلوشي"}</span>
