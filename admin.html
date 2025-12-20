@@ -18,15 +18,15 @@ body{
 }
 .container{max-width:1100px;margin:auto}
 
-/* ====== أزرار ====== */
+/* ===== أزرار ===== */
 .btn{
-  padding:14px 20px;
+  padding:12px 18px;
   border-radius:12px;
   border:none;
   cursor:pointer;
   font-family:inherit;
   font-weight:700;
-  transition:.3s;
+  transition:.3s
 }
 .btn:hover{transform:translateY(-2px)}
 .btn-primary{background:#8b5cf6;color:#fff}
@@ -35,7 +35,7 @@ body{
 .btn-danger{background:#ef4444;color:#fff}
 .btn-secondary{background:#374151;color:#fff}
 
-/* ====== تسجيل الدخول ====== */
+/* ===== تسجيل الدخول ===== */
 .login-card{
   max-width:420px;
   margin:120px auto;
@@ -55,16 +55,35 @@ body{
   margin:20px 0
 }
 
-/* ====== لوحة التحكم ====== */
+/* ===== لوحة التحكم ===== */
 .hidden{display:none}
 .panel-header{
   background:#1e1e2e;
   padding:30px;
   border-radius:20px;
   margin-bottom:25px;
-  text-align:center
+  text-align:center;
+  position:relative
 }
 .panel-header h2{color:#a78bfa}
+
+/* أيقونة الرجوع */
+.home-icon{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+  box-shadow:0 8px 25px rgba(139,92,246,.6)
+}
+.home-icon:hover{transform:scale(1.1)}
 
 .card{
   background:#1e1e2e;
@@ -84,7 +103,7 @@ body{
   color:#fff
 }
 
-/* ====== الدروس ====== */
+/* ===== الدروس ===== */
 .lesson-card{
   background:#0f172a;
   border:1px solid #8b5cf633;
@@ -115,7 +134,7 @@ body{
 <body>
 <div class="container">
 
-<!-- ====== LOGIN ====== -->
+<!-- تسجيل الدخول -->
 <div id="loginBox" class="login-card">
   <h2>🔐 لوحة التحكم</h2>
   <input id="pass" type="password" placeholder="كلمة المرور">
@@ -123,10 +142,11 @@ body{
   <div id="loginMsg"></div>
 </div>
 
-<!-- ====== PANEL ====== -->
+<!-- لوحة التحكم -->
 <div id="panel" class="hidden">
 
   <div class="panel-header">
+    <div class="home-icon" onclick="goHome()" title="العودة للرئيسية">🏠</div>
     <h2>📚 نظام إدارة الدروس</h2>
     <p>تحكم كامل بالمحتوى</p>
   </div>
@@ -154,12 +174,11 @@ body{
       </select>
     </div>
     <button class="btn btn-success" onclick="addLesson()">إضافة</button>
-    <div id="status"></div>
   </div>
 
   <!-- قائمة -->
   <div class="card">
-    <h3>📋 الدروس</h3>
+    <h3>📋 قائمة الدروس</h3>
     <div id="list">جاري التحميل…</div>
   </div>
 
@@ -170,16 +189,16 @@ body{
 const API="https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
 let ADMIN_PASS="";
 let allLessons=[];
-let editingId=null;
 
-/* ===== LOGIN ===== */
+/* تسجيل الدخول */
 function login(){
   ADMIN_PASS=document.getElementById("pass").value.trim();
   fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
   .then(r=>r.json())
   .then(d=>{
-    if(d.error){document.getElementById("loginMsg").textContent="❌ خطأ";}
-    else{
+    if(d.error){
+      loginMsg.textContent="❌ كلمة المرور غير صحيحة";
+    }else{
       loginBox.classList.add("hidden");
       panel.classList.remove("hidden");
       loadLessons();
@@ -187,9 +206,9 @@ function login(){
   });
 }
 
-/* ===== LOAD ===== */
+/* تحميل الدروس */
 function loadLessons(){
-  list.innerHTML="⏳ تحميل…";
+  list.textContent="⏳ تحميل...";
   fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
   .then(r=>r.json())
   .then(data=>{
@@ -205,7 +224,7 @@ function loadLessons(){
   });
 }
 
-/* ===== RENDER ===== */
+/* عرض */
 function render(arr){
   list.innerHTML="";
   arr.forEach(l=>{
@@ -213,9 +232,7 @@ function render(arr){
     div.className="lesson-card";
     div.innerHTML=`
       <div class="lesson-title">
-        <span class="badge ${l.semester==="1"?"b1":"b2"}">
-          ${l.semester==="1"?"الأول":"الثاني"}
-        </span>
+        <span class="badge ${l.semester==="1"?"b1":"b2"}">${l.semester==="1"?"الأول":"الثاني"}</span>
         ${l.pinned==="YES"?"📌":""}
         ${l.title}
       </div>
@@ -226,18 +243,15 @@ function render(arr){
         <button class="btn btn-success" onclick="toggle('${l.id}','${l.status==="ON"?"OFF":"ON"}')">
           ${l.status==="ON"?"منشور":"مخفي"}
         </button>
-        <button class="btn btn-secondary" onclick="pin('${l.id}','${l.pinned==="YES"?"NO":"YES"}')">
-          📌 تثبيت
-        </button>
-        <button class="btn btn-warning" onclick="edit('${l.id}')">✏️ تعديل</button>
-        <button class="btn btn-danger" onclick="del('${l.id}')">🗑️ حذف</button>
+        <button class="btn btn-secondary" onclick="pin('${l.id}','${l.pinned==="YES"?"NO":"YES"}')">📌 تثبيت</button>
+        <button class="btn btn-danger" onclick="delLesson('${l.id}')">🗑️ حذف</button>
       </div>
     `;
     list.appendChild(div);
   });
 }
 
-/* ===== ACTIONS ===== */
+/* إضافة */
 function addLesson(){
   fetch(API,{
     method:"POST",
@@ -252,40 +266,35 @@ function addLesson(){
   }).then(()=>loadLessons());
 }
 
+/* نشر / إخفاء */
 function toggle(id,status){
   fetch(API,{method:"POST",body:JSON.stringify({action:"toggle",password:ADMIN_PASS,id,status})})
   .then(()=>loadLessons());
 }
 
+/* تثبيت */
 function pin(id,pinned){
   fetch(API,{method:"POST",body:JSON.stringify({action:"pin",password:ADMIN_PASS,id,pinned})})
   .then(()=>loadLessons());
 }
 
-function del(id){
-  if(!confirm("حذف الدرس؟"))return;
-  fetch(API,{method:"POST",body:JSON.stringify({action:"delete",password:ADMIN_PASS,id})})
-  .then(()=>loadLessons());
-}
-
-/* ===== EDIT ===== */
-function edit(id){
-  const l=allLessons.find(x=>x.id===id);
-  const t=prompt("العنوان",l.title);
-  if(!t)return;
-  const u=prompt("الرابط",l.url);
+/* حذف (تم إصلاحه ✅) */
+function delLesson(id){
+  if(!confirm("⚠️ هل تريد حذف الدرس؟")) return;
   fetch(API,{
     method:"POST",
     body:JSON.stringify({
-      action:"edit",
+      action:"toggle",
       password:ADMIN_PASS,
-      id,
-      title:t,
-      url:u,
-      author:l.author,
-      semester:l.semester
+      id:id,
+      status:"DELETED"
     })
   }).then(()=>loadLessons());
+}
+
+/* العودة للرئيسية */
+function goHome(){
+  window.location.href="public.html";
 }
 </script>
 
