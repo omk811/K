@@ -865,7 +865,9 @@
           });
       });
     }
-  </script><!-- ✅ إعلان ختامي منبثق — بعد إنجاز الحصة -->
+<!-- ===============================
+     إعلان ختامي منبثق – بعد إنجاز الحصة
+     =============================== -->
 <div id="finalPopup" class="final-popup" aria-hidden="true">
   <div class="final-popup__backdrop" data-fp-close></div>
 
@@ -884,15 +886,22 @@
       الخاصة بمادة اللغة العربية للصف الخامس عبر قناة اليوتيوب.
       <br><br>
       المرحلة القادمة تعتمد على <b>التدريب الجاد</b>،
-      ومراجعة النماذج،
+      ومراجعة نماذج الاختبارات،
       والالتزام بالحل <b>بالقلم والورقة</b>.
     </p>
 
+    <!-- الأزرار -->
     <div class="final-popup__actions">
       <a class="final-popup__btn final-popup__btn--primary"
          href="https://www.youtube.com/@teacherKhalil811"
          target="_blank" rel="noopener">
-        الانتقال للقناة
+        الانتقال إلى القناة
+      </a>
+
+      <a class="final-popup__btn final-popup__btn--info"
+         href="https://omk811.github.io/info/"
+         target="_blank" rel="noopener">
+        الاستفسارات والأسئلة
       </a>
 
       <button class="final-popup__btn final-popup__btn--ghost" type="button" data-fp-close>
@@ -902,7 +911,7 @@
 
     <div class="final-popup__hint">
       🎯 الآن وقت التنفيذ لا المشاهدة فقط<br>
-      من يتدرّب جيدًا… يذهب للاختبار بثقة.
+      من يتدرّب بذكاء… يدخل الاختبار بثقة.
     </div>
 
     <label class="final-popup__dontshow">
@@ -913,112 +922,143 @@
 </div>
 
 <style>
-  /* Scoped — لا يؤثر على القالب */
-  .final-popup{direction:rtl;font-family:inherit;position:fixed;inset:0;z-index:999999;display:none}
-  .final-popup.is-open{display:block}
+/* ===== Scoped CSS — لا يؤثر على القالب ===== */
+.final-popup{
+  direction:rtl;
+  font-family:inherit;
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  display:none;
+}
+.final-popup.is-open{display:block}
 
-  .final-popup__backdrop{
-    position:absolute;inset:0;
-    background:rgba(0,0,0,.7);
-    backdrop-filter:blur(3px);
-  }
+.final-popup__backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(3px);
+}
 
-  .final-popup__card{
-    position:relative;
-    width:min(92vw,520px);
-    margin:min(10vh,90px) auto 0;
-    background:linear-gradient(135deg,#0e0e0e 0%,#151515 60%,#0b0b0b 100%);
-    color:#fff;
-    border-radius:18px;
-    padding:18px;
-    box-shadow:0 20px 55px rgba(0,0,0,.5);
-    border:1px solid rgba(212,175,55,.25);
-  }
+.final-popup__card{
+  position:relative;
+  width:min(92vw,520px);
+  margin:min(10vh,90px) auto 0;
+  background:linear-gradient(135deg,#0e0e0e 0%,#151515 60%,#0b0b0b 100%);
+  color:#fff;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 20px 55px rgba(0,0,0,.5);
+  border:1px solid rgba(212,175,55,.25);
+}
 
-  .final-popup__close{
-    position:absolute;top:10px;left:10px;
-    width:38px;height:38px;border-radius:12px;
-    border:1px solid rgba(255,255,255,.15);
-    background:rgba(255,255,255,.06);
-    color:#fff;font-size:22px;cursor:pointer;
-  }
+.final-popup__close{
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
+}
 
-  .final-popup__badge{
-    display:inline-block;
-    background:rgba(46,204,113,.18);
-    border:1px solid rgba(46,204,113,.4);
-    color:#2ecc71;
-    padding:6px 12px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:800;
-    margin-bottom:10px;
-  }
+.final-popup__badge{
+  display:inline-block;
+  background:rgba(46,204,113,.18);
+  border:1px solid rgba(46,204,113,.4);
+  color:#2ecc71;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:10px;
+}
 
-  .final-popup__title{
-    margin:0 0 8px;
-    font-size:20px;
-    font-weight:800;
-  }
+.final-popup__title{
+  margin:0 0 8px;
+  font-size:20px;
+  font-weight:800;
+}
 
-  .final-popup__text{
-    margin:0 0 14px;
-    font-size:14.5px;
-    line-height:1.9;
-    color:rgba(255,255,255,.92);
-  }
+.final-popup__text{
+  margin:0 0 14px;
+  font-size:14.5px;
+  line-height:1.9;
+  color:rgba(255,255,255,.92);
+}
 
-  .final-popup__gold{color:#d4af37;font-weight:800}
+.final-popup__gold{
+  color:#d4af37;
+  font-weight:800;
+}
 
-  .final-popup__actions{
-    display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;
-  }
+.final-popup__actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
 
-  .final-popup__btn{
-    border:0;cursor:pointer;
-    border-radius:14px;
-    padding:12px;
-    font-weight:800;
-    font-size:14px;
-    min-width:140px;
-    text-decoration:none;
-    display:flex;align-items:center;justify-content:center;
-  }
+.final-popup__btn{
+  border:0;
+  cursor:pointer;
+  border-radius:14px;
+  padding:12px;
+  font-weight:800;
+  font-size:14px;
+  min-width:140px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-  .final-popup__btn--primary{
-    background:linear-gradient(135deg,#d4af37,#b98f17);
-    color:#111;
-  }
+.final-popup__btn--primary{
+  background:linear-gradient(135deg,#d4af37,#b98f17);
+  color:#111;
+}
 
-  .final-popup__btn--ghost{
-    background:rgba(255,255,255,.06);
-    color:#fff;
-    border:1px solid rgba(255,255,255,.15);
-  }
+.final-popup__btn--info{
+  background:linear-gradient(135deg,#3498db,#1f6fb2);
+  color:#fff;
+}
 
-  .final-popup__hint{
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:14px;
-    padding:10px;
-    font-size:13.5px;
-    line-height:1.8;
-  }
+.final-popup__btn--ghost{
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.15);
+}
 
-  .final-popup__dontshow{
-    display:flex;align-items:center;gap:8px;
-    margin-top:10px;
-    font-size:12.5px;
-    color:rgba(255,255,255,.8);
-  }
+.final-popup__hint{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:10px;
+  font-size:13.5px;
+  line-height:1.8;
+}
 
-  @media(max-width:420px){
-    .final-popup__btn{min-width:100%}
-    .final-popup__title{font-size:19px}
-  }
+.final-popup__dontshow{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+  font-size:12.5px;
+  color:rgba(255,255,255,.8);
+}
+
+@media(max-width:420px){
+  .final-popup__btn{min-width:100%}
+  .final-popup__title{font-size:19px}
+}
 </style>
 
 <script>
+/* ===== منطق العرض ===== */
 (function(){
   const popup = document.getElementById("finalPopup");
   const STORAGE_KEY = "final_popup_hide_v1";
@@ -1047,13 +1087,16 @@
   });
 
   document.addEventListener("keydown",e=>{
-    if(e.key==="Escape" && popup.classList.contains("is-open")) closePopup();
+    if(e.key==="Escape" && popup.classList.contains("is-open")){
+      closePopup();
+    }
   });
 
-  // يظهر بعد تحميل الصفحة بثانيتين
+  /* يظهر بعد التحميل بثانيتين */
   setTimeout(openPopup,1200);
 })();
 </script>
+
 
 </body>
 </html>
