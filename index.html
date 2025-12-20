@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>دروسنا التعليمية</title>
+  <!-- ✅ تم إصلاح المسافة الزائدة في رابط الخط -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     * {
@@ -244,13 +245,12 @@
 </div>
 
 <script>
-  // ⚠️ استخدم نفس رابط Web App الذي استخدمته في لوحة التحكم
+  // ✅ رابط API بدون مسافات زائدة
   const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
   
   let allLessons = [];
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  // جلب الدروس المنشورة
   function loadPublicLessons() {
     document.getElementById("lessonsContainer").innerHTML = '<div class="loading">جاري تحميل الدروس...</div>';
     
@@ -268,7 +268,7 @@
       }
     })
     .catch(err => {
-      console.error("Error loading lessons:", err);
+      console.error("خطأ في تحميل الدروس:", err);
       showError("❌ خطأ في الاتصال بالخادم");
     });
   }
@@ -298,7 +298,7 @@
           <span class="semester-badge ${semesterClass}">${semesterText}</span>
           <h3 class="lesson-title">${lesson.title}</h3>
           
-          <div class="lesson-meta">
+          <div class "lesson-meta">
             <span>👁️ ${lesson.views || 0} مشاهدة</span>
             <span>📅 ${lesson.publish_date || "غير محدد"}</span>
             <span>✍️ ${lesson.author || "الأستاذ خليل البلوشي"}</span>
@@ -316,7 +316,6 @@
   }
 
   function incrementView(lessonId) {
-    // زيادة المشاهدات في الخلفية دون إبطاء التصفح
     fetch(API, {
       method: "POST",
       body: JSON.stringify({ action: "incrementView", id: lessonId })
