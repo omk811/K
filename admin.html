@@ -3,880 +3,289 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>لوحة التحكم - إدارة الدروس</title>
+<title>لوحة التحكم – إدارة الدروس</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Cairo", sans-serif;
-  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
-  color: #f1f5f9;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-/* صفحة تسجيل الدخول */
-.login-card {
-  max-width: 450px;
-  margin: 100px auto;
-  background: rgba(30, 30, 46, 0.95);
-  backdrop-filter: blur(20px);
-  padding: 50px 40px;
-  border-radius: 24px;
-  box-shadow: 0 25px 70px rgba(0,0,0,0.5);
-  border: 1px solid rgba(139,92,246,0.3);
-  animation: slideIn 0.5s ease-out;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.login-icon {
-  text-align: center;
-  font-size: 5em;
-  margin-bottom: 20px;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.login-card h2 {
-  text-align: center;
-  color: #a78bfa;
-  font-size: 2.2em;
-  margin-bottom: 10px;
-  font-weight: 900;
-}
-
-.login-card .subtitle {
-  text-align: center;
-  color: #94a3b8;
-  font-size: 1em;
-  margin-bottom: 40px;
-}
-
-.input-group {
-  position: relative;
-  margin-bottom: 30px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 18px 55px 18px 20px;
-  border-radius: 14px;
-  border: 2px solid rgba(139,92,246,0.3);
-  background: rgba(15, 15, 30, 0.7);
-  color: #f1f5f9;
-  font-family: inherit;
-  font-size: 1.05em;
-  transition: all 0.3s ease;
-}
-
-.input-group input:focus {
-  outline: none;
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 4px rgba(139,92,246,0.2);
-  background: rgba(15, 15, 30, 0.9);
-}
-
-.input-group .icon {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.4em;
-}
-
-.btn {
-  width: 100%;
-  padding: 18px;
-  border-radius: 14px;
-  border: none;
-  font-family: inherit;
-  font-size: 1.1em;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.btn:hover::before {
-  width: 400px;
-  height: 400px;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  color: #fff;
-  box-shadow: 0 10px 30px rgba(139,92,246,0.3);
-}
-
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(139,92,246,0.5);
-}
-
-.btn-secondary {
-  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
-  color: #fff;
-}
-
-.btn-secondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(55,65,81,0.4);
-}
-
-.btn-success {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #fff;
-}
-
-.btn-success:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(16,185,129,0.4);
-}
-
-.btn-warning {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: #fff;
-}
-
-.btn-warning:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(245,158,11,0.4);
-}
-
-.btn-refresh {
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-  color: #fff;
-}
-
-.btn-refresh:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(14,165,233,0.4);
-}
-
-.error-msg {
-  text-align: center;
-  margin-top: 25px;
-  padding: 15px;
-  border-radius: 12px;
-  background: rgba(239,68,68,0.2);
-  color: #fca5a5;
-  border: 2px solid rgba(239,68,68,0.3);
-  animation: shake 0.5s;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  75% { transform: translateX(10px); }
-}
-
-/* لوحة التحكم */
-.panel {
-  animation: fadeIn 0.6s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.panel-header {
-  background: linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(16,185,129,0.2) 100%);
-  backdrop-filter: blur(20px);
-  padding: 40px;
-  border-radius: 24px;
-  margin-bottom: 30px;
-  border: 1px solid rgba(139,92,246,0.3);
-  text-align: center;
-  box-shadow: 0 15px 50px rgba(0,0,0,0.3);
-}
-
-.panel-header h2 {
-  font-size: 2.5em;
-  color: #a78bfa;
-  font-weight: 900;
-  margin-bottom: 10px;
-}
-
-.panel-header p {
-  color: #cbd5e1;
-  font-size: 1.1em;
-}
-
-.action-buttons {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-bottom: 35px;
-}
-
-.card {
-  background: rgba(30, 30, 46, 0.9);
-  backdrop-filter: blur(20px);
-  padding: 35px;
-  border-radius: 20px;
-  border: 1px solid rgba(139,92,246,0.2);
-  margin-bottom: 30px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-}
-
-.card h3 {
-  color: #a78bfa;
-  font-size: 1.7em;
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 700;
-  padding-bottom: 15px;
-  border-bottom: 2px solid rgba(139,92,246,0.2);
-}
-
-.form-group {
-  margin-bottom: 22px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 10px;
-  color: #cbd5e1;
-  font-weight: 600;
-  font-size: 1em;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 16px 20px;
-  border-radius: 12px;
-  border: 2px solid rgba(139,92,246,0.3);
-  background: rgba(15, 15, 30, 0.7);
-  color: #f1f5f9;
-  font-family: inherit;
-  font-size: 1em;
-  transition: all 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 4px rgba(139,92,246,0.2);
-  background: rgba(15, 15, 30, 0.9);
-}
-
-.status-msg {
-  text-align: center;
-  margin-top: 25px;
-  padding: 16px;
-  border-radius: 12px;
-  font-weight: 700;
-  animation: slideDown 0.4s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.status-msg.success {
-  background: rgba(16,185,129,0.2);
-  color: #6ee7b7;
-  border: 2px solid rgba(16,185,129,0.3);
-}
-
-.status-msg.error {
-  background: rgba(239,68,68,0.2);
-  color: #fca5a5;
-  border: 2px solid rgba(239,68,68,0.3);
-}
-
-/* فلاتر الدروس */
-.filters {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 25px;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  padding: 12px 24px;
-  border-radius: 12px;
-  border: 2px solid rgba(139,92,246,0.3);
-  background: rgba(15, 15, 30, 0.7);
-  color: #cbd5e1;
-  font-family: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.95em;
-}
-
-.filter-btn:hover {
-  background: rgba(139,92,246,0.2);
-  transform: translateY(-2px);
-  border-color: rgba(139,92,246,0.5);
-}
-
-.filter-btn.active {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  color: white;
-  border-color: #8b5cf6;
-  box-shadow: 0 8px 25px rgba(139,92,246,0.4);
-}
-
-/* قائمة الدروس */
-.lessons-grid {
-  display: grid;
-  gap: 20px;
-}
-
-.lesson-card {
-  background: linear-gradient(135deg, rgba(15,15,30,0.9) 0%, rgba(30,30,46,0.8) 100%);
-  padding: 28px;
-  border-radius: 18px;
-  border: 1px solid rgba(139,92,246,0.2);
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.lesson-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(180deg, #8b5cf6 0%, #10b981 100%);
-  transition: width 0.4s ease;
-}
-
-.lesson-card:hover {
-  transform: translateX(-5px);
-  border-color: rgba(139,92,246,0.5);
-  box-shadow: 0 15px 40px rgba(139,92,246,0.3);
-}
-
-.lesson-card:hover::before {
-  width: 100%;
-  opacity: 0.05;
-}
-
-.lesson-title {
-  font-size: 1.3em;
-  font-weight: 700;
-  color: #e2e8f0;
-  margin-bottom: 18px;
-  line-height: 1.5;
-  display: flex;
-  align-items: start;
-  gap: 10px;
-}
-
-.semester-badge {
-  display: inline-block;
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 0.7em;
-  font-weight: 700;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.semester-1 {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(59,130,246,0.3);
-}
-
-.semester-2 {
-  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(16,185,129,0.3);
-}
-
-.lesson-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  margin-bottom: 20px;
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #94a3b8;
-  font-size: 0.95em;
-}
-
-.meta-item strong {
-  color: #cbd5e1;
-}
-
-.lesson-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 18px;
-  flex-wrap: wrap;
-}
-
-.btn-toggle {
-  flex: 1;
-  min-width: 150px;
-  padding: 14px 20px;
-  border-radius: 12px;
-  border: none;
-  font-family: inherit;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.95em;
-}
-
-.btn-toggle.on {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #fff;
-  box-shadow: 0 6px 20px rgba(16,185,129,0.3);
-}
-
-.btn-toggle.off {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: #fff;
-  box-shadow: 0 6px 20px rgba(239,68,68,0.3);
-}
-
-.btn-toggle:hover {
-  transform: scale(1.05);
-}
-
-.btn-edit { 
-  /* حاليًا غير مفعّل — يمكنك تفعيله لاحقًا */
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  color: #fff;
-  border: none;
-  padding: 14px 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 700;
-  transition: all 0.3s ease;
-  font-size: 0.95em;
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-.btn-edit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(139,92,246,0.5);
-}
-
-.loading {
-  text-align: center;
-  padding: 60px 20px;
-  color: #94a3b8;
-  font-size: 1.2em;
-}
-
-.loading::after {
-  content: '';
-  display: block;
-  width: 50px;
-  height: 50px;
-  margin: 25px auto;
-  border: 4px solid rgba(139,92,246,0.3);
-  border-top-color: #8b5cf6;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.hidden {
-  display: none !important;
-}
-
-@media (max-width: 768px) {
-  .login-card { margin: 50px auto; padding: 35px 25px; }
-  .panel-header { padding: 30px 20px; }
-  .panel-header h2 { font-size: 1.8em; }
-  .card { padding: 25px 20px; }
-  .action-buttons { grid-template-columns: 1fr; }
-  .filters { flex-direction: column; }
-  .filter-btn { width: 100%; }
-  .lesson-actions { flex-direction: column; }
-  .btn-toggle { min-width: 100%; }
-}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"Cairo",sans-serif;
+  background:linear-gradient(135deg,#0f0f1e,#16213e);
+  color:#f1f5f9;
+  min-height:100vh;
+  padding:20px
+}
+.container{max-width:1100px;margin:auto}
+
+/* ====== أزرار ====== */
+.btn{
+  padding:14px 20px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:700;
+  transition:.3s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:#8b5cf6;color:#fff}
+.btn-success{background:#10b981;color:#fff}
+.btn-warning{background:#f59e0b;color:#fff}
+.btn-danger{background:#ef4444;color:#fff}
+.btn-secondary{background:#374151;color:#fff}
+
+/* ====== تسجيل الدخول ====== */
+.login-card{
+  max-width:420px;
+  margin:120px auto;
+  background:#1e1e2e;
+  padding:40px;
+  border-radius:20px;
+  text-align:center
+}
+.login-card h2{color:#a78bfa;margin-bottom:10px}
+.login-card input{
+  width:100%;
+  padding:16px;
+  border-radius:12px;
+  border:2px solid #8b5cf6;
+  background:#0f172a;
+  color:#fff;
+  margin:20px 0
+}
+
+/* ====== لوحة التحكم ====== */
+.hidden{display:none}
+.panel-header{
+  background:#1e1e2e;
+  padding:30px;
+  border-radius:20px;
+  margin-bottom:25px;
+  text-align:center
+}
+.panel-header h2{color:#a78bfa}
+
+.card{
+  background:#1e1e2e;
+  padding:25px;
+  border-radius:18px;
+  margin-bottom:25px
+}
+
+.form-group{margin-bottom:15px}
+.form-group label{display:block;margin-bottom:6px}
+.form-group input,select{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:2px solid #8b5cf6;
+  background:#0f172a;
+  color:#fff
+}
+
+/* ====== الدروس ====== */
+.lesson-card{
+  background:#0f172a;
+  border:1px solid #8b5cf633;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:15px
+}
+.lesson-title{
+  font-weight:700;
+  margin-bottom:10px;
+  display:flex;
+  gap:10px;
+  align-items:center
+}
+.badge{
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700
+}
+.b1{background:#3b82f6}
+.b2{background:#10b981}
+.meta{font-size:14px;color:#cbd5e1;margin-bottom:10px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
 </style>
 </head>
 
 <body>
-
 <div class="container">
-  
-  <!-- تسجيل الدخول -->
-  <div id="loginBox" class="login-card">
-    <div class="login-icon">🔐</div>
-    <h2>لوحة التحكم الإدارية</h2>
-    <p class="subtitle">أدخل كلمة المرور للوصول إلى نظام إدارة الدروس</p>
-    
-    <div class="input-group">
-      <input type="password" id="pass" placeholder="كلمة المرور" onkeypress="if(event.key==='Enter') login()">
-      <span class="icon">🔑</span>
-    </div>
-    
-    <button class="btn btn-primary" onclick="login()">
-      <span style="position: relative; z-index: 1;">🚀 دخول</span>
-    </button>
-    
-    <div id="loginMsg"></div>
+
+<!-- ====== LOGIN ====== -->
+<div id="loginBox" class="login-card">
+  <h2>🔐 لوحة التحكم</h2>
+  <input id="pass" type="password" placeholder="كلمة المرور">
+  <button class="btn btn-primary" onclick="login()">دخول</button>
+  <div id="loginMsg"></div>
+</div>
+
+<!-- ====== PANEL ====== -->
+<div id="panel" class="hidden">
+
+  <div class="panel-header">
+    <h2>📚 نظام إدارة الدروس</h2>
+    <p>تحكم كامل بالمحتوى</p>
   </div>
 
-  <!-- لوحة التحكم -->
-  <div id="panel" class="panel hidden">
-    
-    <div class="panel-header">
-      <h2>📚 نظام إدارة الدروس</h2>
-      <p>إدارة شاملة لجميع الدروس والمحتوى التعليمي</p>
+  <!-- إضافة -->
+  <div class="card">
+    <h3>➕ إضافة درس</h3>
+    <div class="form-group">
+      <label>العنوان</label>
+      <input id="title">
     </div>
-
-    <div class="action-buttons">
-      <button class="btn btn-secondary" onclick="goHome()">
-        <span style="position: relative; z-index: 1;">🏠 الصفحة الرئيسية</span>
-      </button>
-      <button class="btn btn-refresh" onclick="loadLessons()">
-        <span style="position: relative; z-index: 1;">🔄 تحديث البيانات</span>
-      </button>
-      <button class="btn btn-warning" onclick="showSemesterStats()">
-        <span style="position: relative; z-index: 1;">📊 إحصائيات الفصول</span>
-      </button>
+    <div class="form-group">
+      <label>الرابط</label>
+      <input id="url">
     </div>
-
-    <!-- إضافة درس جديد -->
-    <div class="card">
-      <h3>➕ إضافة درس جديد</h3>
-      
-      <div class="form-group">
-        <label>📝 عنوان الدرس</label>
-        <input id="title" placeholder="مثال: الدرس الأول - مقدمة في الرياضيات">
-      </div>
-      
-      <div class="form-group">
-        <label>🔗 رابط الدرس</label>
-        <input id="url" placeholder="https://example.com/lesson">
-      </div>
-      
-      <div class="form-group">
-        <label>✍️ اسم الأستاذ</label>
-        <input id="author" placeholder="الأستاذ خليل البلوشي" value="الأستاذ خليل البلوشي">
-      </div>
-
-      <div class="form-group">
-        <label>📚 الفصل الدراسي</label>
-        <select id="semester">
-          <option value="1">📘 الفصل الدراسي الأول</option>
-          <option value="2">📗 الفصل الدراسي الثاني</option>
-        </select>
-      </div>
-
-      <button class="btn btn-success" onclick="addLesson()">
-        <span style="position: relative; z-index: 1;">✅ إضافة الدرس</span>
-      </button>
-
-      <div id="status"></div>
+    <div class="form-group">
+      <label>الأستاذ</label>
+      <input id="author" value="الأستاذ خليل البلوشي">
     </div>
-
-    <!-- فلتر -->
-    <div class="card">
-      <h3>🎯 تصفية الدروس</h3>
-      <div class="filters">
-        <button class="filter-btn active" onclick="filterLessons('all')">📖 الكل</button>
-        <button class="filter-btn" onclick="filterLessons('1')">📘 الفصل الأول</button>
-        <button class="filter-btn" onclick="filterLessons('2')">📗 الفصل الثاني</button>
-        <button class="filter-btn" onclick="filterLessons('ON')">🟢 منشور</button>
-        <button class="filter-btn" onclick="filterLessons('OFF')">🔴 غير منشور</button>
-      </div>
+    <div class="form-group">
+      <label>الفصل</label>
+      <select id="semester">
+        <option value="1">الفصل الأول</option>
+        <option value="2">الفصل الثاني</option>
+      </select>
     </div>
-
-    <!-- قائمة الدروس -->
-    <div class="card">
-      <h3>📋 قائمة الدروس</h3>
-      <div id="list" class="lessons-grid">
-        <div class="loading">جاري تحميل الدروس</div>
-      </div>
-    </div>
-
+    <button class="btn btn-success" onclick="addLesson()">إضافة</button>
+    <div id="status"></div>
   </div>
+
+  <!-- قائمة -->
+  <div class="card">
+    <h3>📋 الدروس</h3>
+    <div id="list">جاري التحميل…</div>
+  </div>
+
+</div>
 </div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
-let ADMIN_PASS = "";
-let allLessons = [];
+const API="https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
+let ADMIN_PASS="";
+let allLessons=[];
+let editingId=null;
 
-function setStatus(msg, isSuccess) {
-  const div = document.getElementById("status");
-  div.className = "status-msg " + (isSuccess ? "success" : "error");
-  div.textContent = msg;
-  setTimeout(() => {
-    if (div.textContent === msg) div.textContent = "";
-  }, 5000);
-}
-
-function login() {
-  ADMIN_PASS = document.getElementById("pass").value.trim();
-  if (!ADMIN_PASS) {
-    showLoginError("يرجى إدخال كلمة المرور");
-    return;
-  }
-
-  const loginBtn = event.target;
-  const originalText = loginBtn.innerHTML;
-  loginBtn.innerHTML = '<span style="position: relative; z-index: 1;">⏳ جاري التحقق...</span>';
-  loginBtn.disabled = true;
-
-  fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "get",
-      password: ADMIN_PASS
-    })
-  })
-  .then(r => r.json())
-  .then(d => {
-    loginBtn.innerHTML = originalText;
-    loginBtn.disabled = false;
-    if (d.error) {
-      showLoginError("❌ كلمة المرور غير صحيحة");
-    } else {
-      document.getElementById("loginBox").classList.add("hidden");
-      document.getElementById("panel").classList.remove("hidden");
+/* ===== LOGIN ===== */
+function login(){
+  ADMIN_PASS=document.getElementById("pass").value.trim();
+  fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.error){document.getElementById("loginMsg").textContent="❌ خطأ";}
+    else{
+      loginBox.classList.add("hidden");
+      panel.classList.remove("hidden");
       loadLessons();
     }
-  })
-  .catch(err => {
-    loginBtn.innerHTML = originalText;
-    loginBtn.disabled = false;
-    showLoginError("❌ حدث خطأ في الاتصال");
-    console.error("Login error:", err);
   });
 }
 
-function showLoginError(msg) {
-  const msgDiv = document.getElementById("loginMsg");
-  msgDiv.className = "error-msg";
-  msgDiv.textContent = msg;
-}
-
-function loadLessons() {
-  document.getElementById("list").innerHTML = '<div class="loading">جاري تحديث البيانات</div>';
-  fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "get",
-      password: ADMIN_PASS
-    })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (Array.isArray(data)) {
-      allLessons = data;
-      displayLessons(data);
-    } else {
-      document.getElementById("list").innerHTML = `<div style="text-align:center; padding:40px; color:#fca5a5">❌ خطأ في استلام البيانات</div>`;
-    }
-  })
-  .catch(err => {
-    document.getElementById("list").innerHTML = `<div style="text-align:center; padding:40px; color:#fca5a5">❌ خطأ في الاتصال</div>`;
-    console.error("Load error:", err);
+/* ===== LOAD ===== */
+function loadLessons(){
+  list.innerHTML="⏳ تحميل…";
+  fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
+  .then(r=>r.json())
+  .then(data=>{
+    allLessons=data
+      .filter(l=>l.status!=="DELETED")
+      .map(l=>({...l,_ts:l.publish_date?new Date(l.publish_date).getTime():0}))
+      .sort((a,b)=>{
+        if(a.pinned==="YES"&&b.pinned!=="YES")return -1;
+        if(a.pinned!=="YES"&&b.pinned==="YES")return 1;
+        return b._ts-a._ts;
+      });
+    render(allLessons);
   });
 }
 
-function displayLessons(lessons) {
-  const box = document.getElementById("list");
-  if (lessons.length === 0) {
-    box.innerHTML = `
-      <div style="text-align:center; padding:50px; color:#94a3b8">
-        <div style="font-size: 4em; margin-bottom: 15px; opacity: 0.5;">📭</div>
-        <p style="font-size: 1.1em;">لا توجد دروس لعرضها</p>
-      </div>
-    `;
-    return;
-  }
-  box.innerHTML = "";
-  lessons.forEach((lesson, index) => {
-    const semesterText = lesson.semester === "1" ? "الفصل الأول" : "الفصل الثاني";
-    const semesterClass = lesson.semester === "1" ? "semester-1" : "semester-2";
-    const card = document.createElement("div");
-    card.className = "lesson-card";
-    card.style.animationDelay = `${index * 0.05}s`;
-    card.innerHTML = `
+/* ===== RENDER ===== */
+function render(arr){
+  list.innerHTML="";
+  arr.forEach(l=>{
+    const div=document.createElement("div");
+    div.className="lesson-card";
+    div.innerHTML=`
       <div class="lesson-title">
-        <span class="semester-badge ${semesterClass}">${semesterText}</span>
-        <span>${lesson.title}</span>
+        <span class="badge ${l.semester==="1"?"b1":"b2"}">
+          ${l.semester==="1"?"الأول":"الثاني"}
+        </span>
+        ${l.pinned==="YES"?"📌":""}
+        ${l.title}
       </div>
-      <div class="lesson-meta">
-        <div class="meta-item">👁️ <strong>${lesson.views || 0}</strong> مشاهدة</div>
-        <div class="meta-item">📅 ${lesson.publish_date || "غير محدد"}</div>
-        <div class="meta-item">✍️ ${lesson.author || "غير محدد"}</div>
+      <div class="meta">
+        👁️ ${l.views||0} | 📅 ${l.publish_date||"-"} | ✍️ ${l.author||"-"}
       </div>
-      <div class="lesson-actions">
-        <button class="btn-toggle ${lesson.status === "ON" ? "on" : "off"}"
-          onclick="toggleLesson('${lesson.id}', '${lesson.status === "ON" ? "OFF" : "ON"}')">
-          ${lesson.status === "ON" ? "🟢 منشور" : "🔴 غير منشور"}
+      <div class="actions">
+        <button class="btn btn-success" onclick="toggle('${l.id}','${l.status==="ON"?"OFF":"ON"}')">
+          ${l.status==="ON"?"منشور":"مخفي"}
         </button>
-        <button class="btn-edit">✏️ تعديل</button>
+        <button class="btn btn-secondary" onclick="pin('${l.id}','${l.pinned==="YES"?"NO":"YES"}')">
+          📌 تثبيت
+        </button>
+        <button class="btn btn-warning" onclick="edit('${l.id}')">✏️ تعديل</button>
+        <button class="btn btn-danger" onclick="del('${l.id}')">🗑️ حذف</button>
       </div>
     `;
-    box.appendChild(card);
+    list.appendChild(div);
   });
 }
 
-function filterLessons(filter) {
-  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-  let filtered = allLessons;
-  if (filter === '1' || filter === '2') {
-    filtered = allLessons.filter(l => l.semester === filter);
-  } else if (filter === 'ON' || filter === 'OFF') {
-    filtered = allLessons.filter(l => l.status === filter);
-  }
-  displayLessons(filtered);
-}
-
-// ✅ دالة إضافة درس (مكتملة)
-function addLesson() {
-  const title = document.getElementById("title").value.trim();
-  const url = document.getElementById("url").value.trim();
-  const author = document.getElementById("author").value.trim();
-  const semester = document.getElementById("semester").value;
-
-  if (!title || !url) {
-    setStatus("❌ يرجى إدخال العنوان والرابط", false);
-    return;
-  }
-
-  const btn = event.target;
-  const originalText = btn.innerHTML;
-  btn.innerHTML = '<span style="position: relative; z-index: 1;">⏳ جاري الإضافة...</span>';
-  btn.disabled = true;
-
-  fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "add",
-      password: ADMIN_PASS,
-      title: title,
-      url: url,
-      author: author,
-      semester: semester
+/* ===== ACTIONS ===== */
+function addLesson(){
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"add",
+      password:ADMIN_PASS,
+      title:title.value,
+      url:url.value,
+      author:author.value,
+      semester:semester.value
     })
-  })
-  .then(r => r.json())
-  .then(res => {
-    btn.innerHTML = originalText;
-    btn.disabled = false;
-    if (res.success) {
-      setStatus("✅ تم إضافة الدرس بنجاح", true);
-      document.getElementById("title").value = "";
-      document.getElementById("url").value = "";
-      document.getElementById("author").value = "الأستاذ خليل البلوشي";
-      document.getElementById("semester").value = "1";
-      loadLessons();
-    } else {
-      setStatus("❌ فشل في إضافة الدرس", false);
-    }
-  })
-  .catch(err => {
-    btn.innerHTML = originalText;
-    btn.disabled = false;
-    setStatus("❌ خطأ في الاتصال", false);
-    console.error("Add error:", err);
-  });
+  }).then(()=>loadLessons());
 }
 
-// ✅ دالة تفعيل/إيقاف درس (مكتملة)
-function toggleLesson(id, newStatus) {
-  fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "toggle",
-      password: ADMIN_PASS,
-      id: id,
-      status: newStatus
+function toggle(id,status){
+  fetch(API,{method:"POST",body:JSON.stringify({action:"toggle",password:ADMIN_PASS,id,status})})
+  .then(()=>loadLessons());
+}
+
+function pin(id,pinned){
+  fetch(API,{method:"POST",body:JSON.stringify({action:"pin",password:ADMIN_PASS,id,pinned})})
+  .then(()=>loadLessons());
+}
+
+function del(id){
+  if(!confirm("حذف الدرس؟"))return;
+  fetch(API,{method:"POST",body:JSON.stringify({action:"delete",password:ADMIN_PASS,id})})
+  .then(()=>loadLessons());
+}
+
+/* ===== EDIT ===== */
+function edit(id){
+  const l=allLessons.find(x=>x.id===id);
+  const t=prompt("العنوان",l.title);
+  if(!t)return;
+  const u=prompt("الرابط",l.url);
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"edit",
+      password:ADMIN_PASS,
+      id,
+      title:t,
+      url:u,
+      author:l.author,
+      semester:l.semester
     })
-  })
-  .then(r => r.json())
-  .then(res => {
-    if (res.success) {
-      loadLessons(); // تحديث القائمة
-    } else {
-      alert("❌ فشل التحديث: " + (res.message || "خطأ غير معروف"));
-    }
-  })
-  .catch(err => {
-    console.error("Toggle error:", err);
-    alert("❌ حدث خطأ أثناء الاتصال");
-  });
-}
-
-// ✅ دالة العودة للصفحة الرئيسية (مكتملة)
-function goHome() {
-  // ✅ غيّر هذا الرابط إذا كان ملف الصفحة العامة باسم مختلف أو في مكان آخر
-  window.location.href = "public.html";
-}
-
-// دوال غير مفعلة حالياً (يمكنك تفعيلها لاحقاً)
-function showSemesterStats() {
-  alert("📊 هذه الميزة قيد التطوير.");
+  }).then(()=>loadLessons());
 }
 </script>
 
