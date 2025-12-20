@@ -65,14 +65,36 @@ body{
   text-align:center;
   position:relative
 }
+.panel-header h2{color:#a78bfa}
+
+/* أيقونات */
+.home-icon,.refresh-icon{
+  position:absolute;
+  top:20px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+  transition:.3s;
+  box-shadow:0 8px 25px rgba(0,0,0,.4)
+}
 .home-icon{
-  position:absolute;top:20px;right:20px;
-  width:44px;height:44px;border-radius:50%;
-  background:linear-gradient(135deg,#8b5cf6,#6d28d9);
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;cursor:pointer
+  right:20px;
+  background:linear-gradient(135deg,#8b5cf6,#6d28d9)
+}
+.refresh-icon{
+  left:20px;
+  background:linear-gradient(135deg,#10b981,#059669)
+}
+.home-icon:hover,.refresh-icon:hover{
+  transform:scale(1.1)
 }
 
+/* بطاقات */
 .card{
   background:#1e1e2e;
   padding:25px;
@@ -91,19 +113,29 @@ body{
 .lesson-title{
   font-weight:700;
   margin-bottom:10px;
-  display:flex;gap:10px;align-items:center
+  display:flex;
+  gap:10px;
+  align-items:center
 }
 .badge{
-  padding:4px 10px;border-radius:999px;
-  font-size:12px;font-weight:700
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700
 }
 .b1{background:#3b82f6}
 .b2{background:#10b981}
 .meta{font-size:14px;color:#cbd5e1;margin-bottom:10px}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
+
 input,select{
-  width:100%;padding:12px;border-radius:10px;
-  border:2px solid #8b5cf6;background:#020617;color:#fff
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:2px solid #8b5cf6;
+  background:#020617;
+  color:#fff;
+  margin-bottom:8px
 }
 </style>
 </head>
@@ -111,7 +143,7 @@ input,select{
 <body>
 <div class="container">
 
-<!-- LOGIN -->
+<!-- تسجيل الدخول -->
 <div id="loginBox" class="login-card">
   <h2>🔐 لوحة التحكم</h2>
   <input id="pass" type="password" placeholder="كلمة المرور">
@@ -119,12 +151,14 @@ input,select{
   <div id="loginMsg"></div>
 </div>
 
-<!-- PANEL -->
+<!-- لوحة التحكم -->
 <div id="panel" class="hidden">
 
   <div class="panel-header">
-    <div class="home-icon" onclick="goHome()">🏠</div>
+    <div class="home-icon" onclick="goHome()" title="العودة للرئيسية">🏠</div>
+    <div class="refresh-icon" onclick="manualRefresh()" title="تحديث البيانات">🔄</div>
     <h2>📚 إدارة الدروس</h2>
+    <p>لوحة تحكم المحتوى التعليمي</p>
   </div>
 
   <div class="card">
@@ -141,14 +175,18 @@ let ADMIN_PASS="";
 let allLessons=[];
 let editingId=null;
 
-/* LOGIN */
+/* تسجيل الدخول */
 function login(){
   ADMIN_PASS=pass.value.trim();
-  fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({action:"get",password:ADMIN_PASS})
+  })
   .then(r=>r.json())
   .then(d=>{
-    if(d.error){loginMsg.textContent="❌ خطأ";}
-    else{
+    if(d.error){
+      loginMsg.textContent="❌ كلمة المرور غير صحيحة";
+    }else{
       loginBox.classList.add("hidden");
       panel.classList.remove("hidden");
       loadLessons();
@@ -156,10 +194,13 @@ function login(){
   });
 }
 
-/* LOAD */
+/* تحميل الدروس */
 function loadLessons(){
-  list.textContent="⏳ تحميل...";
-  fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
+  list.textContent="⏳ جاري التحميل...";
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({action:"get",password:ADMIN_PASS})
+  })
   .then(r=>r.json())
   .then(data=>{
     allLessons=data.filter(l=>l.status!=="DELETED");
@@ -167,7 +208,13 @@ function loadLessons(){
   });
 }
 
-/* RENDER */
+/* تحديث يدوي */
+function manualRefresh(){
+  list.textContent="🔄 جاري التحديث...";
+  loadLessons();
+}
+
+/* عرض */
 function render(arr){
   list.innerHTML="";
   arr.forEach(l=>{
@@ -186,24 +233,30 @@ function render(arr){
         <div class="actions">
           <button class="btn btn-success" onclick="saveEdit('${l.id}')">💾 حفظ</button>
           <button class="btn btn-secondary" onclick="cancelEdit()">❌ إلغاء</button>
-        </div>`;
+        </div>
+      `;
     }else{
       div.innerHTML=`
         <div class="lesson-title">
-          <span class="badge ${l.semester==="1"?"b1":"b2"}">${l.semester==="1"?"الأول":"الثاني"}</span>
+          <span class="badge ${l.semester==="1"?"b1":"b2"}">
+            ${l.semester==="1"?"الأول":"الثاني"}
+          </span>
           ${l.title}
         </div>
-        <div class="meta">✍️ ${l.author||"-"} | 📅 ${l.publish_date||"-"}</div>
+        <div class="meta">
+          ✍️ ${l.author||"-"} | 📅 ${l.publish_date||"-"}
+        </div>
         <div class="actions">
           <button class="btn btn-warning" onclick="startEdit('${l.id}')">✏️ تعديل</button>
           <button class="btn btn-danger" onclick="delLesson('${l.id}')">🗑️ حذف</button>
-        </div>`;
+        </div>
+      `;
     }
     list.appendChild(div);
   });
 }
 
-/* EDIT */
+/* تعديل */
 function startEdit(id){editingId=id;render(allLessons)}
 function cancelEdit(){editingId=null;render(allLessons)}
 
@@ -222,17 +275,24 @@ function saveEdit(id){
   }).then(()=>{editingId=null;loadLessons()});
 }
 
-/* DELETE */
+/* حذف */
 function delLesson(id){
-  if(!confirm("حذف الدرس؟"))return;
+  if(!confirm("⚠️ هل تريد حذف الدرس؟")) return;
   fetch(API,{
     method:"POST",
-    body:JSON.stringify({action:"toggle",password:ADMIN_PASS,id,status:"DELETED"})
+    body:JSON.stringify({
+      action:"toggle",
+      password:ADMIN_PASS,
+      id:id,
+      status:"DELETED"
+    })
   }).then(()=>loadLessons());
 }
 
-/* HOME */
-function goHome(){window.location.href="public.html";}
+/* العودة للرئيسية */
+function goHome(){
+  window.location.href="public.html";
+}
 </script>
 
 </body>
