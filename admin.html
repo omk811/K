@@ -687,6 +687,16 @@ const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJN
 let ADMIN_PASS = "";
 let allLessons = [];
 
+// دالة عرض رسالة الحالة
+function setStatus(msg, isSuccess) {
+  const div = document.getElementById("status");
+  div.className = "status-msg " + (isSuccess ? "success" : "error");
+  div.textContent = msg;
+  setTimeout(() => {
+    if (div.textContent === msg) div.textContent = "";
+  }, 5000);
+}
+
 function login() {
   ADMIN_PASS = document.getElementById("pass").value.trim();
   if (!ADMIN_PASS) {
@@ -694,7 +704,6 @@ function login() {
     return;
   }
 
-  // إظهار حالة التحميل
   const loginBtn = event.target;
   const originalText = loginBtn.innerHTML;
   loginBtn.innerHTML = '<span style="position: relative; z-index: 1;">⏳ جاري التحقق...</span>';
@@ -709,10 +718,10 @@ function login() {
   })
   .then(r => r.json())
   .then(d => {
+    loginBtn.innerHTML = originalText;
+    loginBtn.disabled = false;
     if (d.error) {
       showLoginError("❌ كلمة المرور غير صحيحة");
-      loginBtn.innerHTML = originalText;
-      loginBtn.disabled = false;
     } else {
       document.getElementById("loginBox").classList.add("hidden");
       document.getElementById("panel").classList.remove("hidden");
@@ -720,9 +729,10 @@ function login() {
     }
   })
   .catch(err => {
-    showLoginError("❌ حدث خطأ في الاتصال");
     loginBtn.innerHTML = originalText;
     loginBtn.disabled = false;
+    showLoginError("❌ حدث خطأ في الاتصال");
+    console.error("Login error:", err);
   });
 }
 
@@ -761,6 +771,7 @@ function loadLessons() {
         ❌ حدث خطأ في الاتصال
       </div>
     `;
+    console.error("Load lessons error:", err);
   });
 }
 
@@ -819,7 +830,6 @@ function displayLessons(lessons) {
 }
 
 function filterLessons(filter) {
-  // تحديث الأزرار
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.remove('active');
   });
@@ -865,6 +875,8 @@ function addLesson() {
   })
   .then(r => r.json())
   .then(res => {
+    btn.innerHTML = originalText;
+    btn.disabled = false;
     if (res.success) {
       setStatus("✅ تم إضافة الدرس بنجاح", true);
       document.getElementById("title").value = "";
@@ -872,3 +884,32 @@ function addLesson() {
       document.getElementById("author").value = "الأستاذ خليل البلوشي";
       document.getElementById("semester").value = "1";
       loadLessons();
+    } else {
+      setStatus("❌ فشل في إضافة الدرس", false);
+    }
+  })
+  .catch(err => {
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+    setStatus("❌ خطأ في الاتصال", false);
+    console.error("Add lesson error:", err);
+  });
+}
+
+// دوال placeholder للوظائف غير المنفذة (لتلافي الأخطاء)
+function goHome() {
+  alert("الانتقال إلى الصفحة الرئيسية غير مُفعّل بعد.");
+}
+function showSemesterStats() {
+  alert("عرض الإحصائيات غير مُفعّل بعد.");
+}
+function toggleLesson(id, newStatus) {
+  alert("تفعيل/إيقاف الدرس غير مُفعّل بعد.");
+}
+function editLesson(id) {
+  alert("تعديل الدرس غير مُفعّل بعد.");
+}
+</script>
+
+</body>
+</html>
