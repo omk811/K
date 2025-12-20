@@ -1,756 +1,345 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>منصة الدروس  - الأستاذ خليل البلوشي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>دروسنا التعليمية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    body {
+      font-family: "Cairo", sans-serif;
+      background: linear-gradient(135deg, #0f0f1e 0%, #16213e 100%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-body {
-  font-family: "Cairo", sans-serif;
-  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
-  color: #f1f5f9;
-  min-height: 100vh;
-  padding: 20px;
-  position: relative;
-  overflow-x: hidden;
-}
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-/* تأثيرات الخلفية المتحركة */
-body::before {
-  content: '';
-  position: fixed;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%);
-  top: -300px;
-  right: -300px;
-  animation: float 20s ease-in-out infinite;
-  z-index: 0;
-}
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      margin-bottom: 30px;
+      background: rgba(15, 15, 30, 0.8);
+      border-radius: 24px;
+      border: 1px solid rgba(139,92,246,0.3);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
 
-body::after {
-  content: '';
-  position: fixed;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%);
-  bottom: -250px;
-  left: -250px;
-  animation: float 15s ease-in-out infinite reverse;
-  z-index: 0;
-}
+    header h1 {
+      font-size: 2.6em;
+      color: #a78bfa;
+      margin-bottom: 12px;
+      font-weight: 900;
+    }
 
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(50px, 50px) scale(1.1); }
-}
+    header p {
+      color: #cbd5e1;
+      font-size: 1.1em;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
+    .filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-/* الهيدر */
-.header {
-  background: rgba(30, 30, 46, 0.9);
-  backdrop-filter: blur(20px);
-  padding: 40px;
-  border-radius: 24px;
-  margin-bottom: 40px;
-  border: 1px solid rgba(139,92,246,0.3);
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  animation: slideDown 0.6s ease-out;
-}
+    .filter-btn {
+      padding: 10px 22px;
+      border-radius: 12px;
+      border: 2px solid rgba(139,92,246,0.3);
+      background: rgba(15, 15, 30, 0.7);
+      color: #cbd5e1;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    .filter-btn:hover {
+      background: rgba(139,92,246,0.2);
+      transform: translateY(-2px);
+      border-color: rgba(139,92,246,0.5);
+    }
 
-.header-icon {
-  font-size: 4em;
-  margin-bottom: 15px;
-  animation: bounce 2s ease-in-out infinite;
-}
+    .filter-btn.active {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      color: white;
+      border-color: #8b5cf6;
+      box-shadow: 0 6px 20px rgba(139,92,246,0.4);
+    }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
 
-.header h1 {
-  font-size: 2.8em;
-  color: #a78bfa;
-  font-weight: 900;
-  margin-bottom: 12px;
-  background: linear-gradient(135deg, #a78bfa 0%, #10b981 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+    .lesson-card {
+      background: linear-gradient(135deg, rgba(15,15,30,0.9) 0%, rgba(30,30,46,0.8) 100%);
+      padding: 28px;
+      border-radius: 18px;
+      border: 1px solid rgba(139,92,246,0.2);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-.header p {
-  color: #cbd5e1;
-  font-size: 1.2em;
-  margin-bottom: 25px;
-}
+    .lesson-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #8b5cf6 0%, #10b981 100%);
+    }
 
-.admin-btn {
-  display: inline-block;
-  padding: 14px 32px;
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  color: white;
-  text-decoration: none;
-  border-radius: 12px;
-  font-weight: 700;
-  transition: all 0.3s ease;
-  border: 2px solid rgba(139,92,246,0.5);
-  position: relative;
-  overflow: hidden;
-}
+    .lesson-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(139,92,246,0.5);
+      box-shadow: 0 15px 35px rgba(139,92,246,0.3);
+    }
 
-.admin-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
+    .semester-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.75em;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
 
-.admin-btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
+    .semester-1 {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: white;
+    }
 
-.admin-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(139,92,246,0.4);
-}
+    .semester-2 {
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      color: white;
+    }
 
-/* فلاتر الفصول */
-.semester-filters {
-  background: rgba(30, 30, 46, 0.9);
-  backdrop-filter: blur(20px);
-  padding: 30px;
-  border-radius: 20px;
-  margin-bottom: 35px;
-  border: 1px solid rgba(139,92,246,0.2);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-  animation: fadeIn 0.8s ease-out;
-}
+    .lesson-title {
+      font-size: 1.25em;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+    .lesson-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 18px 0;
+      color: #94a3b8;
+      font-size: 0.95em;
+    }
 
-.semester-filters h3 {
-  color: #a78bfa;
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 1.6em;
-  font-weight: 700;
-}
+    .lesson-actions .btn-lesson {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
 
-.filter-buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+    .lesson-actions .btn-lesson:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(139,92,246,0.5);
+    }
 
-.filter-btn {
-  padding: 14px 28px;
-  border-radius: 14px;
-  border: 2px solid rgba(139,92,246,0.3);
-  background: rgba(15, 15, 30, 0.7);
-  color: #cbd5e1;
-  font-family: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1em;
-  position: relative;
-  overflow: hidden;
-}
+    .loading, .empty, .error {
+      text-align: center;
+      padding: 60px 20px;
+      color: #94a3b8;
+      font-size: 1.2em;
+    }
 
-.filter-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.3), transparent);
-  transition: left 0.5s;
-}
+    .loading::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 50px;
+      margin: 25px auto;
+      border: 4px solid rgba(139,92,246,0.3);
+      border-top-color: #8b5cf6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
 
-.filter-btn:hover::before {
-  left: 100%;
-}
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
 
-.filter-btn:hover {
-  background: rgba(139,92,246,0.2);
-  transform: translateY(-2px);
-  border-color: rgba(139,92,246,0.5);
-}
+    footer {
+      text-align: center;
+      padding: 30px 0 20px;
+      color: #64748b;
+      font-size: 0.95em;
+    }
 
-.filter-btn.active {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  color: white;
-  border-color: #8b5cf6;
-  box-shadow: 0 8px 25px rgba(139,92,246,0.4);
-}
-
-/* أقسام الفصول */
-.semester-section {
-  margin-bottom: 45px;
-  padding: 30px;
-  background: rgba(30, 30, 46, 0.6);
-  border-radius: 24px;
-  border: 1px solid rgba(139,92,246,0.15);
-  backdrop-filter: blur(10px);
-  animation: slideUp 0.8s ease-out;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.section-title {
-  color: #a78bfa;
-  font-size: 2em;
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  font-weight: 700;
-  padding-bottom: 15px;
-  border-bottom: 2px solid rgba(139,92,246,0.2);
-}
-
-.semester-icon {
-  font-size: 1.4em;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-.lesson-count {
-  background: rgba(139,92,246,0.25);
-  color: #c4b5fd;
-  padding: 6px 18px;
-  border-radius: 25px;
-  font-size: 0.75em;
-  margin-right: auto;
-  font-weight: 600;
-  border: 1px solid rgba(139,92,246,0.3);
-}
-
-/* شبكة الدروس */
-.lessons-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 25px;
-  margin-top: 25px;
-}
-
-/* بطاقة الدرس */
-.lesson-card {
-  background: linear-gradient(135deg, rgba(15,15,30,0.9) 0%, rgba(30,30,46,0.8) 100%);
-  padding: 28px;
-  border-radius: 18px;
-  border: 1px solid rgba(139,92,246,0.2);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.lesson-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(180deg, #8b5cf6 0%, #10b981 100%);
-  transition: width 0.4s ease;
-}
-
-.lesson-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at top right, rgba(139,92,246,0.1), transparent);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.lesson-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(139,92,246,0.5);
-  box-shadow: 0 20px 50px rgba(139,92,246,0.3);
-}
-
-.lesson-card:hover::before {
-  width: 100%;
-  opacity: 0.05;
-}
-
-.lesson-card:hover::after {
-  opacity: 1;
-}
-
-.lesson-title {
-  font-size: 1.3em;
-  font-weight: 700;
-  color: #e2e8f0;
-  margin-bottom: 18px;
-  line-height: 1.5;
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: start;
-  gap: 10px;
-}
-
-.semester-badge {
-  display: inline-block;
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 0.7em;
-  font-weight: 700;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.semester-1 {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(59,130,246,0.3);
-}
-
-.semester-2 {
-  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(16,185,129,0.3);
-}
-
-.lesson-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 1;
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #94a3b8;
-  font-size: 0.95em;
-  font-weight: 500;
-}
-
-.meta-item strong {
-  color: #cbd5e1;
-  font-weight: 700;
-}
-
-.lesson-actions {
-  position: relative;
-  z-index: 1;
-}
-
-.btn-view {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 24px;
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  color: white;
-  text-decoration: none;
-  border-radius: 12px;
-  font-weight: 700;
-  transition: all 0.3s ease;
-  border: 2px solid rgba(139,92,246,0.5);
-  width: 100%;
-  justify-content: center;
-}
-
-.btn-view:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(139,92,246,0.5);
-  background: linear-gradient(135deg, #9d72f7 0%, #7e3ae8 100%);
-}
-
-/* حالة التحميل */
-.loading {
-  text-align: center;
-  padding: 60px 20px;
-  color: #94a3b8;
-  font-size: 1.2em;
-}
-
-.loading::after {
-  content: '';
-  display: block;
-  width: 50px;
-  height: 50px;
-  margin: 20px auto;
-  border: 4px solid rgba(139,92,246,0.3);
-  border-top-color: #8b5cf6;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: #94a3b8;
-}
-
-.empty-state-icon {
-  font-size: 4em;
-  margin-bottom: 15px;
-  opacity: 0.5;
-}
-
-/* الفوتر */
-.footer {
-  text-align: center;
-  margin-top: 60px;
-  padding: 30px;
-  color: #64748b;
-  font-size: 0.95em;
-  background: rgba(30, 30, 46, 0.6);
-  border-radius: 20px;
-  border: 1px solid rgba(139,92,246,0.1);
-}
-
-.footer a {
-  color: #a78bfa;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-.footer a:hover {
-  color: #c4b5fd;
-}
-
-/* تحسينات الموبايل */
-@media (max-width: 768px) {
-  .header {
-    padding: 30px 20px;
-  }
-  
-  .header h1 {
-    font-size: 2em;
-  }
-  
-  .header p {
-    font-size: 1em;
-  }
-  
-  .filter-buttons {
-    flex-direction: column;
-  }
-  
-  .filter-btn {
-    width: 100%;
-  }
-  
-  .lessons-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  
-  .section-title {
-    font-size: 1.5em;
-    flex-wrap: wrap;
-  }
-  
-  .lesson-meta {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
-
-/* تأثيرات إضافية */
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animated-gradient {
-  background-size: 200% 200%;
-  animation: gradient 3s ease infinite;
-}
-</style>
+    @media (max-width: 768px) {
+      .lessons-grid {
+        grid-template-columns: 1fr;
+      }
+      header h1 {
+        font-size: 2em;
+      }
+      .filters {
+        flex-direction: column;
+        align-items: center;
+      }
+      .filter-btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
 <div class="container">
-  
-  <!-- الهيدر -->
-  <div class="header">
-    <div class="header-icon">📚</div>
-    <h1>منصة الدروس التعليمية</h1>
-    <p>مع الأستاذ خليل البلوشي - جميع الدروس في مكان واحد</p>
-    <a href="admin.html" class="admin-btn">
-      <span style="position: relative; z-index: 1;">🔐 لوحة التحكم</span>
-    </a>
+  <header>
+    <h1>📚 دروسنا التعليمية</h1>
+    <p>مرحباً بك! إليك أحدث الدروس المنشورة من قبل الأستاذ خليل البلوشي. اختر درسك وابدأ رحلتك التعليمية.</p>
+  </header>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterLessons('all')">📖 الكل</button>
+    <button class="filter-btn" onclick="filterLessons('1')">📘 الفصل الأول</button>
+    <button class="filter-btn" onclick="filterLessons('2')">📗 الفصل الثاني</button>
   </div>
 
-  <!-- فلاتر الفصول -->
-  <div class="semester-filters">
-    <h3>🎯 تصفية حسب الفصل الدراسي</h3>
-    <div class="filter-buttons">
-      <button class="filter-btn active" onclick="filterLessons('all')">
-        📖 جميع الدروس
-      </button>
-      <button class="filter-btn" onclick="filterLessons('semester1')">
-        📘 الفصل الدراسي الأول
-      </button>
-      <button class="filter-btn" onclick="filterLessons('semester2')">
-        📗 الفصل الدراسي الثاني
-      </button>
-    </div>
+  <div class="lessons-grid" id="lessonsContainer">
+    <div class="loading">جاري تحميل الدروس...</div>
   </div>
 
-  <!-- قسم الفصل الأول -->
-  <div id="semester1-section" class="semester-section">
-    <h2 class="section-title">
-      <span class="semester-icon">📘</span>
-      دروس الفصل الدراسي الأول
-      <span class="lesson-count" id="semester1-count">0 درس</span>
-    </h2>
-    <div id="semester1-lessons" class="lessons-grid">
-      <div class="loading">جاري تحميل الدروس</div>
-    </div>
-  </div>
-
-  <!-- قسم الفصل الثاني -->
-  <div id="semester2-section" class="semester-section">
-    <h2 class="section-title">
-      <span class="semester-icon">📗</span>
-      دروس الفصل الدراسي الثاني
-      <span class="lesson-count" id="semester2-count">0 درس</span>
-    </h2>
-    <div id="semester2-lessons" class="lessons-grid">
-      <div class="loading">جاري تحميل الدروس</div>
-    </div>
-  </div>
-
-  <!-- الفوتر -->
-  <div class="footer">
-    <p>© 2025 منصة الدروس التعليمية - الأستاذ خليل البلوشي</p>
-    <p>جميع الحقوق محفوظة</p>
-  </div>
-
+  <footer>
+    © <span id="year"></span> جميع الحقوق محفوظة | نظام إدارة الدروس
+  </footer>
 </div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
+  // ⚠️ استخدم نفس رابط Web App الذي استخدمته في لوحة التحكم
+  const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
+  
+  let allLessons = [];
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-// تحميل الدروس عند فتح الصفحة
-window.addEventListener('DOMContentLoaded', loadLessons);
-
-function loadLessons() {
-  fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "getPublic"
+  // جلب الدروس المنشورة
+  function loadPublicLessons() {
+    document.getElementById("lessonsContainer").innerHTML = '<div class="loading">جاري تحميل الدروس...</div>';
+    
+    fetch(API, {
+      method: "POST",
+      body: JSON.stringify({ action: "getPublic" })
     })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.error) {
-      showError();
-    } else {
-      displayLessonsBySemester(data);
+    .then(res => res.json())
+    .then(data => {
+      if (Array.isArray(data)) {
+        allLessons = data;
+        displayLessons(data);
+      } else {
+        showError("لم نتمكن من تحميل الدروس. حاول لاحقاً.");
+      }
+    })
+    .catch(err => {
+      console.error("Error loading lessons:", err);
+      showError("❌ خطأ في الاتصال بالخادم");
+    });
+  }
+
+  function displayLessons(lessons) {
+    const container = document.getElementById("lessonsContainer");
+    
+    if (lessons.length === 0) {
+      container.innerHTML = `
+        <div class="empty">
+          <div style="font-size: 4em; margin-bottom: 15px; opacity: 0.5;">📭</div>
+          <p>لا توجد دروس منشورة حالياً</p>
+        </div>
+      `;
+      return;
     }
-  })
-  .catch(err => {
-    console.error('خطأ في التحميل:', err);
-    showError();
-  });
-}
-
-function displayLessonsBySemester(lessons) {
-  // تقسيم الدروس حسب الفصل
-  const semester1Lessons = lessons.filter(l => l.semester === "1");
-  const semester2Lessons = lessons.filter(l => l.semester === "2");
-  
-  // تحديث العدادات
-  document.getElementById('semester1-count').textContent = `${semester1Lessons.length} درس`;
-  document.getElementById('semester2-count').textContent = `${semester2Lessons.length} درس`;
-  
-  // عرض دروس الفصل الأول
-  displaySemesterLessons('semester1-lessons', semester1Lessons);
-  
-  // عرض دروس الفصل الثاني
-  displaySemesterLessons('semester2-lessons', semester2Lessons);
-}
-
-function displaySemesterLessons(containerId, lessons) {
-  const container = document.getElementById(containerId);
-  
-  if (lessons.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">📭</div>
-        <p>لا توجد دروس متاحة حالياً</p>
-      </div>
-    `;
-    return;
+    
+    container.innerHTML = "";
+    lessons.forEach(lesson => {
+      const semesterClass = lesson.semester === "1" ? "semester-1" : "semester-2";
+      const semesterText = lesson.semester === "1" ? "الفصل الأول" : "الفصل الثاني";
+      
+      const card = document.createElement("div");
+      card.className = "lesson-card";
+      card.innerHTML = `
+        <div>
+          <span class="semester-badge ${semesterClass}">${semesterText}</span>
+          <h3 class="lesson-title">${lesson.title}</h3>
+          
+          <div class="lesson-meta">
+            <span>👁️ ${lesson.views || 0} مشاهدة</span>
+            <span>📅 ${lesson.publish_date || "غير محدد"}</span>
+            <span>✍️ ${lesson.author || "الأستاذ خليل البلوشي"}</span>
+          </div>
+          
+          <div class="lesson-actions">
+            <a href="${lesson.url}" target="_blank" class="btn-lesson" onclick="incrementView('${lesson.id}')">
+              ▶️ ابدأ الدرس الآن
+            </a>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
   }
-  
-  container.innerHTML = '';
-  
-  lessons.forEach((lesson, index) => {
-    const card = createLessonCard(lesson);
-    card.style.animationDelay = `${index * 0.1}s`;
-    container.appendChild(card);
-  });
-}
 
-function createLessonCard(lesson) {
-  const card = document.createElement('div');
-  card.className = 'lesson-card';
-  
-  const semesterText = lesson.semester === "1" ? "الفصل الأول" : "الفصل الثاني";
-  const semesterClass = lesson.semester === "1" ? "semester-1" : "semester-2";
-  
-  card.innerHTML = `
-    <div class="lesson-title">
-      <span class="semester-badge ${semesterClass}">${semesterText}</span>
-      <span>${lesson.title}</span>
-    </div>
-    <div class="lesson-meta">
-      <div class="meta-item">
-        👁️ <strong>${lesson.views || 0}</strong> مشاهدة
-      </div>
-      <div class="meta-item">
-        ✍️ ${lesson.author || "الأستاذ خليل"}
-      </div>
-      <div class="meta-item">
-        📅 ${lesson.publish_date || "حديث"}
-      </div>
-    </div>
-    <div class="lesson-actions">
-      <a href="${lesson.url}" target="_blank" class="btn-view" onclick="incrementView('${lesson.id}')">
-        👁️ مشاهدة الدرس
-      </a>
-    </div>
-  `;
-  
-  return card;
-}
-
-function filterLessons(filterType) {
-  const semester1Section = document.getElementById('semester1-section');
-  const semester2Section = document.getElementById('semester2-section');
-  
-  // تحديث الأزرار
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-  event.target.classList.add('active');
-  
-  // تطبيق الفلتر
-  if (filterType === 'all') {
-    semester1Section.style.display = 'block';
-    semester2Section.style.display = 'block';
-  } else if (filterType === 'semester1') {
-    semester1Section.style.display = 'block';
-    semester2Section.style.display = 'none';
-  } else if (filterType === 'semester2') {
-    semester1Section.style.display = 'none';
-    semester2Section.style.display = 'block';
+  function incrementView(lessonId) {
+    // زيادة المشاهدات في الخلفية دون إبطاء التصفح
+    fetch(API, {
+      method: "POST",
+      body: JSON.stringify({ action: "incrementView", id: lessonId })
+    }).catch(err => console.warn("فشل تحديث المشاهدات:", err));
   }
-  
-  // تأثير انتقالي
-  const visibleSection = filterType === 'semester1' ? semester1Section : 
-                         filterType === 'semester2' ? semester2Section : null;
-  
-  if (visibleSection) {
-    visibleSection.style.animation = 'none';
-    setTimeout(() => {
-      visibleSection.style.animation = 'slideUp 0.6s ease-out';
-    }, 10);
+
+  function filterLessons(filter) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    let filtered = allLessons;
+    if (filter === '1' || filter === '2') {
+      filtered = allLessons.filter(l => l.semester === filter);
+    }
+    displayLessons(filtered);
   }
-}
 
-function incrementView(lessonId) {
-  // زيادة عداد المشاهدات
-  fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "incrementView",
-      id: lessonId
-    })
-  }).catch(err => console.log('خطأ في تحديث المشاهدات:', err));
-}
+  function showError(msg) {
+    document.getElementById("lessonsContainer").innerHTML = `<div class="error">${msg}</div>`;
+  }
 
-function showError() {
-  ['semester1-lessons', 'semester2-lessons'].forEach(id => {
-    document.getElementById(id).innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">⚠️</div>
-        <p>عذراً، حدث خطأ في تحميل الدروس</p>
-        <button class="btn-view" onclick="loadLessons()" style="margin-top: 20px; display: inline-flex;">
-          🔄 إعادة المحاولة
-        </button>
-      </div>
-    `;
-  });
-}
+  // تحميل الدروس عند فتح الصفحة
+  loadPublicLessons();
 </script>
 
 </body>
