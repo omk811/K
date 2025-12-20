@@ -496,7 +496,8 @@ body {
   transform: scale(1.05);
 }
 
-.btn-edit {
+.btn-edit { 
+  /* حاليًا غير مفعّل — يمكنك تفعيله لاحقًا */
   background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
   color: #fff;
   border: none;
@@ -507,6 +508,8 @@ body {
   font-weight: 700;
   transition: all 0.3s ease;
   font-size: 0.95em;
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .btn-edit:hover {
@@ -541,44 +544,16 @@ body {
   display: none !important;
 }
 
-/* تحسينات الموبايل */
 @media (max-width: 768px) {
-  .login-card {
-    margin: 50px auto;
-    padding: 35px 25px;
-  }
-  
-  .panel-header {
-    padding: 30px 20px;
-  }
-  
-  .panel-header h2 {
-    font-size: 1.8em;
-  }
-  
-  .card {
-    padding: 25px 20px;
-  }
-  
-  .action-buttons {
-    grid-template-columns: 1fr;
-  }
-  
-  .filters {
-    flex-direction: column;
-  }
-  
-  .filter-btn {
-    width: 100%;
-  }
-  
-  .lesson-actions {
-    flex-direction: column;
-  }
-  
-  .btn-toggle {
-    min-width: 100%;
-  }
+  .login-card { margin: 50px auto; padding: 35px 25px; }
+  .panel-header { padding: 30px 20px; }
+  .panel-header h2 { font-size: 1.8em; }
+  .card { padding: 25px 20px; }
+  .action-buttons { grid-template-columns: 1fr; }
+  .filters { flex-direction: column; }
+  .filter-btn { width: 100%; }
+  .lesson-actions { flex-direction: column; }
+  .btn-toggle { min-width: 100%; }
 }
 </style>
 </head>
@@ -587,7 +562,7 @@ body {
 
 <div class="container">
   
-  <!-- صفحة تسجيل الدخول -->
+  <!-- تسجيل الدخول -->
   <div id="loginBox" class="login-card">
     <div class="login-icon">🔐</div>
     <h2>لوحة التحكم الإدارية</h2>
@@ -659,7 +634,7 @@ body {
       <div id="status"></div>
     </div>
 
-    <!-- فلتر الدروس -->
+    <!-- فلتر -->
     <div class="card">
       <h3>🎯 تصفية الدروس</h3>
       <div class="filters">
@@ -687,7 +662,6 @@ const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJN
 let ADMIN_PASS = "";
 let allLessons = [];
 
-// دالة عرض رسالة الحالة
 function setStatus(msg, isSuccess) {
   const div = document.getElementById("status");
   div.className = "status-msg " + (isSuccess ? "success" : "error");
@@ -744,7 +718,6 @@ function showLoginError(msg) {
 
 function loadLessons() {
   document.getElementById("list").innerHTML = '<div class="loading">جاري تحديث البيانات</div>';
-  
   fetch(API, {
     method: "POST",
     body: JSON.stringify({
@@ -754,30 +727,21 @@ function loadLessons() {
   })
   .then(r => r.json())
   .then(data => {
-    if (data.error) {
-      document.getElementById("list").innerHTML = `
-        <div style="text-align:center; padding:40px; color:#fca5a5">
-          ❌ حدث خطأ في تحميل البيانات
-        </div>
-      `;
-    } else {
+    if (Array.isArray(data)) {
       allLessons = data;
       displayLessons(data);
+    } else {
+      document.getElementById("list").innerHTML = `<div style="text-align:center; padding:40px; color:#fca5a5">❌ خطأ في استلام البيانات</div>`;
     }
   })
   .catch(err => {
-    document.getElementById("list").innerHTML = `
-      <div style="text-align:center; padding:40px; color:#fca5a5">
-        ❌ حدث خطأ في الاتصال
-      </div>
-    `;
-    console.error("Load lessons error:", err);
+    document.getElementById("list").innerHTML = `<div style="text-align:center; padding:40px; color:#fca5a5">❌ خطأ في الاتصال</div>`;
+    console.error("Load error:", err);
   });
 }
 
 function displayLessons(lessons) {
   const box = document.getElementById("list");
-  
   if (lessons.length === 0) {
     box.innerHTML = `
       <div style="text-align:center; padding:50px; color:#94a3b8">
@@ -787,65 +751,48 @@ function displayLessons(lessons) {
     `;
     return;
   }
-  
   box.innerHTML = "";
-  
   lessons.forEach((lesson, index) => {
     const semesterText = lesson.semester === "1" ? "الفصل الأول" : "الفصل الثاني";
     const semesterClass = lesson.semester === "1" ? "semester-1" : "semester-2";
-    
     const card = document.createElement("div");
     card.className = "lesson-card";
     card.style.animationDelay = `${index * 0.05}s`;
-    
     card.innerHTML = `
       <div class="lesson-title">
         <span class="semester-badge ${semesterClass}">${semesterText}</span>
         <span>${lesson.title}</span>
       </div>
       <div class="lesson-meta">
-        <div class="meta-item">
-          👁️ <strong>${lesson.views || 0}</strong> مشاهدة
-        </div>
-        <div class="meta-item">
-          📅 ${lesson.publish_date || "غير محدد"}
-        </div>
-        <div class="meta-item">
-          ✍️ ${lesson.author || "غير محدد"}
-        </div>
+        <div class="meta-item">👁️ <strong>${lesson.views || 0}</strong> مشاهدة</div>
+        <div class="meta-item">📅 ${lesson.publish_date || "غير محدد"}</div>
+        <div class="meta-item">✍️ ${lesson.author || "غير محدد"}</div>
       </div>
       <div class="lesson-actions">
         <button class="btn-toggle ${lesson.status === "ON" ? "on" : "off"}"
           onclick="toggleLesson('${lesson.id}', '${lesson.status === "ON" ? "OFF" : "ON"}')">
           ${lesson.status === "ON" ? "🟢 منشور" : "🔴 غير منشور"}
         </button>
-        <button class="btn-edit" onclick="editLesson('${lesson.id}')">
-          ✏️ تعديل
-        </button>
+        <button class="btn-edit">✏️ تعديل</button>
       </div>
     `;
-    
     box.appendChild(card);
   });
 }
 
 function filterLessons(filter) {
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
   event.target.classList.add('active');
-  
   let filtered = allLessons;
-  
   if (filter === '1' || filter === '2') {
     filtered = allLessons.filter(l => l.semester === filter);
   } else if (filter === 'ON' || filter === 'OFF') {
     filtered = allLessons.filter(l => l.status === filter);
   }
-  
   displayLessons(filtered);
 }
 
+// ✅ دالة إضافة درس (مكتملة)
 function addLesson() {
   const title = document.getElementById("title").value.trim();
   const url = document.getElementById("url").value.trim();
@@ -892,22 +839,44 @@ function addLesson() {
     btn.innerHTML = originalText;
     btn.disabled = false;
     setStatus("❌ خطأ في الاتصال", false);
-    console.error("Add lesson error:", err);
+    console.error("Add error:", err);
   });
 }
 
-// دوال placeholder للوظائف غير المنفذة (لتلافي الأخطاء)
-function goHome() {
-  alert("الانتقال إلى الصفحة الرئيسية غير مُفعّل بعد.");
-}
-function showSemesterStats() {
-  alert("عرض الإحصائيات غير مُفعّل بعد.");
-}
+// ✅ دالة تفعيل/إيقاف درس (مكتملة)
 function toggleLesson(id, newStatus) {
-  alert("تفعيل/إيقاف الدرس غير مُفعّل بعد.");
+  fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "toggle",
+      password: ADMIN_PASS,
+      id: id,
+      status: newStatus
+    })
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res.success) {
+      loadLessons(); // تحديث القائمة
+    } else {
+      alert("❌ فشل التحديث: " + (res.message || "خطأ غير معروف"));
+    }
+  })
+  .catch(err => {
+    console.error("Toggle error:", err);
+    alert("❌ حدث خطأ أثناء الاتصال");
+  });
 }
-function editLesson(id) {
-  alert("تعديل الدرس غير مُفعّل بعد.");
+
+// ✅ دالة العودة للصفحة الرئيسية (مكتملة)
+function goHome() {
+  // ✅ غيّر هذا الرابط إذا كان ملف الصفحة العامة باسم مختلف أو في مكان آخر
+  window.location.href = "public.html";
+}
+
+// دوال غير مفعلة حالياً (يمكنك تفعيلها لاحقاً)
+function showSemesterStats() {
+  alert("📊 هذه الميزة قيد التطوير.");
 }
 </script>
 
