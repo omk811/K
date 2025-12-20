@@ -29,11 +29,11 @@ body{
   transition:.3s
 }
 .btn:hover{transform:translateY(-2px)}
+.btn-primary{background:#8b5cf6;color:#fff}
 .btn-success{background:#10b981;color:#fff}
-.btn-secondary{background:#374151;color:#fff}
 .btn-warning{background:#f59e0b;color:#fff}
 .btn-danger{background:#ef4444;color:#fff}
-.btn-primary{background:#8b5cf6;color:#fff}
+.btn-secondary{background:#374151;color:#fff}
 
 /* تسجيل الدخول */
 .login-card{
@@ -90,11 +90,8 @@ body{
   left:20px;
   background:linear-gradient(135deg,#10b981,#059669)
 }
-.home-icon:hover,.refresh-icon:hover{
-  transform:scale(1.1)
-}
+.home-icon:hover,.refresh-icon:hover{transform:scale(1.1)}
 
-/* بطاقات */
 .card{
   background:#1e1e2e;
   padding:25px;
@@ -135,7 +132,7 @@ input,select{
   border:2px solid #8b5cf6;
   background:#020617;
   color:#fff;
-  margin-bottom:8px
+  margin-bottom:10px
 }
 </style>
 </head>
@@ -161,6 +158,21 @@ input,select{
     <p>لوحة تحكم المحتوى التعليمي</p>
   </div>
 
+  <!-- إضافة درس -->
+  <div class="card">
+    <h3>➕ إضافة درس جديد</h3>
+    <input id="title" placeholder="عنوان الدرس">
+    <input id="url" placeholder="رابط الدرس">
+    <input id="author" value="الأستاذ خليل البلوشي">
+    <select id="semester">
+      <option value="1">الفصل الأول</option>
+      <option value="2">الفصل الثاني</option>
+    </select>
+    <button class="btn btn-success" onclick="addLesson()">إضافة الدرس</button>
+    <div id="status"></div>
+  </div>
+
+  <!-- قائمة الدروس -->
   <div class="card">
     <h3>📋 قائمة الدروس</h3>
     <div id="list">جاري التحميل…</div>
@@ -178,10 +190,7 @@ let editingId=null;
 /* تسجيل الدخول */
 function login(){
   ADMIN_PASS=pass.value.trim();
-  fetch(API,{
-    method:"POST",
-    body:JSON.stringify({action:"get",password:ADMIN_PASS})
-  })
+  fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
   .then(r=>r.json())
   .then(d=>{
     if(d.error){
@@ -194,13 +203,10 @@ function login(){
   });
 }
 
-/* تحميل الدروس */
+/* تحميل */
 function loadLessons(){
   list.textContent="⏳ جاري التحميل...";
-  fetch(API,{
-    method:"POST",
-    body:JSON.stringify({action:"get",password:ADMIN_PASS})
-  })
+  fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
   .then(r=>r.json())
   .then(data=>{
     allLessons=data.filter(l=>l.status!=="DELETED");
@@ -243,9 +249,7 @@ function render(arr){
           </span>
           ${l.title}
         </div>
-        <div class="meta">
-          ✍️ ${l.author||"-"} | 📅 ${l.publish_date||"-"}
-        </div>
+        <div class="meta">✍️ ${l.author||"-"} | 📅 ${l.publish_date||"-"}</div>
         <div class="actions">
           <button class="btn btn-warning" onclick="startEdit('${l.id}')">✏️ تعديل</button>
           <button class="btn btn-danger" onclick="delLesson('${l.id}')">🗑️ حذف</button>
@@ -256,10 +260,32 @@ function render(arr){
   });
 }
 
+/* إضافة */
+function addLesson(){
+  if(!title.value || !url.value){
+    alert("العنوان والرابط مطلوبان");
+    return;
+  }
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"add",
+      password:ADMIN_PASS,
+      title:title.value,
+      url:url.value,
+      author:author.value,
+      semester:semester.value
+    })
+  }).then(()=>{
+    title.value="";
+    url.value="";
+    loadLessons();
+  });
+}
+
 /* تعديل */
 function startEdit(id){editingId=id;render(allLessons)}
 function cancelEdit(){editingId=null;render(allLessons)}
-
 function saveEdit(id){
   fetch(API,{
     method:"POST",
@@ -267,10 +293,10 @@ function saveEdit(id){
       action:"edit",
       password:ADMIN_PASS,
       id:id,
-      title:document.getElementById("e-title").value,
-      url:document.getElementById("e-url").value,
-      author:document.getElementById("e-author").value,
-      semester:document.getElementById("e-sem").value
+      title:e-title.value,
+      url:e-url.value,
+      author:e-author.value,
+      semester:e-sem.value
     })
   }).then(()=>{editingId=null;loadLessons()});
 }
@@ -289,7 +315,7 @@ function delLesson(id){
   }).then(()=>loadLessons());
 }
 
-/* العودة للرئيسية */
+/* رجوع */
 function goHome(){
   window.location.href="public.html";
 }
