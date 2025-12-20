@@ -195,6 +195,16 @@ body::after {
   box-shadow: 0 8px 25px rgba(16,185,129,0.4);
 }
 
+.btn-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #fff;
+}
+
+.btn-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245,158,11,0.4);
+}
+
 .error-msg {
   text-align: center;
   margin-top: 20px;
@@ -285,7 +295,8 @@ body::after {
   font-size: 0.95em;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
   width: 100%;
   padding: 14px 18px;
   border-radius: 12px;
@@ -297,7 +308,8 @@ body::after {
   transition: all 0.3s ease;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
   outline: none;
   border-color: #8b5cf6;
   box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
@@ -394,6 +406,25 @@ body::after {
   font-size: 0.9em;
 }
 
+.semester-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.semester-1 {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+}
+
+.semester-2 {
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+  color: white;
+}
+
 .lesson-actions {
   display: flex;
   gap: 10px;
@@ -425,6 +456,23 @@ body::after {
   transform: scale(1.05);
 }
 
+.btn-edit {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-edit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139,92,246,0.4);
+}
+
 .loading {
   text-align: center;
   padding: 40px;
@@ -447,6 +495,37 @@ body::after {
   display: none !important;
 }
 
+/* فلتر الدروس */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(139,92,246,0.3);
+  background: rgba(15, 15, 30, 0.6);
+  color: #cbd5e1;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background: rgba(139,92,246,0.2);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  color: white;
+  border-color: #8b5cf6;
+}
+
 /* تحسينات للموبايل */
 @media (max-width: 768px) {
   .login-card, .card {
@@ -464,6 +543,18 @@ body::after {
   .lesson-meta {
     flex-direction: column;
     gap: 8px;
+  }
+  
+  .lesson-actions {
+    flex-direction: column;
+  }
+  
+  .filters {
+    flex-direction: column;
+  }
+  
+  .filter-btn {
+    width: 100%;
   }
 }
 </style>
@@ -505,6 +596,9 @@ body::after {
       <button class="btn btn-refresh" onclick="loadLessons()">
         <span style="position: relative; z-index: 1;">🔄 تحديث البيانات</span>
       </button>
+      <button class="btn btn-warning" onclick="showSemesterStats()">
+        <span style="position: relative; z-index: 1;">📊 إحصائيات الفصول</span>
+      </button>
     </div>
 
     <!-- إضافة درس جديد -->
@@ -526,11 +620,31 @@ body::after {
         <input id="author" placeholder="الأستاذ خليل البلوشي" value="الأستاذ خليل البلوشي">
       </div>
 
+      <div class="form-group">
+        <label>الفصل الدراسي</label>
+        <select id="semester">
+          <option value="1">الفصل الدراسي الأول</option>
+          <option value="2">الفصل الدراسي الثاني</option>
+        </select>
+      </div>
+
       <button class="btn btn-success" onclick="addLesson()">
         <span style="position: relative; z-index: 1;">➕ إضافة الدرس</span>
       </button>
 
       <div id="status"></div>
+    </div>
+
+    <!-- فلتر الدروس -->
+    <div class="card">
+      <h3>🎯 تصفية الدروس</h3>
+      <div class="filters">
+        <button class="filter-btn active" onclick="filterLessons('all')">الكل</button>
+        <button class="filter-btn" onclick="filterLessons('1')">الفصل الدراسي الأول</button>
+        <button class="filter-btn" onclick="filterLessons('2')">الفصل الدراسي الثاني</button>
+        <button class="filter-btn" onclick="filterLessons('ON')">منشور فقط</button>
+        <button class="filter-btn" onclick="filterLessons('OFF')">غير منشور</button>
+      </div>
     </div>
 
     <!-- قائمة الدروس -->
@@ -547,6 +661,8 @@ body::after {
 <script>
 const API = "https://script.google.com/macros/s/AKfycbx61Y4tVA1j_L2c2_3EoVQX7hb5Ysh5tbFvavj2M48ZwCmWvH78Qd5uwYtUwiV-BkD5tQ/exec";
 let ADMIN_PASS = "";
+let allLessons = [];
+let currentFilter = 'all';
 
 function login(){
   ADMIN_PASS = document.getElementById("pass").value.trim();
@@ -584,34 +700,74 @@ function loadLessons(){
   })
   .then(r=>r.json())
   .then(data=>{
-    const box = document.getElementById("list");
-    box.innerHTML = "";
-    data.forEach(l=>{
-      const card = document.createElement("div");
-      card.className = "lesson-card";
-      card.innerHTML = `
-        <div class="lesson-title">${l.title}</div>
-        <div class="lesson-meta">
-          <div class="meta-item">👁️ <strong>${l.views}</strong> زيارة</div>
-          <div class="meta-item">🗓️ ${l.publish_date || "غير محدد"}</div>
-          <div class="meta-item">✍️ ${l.author || "غير محدد"}</div>
-        </div>
-        <div class="lesson-actions">
-          <button class="btn-toggle ${l.status=="ON"?"on":"off"}"
-            onclick="toggleLesson('${l.id}','${l.status=="ON"?"OFF":"ON"}')">
-            ${l.status=="ON"?"🟢 منشور":"🔴 غير منشور"}
-          </button>
-        </div>
-      `;
-      box.appendChild(card);
-    });
+    allLessons = data;
+    displayLessons(data);
   });
+}
+
+function displayLessons(lessons){
+  const box = document.getElementById("list");
+  if(lessons.length === 0){
+    box.innerHTML = '<div style="text-align:center; padding:40px; color:#94a3b8">لا توجد دروس لعرضها</div>';
+    return;
+  }
+  
+  box.innerHTML = "";
+  lessons.forEach(l=>{
+    const semesterText = l.semester === "1" ? "الفصل الأول" : "الفصل الثاني";
+    const semesterClass = l.semester === "1" ? "semester-1" : "semester-2";
+    
+    const card = document.createElement("div");
+    card.className = "lesson-card";
+    card.innerHTML = `
+      <div class="lesson-title">
+        ${l.title}
+        <span class="semester-badge ${semesterClass}">${semesterText}</span>
+      </div>
+      <div class="lesson-meta">
+        <div class="meta-item">👁️ <strong>${l.views}</strong> زيارة</div>
+        <div class="meta-item">🗓️ ${l.publish_date || "غير محدد"}</div>
+        <div class="meta-item">✍️ ${l.author || "غير محدد"}</div>
+      </div>
+      <div class="lesson-actions">
+        <button class="btn-toggle ${l.status=="ON"?"on":"off"}"
+          onclick="toggleLesson('${l.id}','${l.status=="ON"?"OFF":"ON"}')">
+          ${l.status=="ON"?"🟢 منشور":"🔴 غير منشور"}
+        </button>
+        <button class="btn-edit" onclick="editLesson('${l.id}')">
+          ✏️ تعديل الفصل
+        </button>
+      </div>
+    `;
+    box.appendChild(card);
+  });
+}
+
+function filterLessons(filter){
+  currentFilter = filter;
+  
+  // تحديد الأزرار النشطة
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+  
+  let filtered = allLessons;
+  
+  if(filter === '1' || filter === '2'){
+    filtered = allLessons.filter(l => l.semester === filter);
+  } else if(filter === 'ON' || filter === 'OFF'){
+    filtered = allLessons.filter(l => l.status === filter);
+  }
+  
+  displayLessons(filtered);
 }
 
 function addLesson(){
   const title = document.getElementById("title").value.trim();
   const url   = document.getElementById("url").value.trim();
   const author= document.getElementById("author").value.trim();
+  const semester = document.getElementById("semester").value;
 
   if(!title || !url){
     setStatus("❌ يرجى إدخال العنوان والرابط", false);
@@ -625,7 +781,8 @@ function addLesson(){
       password:ADMIN_PASS,
       title:title,
       url:url,
-      author:author
+      author:author,
+      semester:semester
     })
   })
   .then(r=>r.json())
@@ -635,9 +792,36 @@ function addLesson(){
       document.getElementById("title").value="";
       document.getElementById("url").value="";
       document.getElementById("author").value="الأستاذ خليل البلوشي";
+      document.getElementById("semester").value="1";
       loadLessons();
     }
   });
+}
+
+function editLesson(id){
+  const lesson = allLessons.find(l => l.id === id);
+  if(!lesson) return;
+  
+  const newSemester = prompt(`تعديل الفصل الدراسي للدرس:\n"${lesson.title}"\n\nأدخل 1 للفصل الأول أو 2 للفصل الثاني:`, lesson.semester || "1");
+  
+  if(newSemester !== null && (newSemester === "1" || newSemester === "2")){
+    fetch(API,{
+      method:"POST",
+      body:JSON.stringify({
+        action:"update",
+        password:ADMIN_PASS,
+        id:id,
+        semester:newSemester
+      })
+    })
+    .then(r=>r.json())
+    .then(res=>{
+      if(res.success){
+        setStatus("✅ تم تحديث الفصل الدراسي بنجاح", true);
+        loadLessons();
+      }
+    });
+  }
 }
 
 function toggleLesson(id,status){
@@ -651,6 +835,27 @@ function toggleLesson(id,status){
     })
   })
   .then(()=>loadLessons());
+}
+
+function showSemesterStats(){
+  const semester1 = allLessons.filter(l => l.semester === "1");
+  const semester2 = allLessons.filter(l => l.semester === "2");
+  const published1 = semester1.filter(l => l.status === "ON");
+  const published2 = semester2.filter(l => l.status === "ON");
+  
+  alert(`📊 إحصائيات الفصول الدراسية:
+  
+الفصل الدراسي الأول:
+- إجمالي الدروس: ${semester1.length}
+- الدروس المنشورة: ${published1.length}
+- الدروس المخفية: ${semester1.length - published1.length}
+
+الفصل الدراسي الثاني:
+- إجمالي الدروس: ${semester2.length}
+- الدروس المنشورة: ${published2.length}
+- الدروس المخفية: ${semester2.length - published2.length}
+
+المجموع الكلي: ${allLessons.length} درس`);
 }
 
 function setStatus(msg, success){
