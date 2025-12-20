@@ -18,7 +18,7 @@ body{
 }
 .container{max-width:1100px;margin:auto}
 
-/* ===== أزرار ===== */
+/* أزرار */
 .btn{
   padding:12px 18px;
   border-radius:12px;
@@ -29,13 +29,13 @@ body{
   transition:.3s
 }
 .btn:hover{transform:translateY(-2px)}
-.btn-primary{background:#8b5cf6;color:#fff}
 .btn-success{background:#10b981;color:#fff}
+.btn-secondary{background:#374151;color:#fff}
 .btn-warning{background:#f59e0b;color:#fff}
 .btn-danger{background:#ef4444;color:#fff}
-.btn-secondary{background:#374151;color:#fff}
+.btn-primary{background:#8b5cf6;color:#fff}
 
-/* ===== تسجيل الدخول ===== */
+/* تسجيل الدخول */
 .login-card{
   max-width:420px;
   margin:120px auto;
@@ -55,7 +55,7 @@ body{
   margin:20px 0
 }
 
-/* ===== لوحة التحكم ===== */
+/* لوحة التحكم */
 .hidden{display:none}
 .panel-header{
   background:#1e1e2e;
@@ -65,25 +65,13 @@ body{
   text-align:center;
   position:relative
 }
-.panel-header h2{color:#a78bfa}
-
-/* أيقونة الرجوع */
 .home-icon{
-  position:absolute;
-  top:20px;
-  right:20px;
-  width:44px;
-  height:44px;
-  border-radius:50%;
+  position:absolute;top:20px;right:20px;
+  width:44px;height:44px;border-radius:50%;
   background:linear-gradient(135deg,#8b5cf6,#6d28d9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-  cursor:pointer;
-  box-shadow:0 8px 25px rgba(139,92,246,.6)
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;cursor:pointer
 }
-.home-icon:hover{transform:scale(1.1)}
 
 .card{
   background:#1e1e2e;
@@ -92,18 +80,7 @@ body{
   margin-bottom:25px
 }
 
-.form-group{margin-bottom:15px}
-.form-group label{display:block;margin-bottom:6px}
-.form-group input,select{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:2px solid #8b5cf6;
-  background:#0f172a;
-  color:#fff
-}
-
-/* ===== الدروس ===== */
+/* الدروس */
 .lesson-card{
   background:#0f172a;
   border:1px solid #8b5cf633;
@@ -114,27 +91,27 @@ body{
 .lesson-title{
   font-weight:700;
   margin-bottom:10px;
-  display:flex;
-  gap:10px;
-  align-items:center
+  display:flex;gap:10px;align-items:center
 }
 .badge{
-  padding:4px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:700
+  padding:4px 10px;border-radius:999px;
+  font-size:12px;font-weight:700
 }
 .b1{background:#3b82f6}
 .b2{background:#10b981}
 .meta{font-size:14px;color:#cbd5e1;margin-bottom:10px}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
+input,select{
+  width:100%;padding:12px;border-radius:10px;
+  border:2px solid #8b5cf6;background:#020617;color:#fff
+}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<!-- تسجيل الدخول -->
+<!-- LOGIN -->
 <div id="loginBox" class="login-card">
   <h2>🔐 لوحة التحكم</h2>
   <input id="pass" type="password" placeholder="كلمة المرور">
@@ -142,41 +119,14 @@ body{
   <div id="loginMsg"></div>
 </div>
 
-<!-- لوحة التحكم -->
+<!-- PANEL -->
 <div id="panel" class="hidden">
 
   <div class="panel-header">
-    <div class="home-icon" onclick="goHome()" title="العودة للرئيسية">🏠</div>
-    <h2>📚 نظام إدارة الدروس</h2>
-    <p>تحكم كامل بالمحتوى</p>
+    <div class="home-icon" onclick="goHome()">🏠</div>
+    <h2>📚 إدارة الدروس</h2>
   </div>
 
-  <!-- إضافة -->
-  <div class="card">
-    <h3>➕ إضافة درس</h3>
-    <div class="form-group">
-      <label>العنوان</label>
-      <input id="title">
-    </div>
-    <div class="form-group">
-      <label>الرابط</label>
-      <input id="url">
-    </div>
-    <div class="form-group">
-      <label>الأستاذ</label>
-      <input id="author" value="الأستاذ خليل البلوشي">
-    </div>
-    <div class="form-group">
-      <label>الفصل</label>
-      <select id="semester">
-        <option value="1">الفصل الأول</option>
-        <option value="2">الفصل الثاني</option>
-      </select>
-    </div>
-    <button class="btn btn-success" onclick="addLesson()">إضافة</button>
-  </div>
-
-  <!-- قائمة -->
   <div class="card">
     <h3>📋 قائمة الدروس</h3>
     <div id="list">جاري التحميل…</div>
@@ -189,16 +139,16 @@ body{
 const API="https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
 let ADMIN_PASS="";
 let allLessons=[];
+let editingId=null;
 
-/* تسجيل الدخول */
+/* LOGIN */
 function login(){
-  ADMIN_PASS=document.getElementById("pass").value.trim();
+  ADMIN_PASS=pass.value.trim();
   fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
   .then(r=>r.json())
   .then(d=>{
-    if(d.error){
-      loginMsg.textContent="❌ كلمة المرور غير صحيحة";
-    }else{
+    if(d.error){loginMsg.textContent="❌ خطأ";}
+    else{
       loginBox.classList.add("hidden");
       panel.classList.remove("hidden");
       loadLessons();
@@ -206,96 +156,83 @@ function login(){
   });
 }
 
-/* تحميل الدروس */
+/* LOAD */
 function loadLessons(){
   list.textContent="⏳ تحميل...";
   fetch(API,{method:"POST",body:JSON.stringify({action:"get",password:ADMIN_PASS})})
   .then(r=>r.json())
   .then(data=>{
-    allLessons=data
-      .filter(l=>l.status!=="DELETED")
-      .map(l=>({...l,_ts:l.publish_date?new Date(l.publish_date).getTime():0}))
-      .sort((a,b)=>{
-        if(a.pinned==="YES"&&b.pinned!=="YES")return -1;
-        if(a.pinned!=="YES"&&b.pinned==="YES")return 1;
-        return b._ts-a._ts;
-      });
+    allLessons=data.filter(l=>l.status!=="DELETED");
     render(allLessons);
   });
 }
 
-/* عرض */
+/* RENDER */
 function render(arr){
   list.innerHTML="";
   arr.forEach(l=>{
     const div=document.createElement("div");
     div.className="lesson-card";
-    div.innerHTML=`
-      <div class="lesson-title">
-        <span class="badge ${l.semester==="1"?"b1":"b2"}">${l.semester==="1"?"الأول":"الثاني"}</span>
-        ${l.pinned==="YES"?"📌":""}
-        ${l.title}
-      </div>
-      <div class="meta">
-        👁️ ${l.views||0} | 📅 ${l.publish_date||"-"} | ✍️ ${l.author||"-"}
-      </div>
-      <div class="actions">
-        <button class="btn btn-success" onclick="toggle('${l.id}','${l.status==="ON"?"OFF":"ON"}')">
-          ${l.status==="ON"?"منشور":"مخفي"}
-        </button>
-        <button class="btn btn-secondary" onclick="pin('${l.id}','${l.pinned==="YES"?"NO":"YES"}')">📌 تثبيت</button>
-        <button class="btn btn-danger" onclick="delLesson('${l.id}')">🗑️ حذف</button>
-      </div>
-    `;
+
+    if(editingId===l.id){
+      div.innerHTML=`
+        <input id="e-title" value="${l.title}">
+        <input id="e-url" value="${l.url}">
+        <input id="e-author" value="${l.author||""}">
+        <select id="e-sem">
+          <option value="1" ${l.semester==="1"?"selected":""}>الفصل الأول</option>
+          <option value="2" ${l.semester==="2"?"selected":""}>الفصل الثاني</option>
+        </select>
+        <div class="actions">
+          <button class="btn btn-success" onclick="saveEdit('${l.id}')">💾 حفظ</button>
+          <button class="btn btn-secondary" onclick="cancelEdit()">❌ إلغاء</button>
+        </div>`;
+    }else{
+      div.innerHTML=`
+        <div class="lesson-title">
+          <span class="badge ${l.semester==="1"?"b1":"b2"}">${l.semester==="1"?"الأول":"الثاني"}</span>
+          ${l.title}
+        </div>
+        <div class="meta">✍️ ${l.author||"-"} | 📅 ${l.publish_date||"-"}</div>
+        <div class="actions">
+          <button class="btn btn-warning" onclick="startEdit('${l.id}')">✏️ تعديل</button>
+          <button class="btn btn-danger" onclick="delLesson('${l.id}')">🗑️ حذف</button>
+        </div>`;
+    }
     list.appendChild(div);
   });
 }
 
-/* إضافة */
-function addLesson(){
+/* EDIT */
+function startEdit(id){editingId=id;render(allLessons)}
+function cancelEdit(){editingId=null;render(allLessons)}
+
+function saveEdit(id){
   fetch(API,{
     method:"POST",
     body:JSON.stringify({
-      action:"add",
-      password:ADMIN_PASS,
-      title:title.value,
-      url:url.value,
-      author:author.value,
-      semester:semester.value
-    })
-  }).then(()=>loadLessons());
-}
-
-/* نشر / إخفاء */
-function toggle(id,status){
-  fetch(API,{method:"POST",body:JSON.stringify({action:"toggle",password:ADMIN_PASS,id,status})})
-  .then(()=>loadLessons());
-}
-
-/* تثبيت */
-function pin(id,pinned){
-  fetch(API,{method:"POST",body:JSON.stringify({action:"pin",password:ADMIN_PASS,id,pinned})})
-  .then(()=>loadLessons());
-}
-
-/* حذف (تم إصلاحه ✅) */
-function delLesson(id){
-  if(!confirm("⚠️ هل تريد حذف الدرس؟")) return;
-  fetch(API,{
-    method:"POST",
-    body:JSON.stringify({
-      action:"toggle",
+      action:"edit",
       password:ADMIN_PASS,
       id:id,
-      status:"DELETED"
+      title:document.getElementById("e-title").value,
+      url:document.getElementById("e-url").value,
+      author:document.getElementById("e-author").value,
+      semester:document.getElementById("e-sem").value
     })
+  }).then(()=>{editingId=null;loadLessons()});
+}
+
+/* DELETE */
+function delLesson(id){
+  if(!confirm("حذف الدرس؟"))return;
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({action:"toggle",password:ADMIN_PASS,id,status:"DELETED"})
   }).then(()=>loadLessons());
 }
 
-/* العودة للرئيسية */
-function goHome(){
-  window.location.href="public.html";
-}
+/* HOME */
+function goHome(){window.location.href="public.html";}
 </script>
 
 </body>
