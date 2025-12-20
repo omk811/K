@@ -865,236 +865,108 @@
           });
       });
     }
-<!-- ===============================
-     إعلان ختامي منبثق – بعد إنجاز الحصة
-     =============================== -->
-<div id="finalPopup" class="final-popup" aria-hidden="true">
-  <div class="final-popup__backdrop" data-fp-close></div>
+<!-- نافذة منبثقة مختصرة للاستفسارات -->
+<div id="askPopup" class="ask-popup">
+  <div class="ask-popup__backdrop" onclick="closeAskPopup()"></div>
 
-  <div class="final-popup__card" role="dialog" aria-modal="true" aria-labelledby="fpTitle">
-    <button class="final-popup__close" type="button" aria-label="إغلاق" data-fp-close>×</button>
+  <div class="ask-popup__box">
+    <button class="ask-popup__close" onclick="closeAskPopup()">×</button>
 
-    <div class="final-popup__badge">تم الإنجاز ✔</div>
+    <h3>📌 للاستفسارات الخاصة بالمنهج</h3>
 
-    <h2 id="fpTitle" class="final-popup__title">
-      بحمد الله وتوفيقه
-    </h2>
-
-    <p class="final-popup__text">
-      تم <b>إنجاز الحصة الختامية</b> والانتهاء من
-      <span class="final-popup__gold">جميع الدروس المرئية</span>
-      الخاصة بمادة اللغة العربية للصف الخامس عبر قناة اليوتيوب.
-      <br><br>
-      المرحلة القادمة تعتمد على <b>التدريب الجاد</b>،
-      ومراجعة نماذج الاختبارات،
-      والالتزام بالحل <b>بالقلم والورقة</b>.
+    <p>
+      زر الرابط التالي لطرح سؤالك:<br>
+      <a href="https://omk811.github.io/K/index.html" target="_blank">
+        صفحة الاستفسارات
+      </a>
     </p>
 
-    <!-- الأزرار -->
-    <div class="final-popup__actions">
-      <a class="final-popup__btn final-popup__btn--primary"
-         href="https://www.youtube.com/@teacherKhalil811"
-         target="_blank" rel="noopener">
-        الانتقال إلى القناة
-      </a>
+    <p class="note">
+      سيتم الرد على <b>نفس الموقع</b>.<br>
+      لا تنسَ زيارته لمعرفة الإجابة.<br>
+      ⏳ الرد قد يستغرق دقائق وربما ساعات 😊
+    </p>
 
-      <a class="final-popup__btn final-popup__btn--info"
-         href="https://omk811.github.io/info/"
-         target="_blank" rel="noopener">
-        الاستفسارات والأسئلة
-      </a>
-
-      <button class="final-popup__btn final-popup__btn--ghost" type="button" data-fp-close>
-        إغلاق
-      </button>
-    </div>
-
-    <div class="final-popup__hint">
-      🎯 الآن وقت التنفيذ لا المشاهدة فقط<br>
-      من يتدرّب بذكاء… يدخل الاختبار بثقة.
-    </div>
-
-    <label class="final-popup__dontshow">
-      <input type="checkbox" id="fpDontShow">
-      لا تُظهر هذا الإعلان مرة أخرى
-    </label>
+    <button class="ask-popup__btn" onclick="closeAskPopup()">فهمت</button>
   </div>
 </div>
 
 <style>
-/* ===== Scoped CSS — لا يؤثر على القالب ===== */
-.final-popup{
-  direction:rtl;
-  font-family:inherit;
+.ask-popup{
   position:fixed;
   inset:0;
-  z-index:999999;
+  z-index:99999;
   display:none;
+  font-family:inherit;
+  direction:rtl;
 }
-.final-popup.is-open{display:block}
+.ask-popup.show{display:block}
 
-.final-popup__backdrop{
+.ask-popup__backdrop{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,.7);
-  backdrop-filter:blur(3px);
+  background:rgba(0,0,0,.6);
 }
 
-.final-popup__card{
+.ask-popup__box{
   position:relative;
-  width:min(92vw,520px);
-  margin:min(10vh,90px) auto 0;
-  background:linear-gradient(135deg,#0e0e0e 0%,#151515 60%,#0b0b0b 100%);
+  width:min(90%,420px);
+  margin:15vh auto 0;
+  background:#111;
   color:#fff;
-  border-radius:18px;
-  padding:18px;
-  box-shadow:0 20px 55px rgba(0,0,0,.5);
-  border:1px solid rgba(212,175,55,.25);
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
 }
 
-.final-popup__close{
+.ask-popup__close{
   position:absolute;
-  top:10px;
-  left:10px;
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.06);
+  top:8px;
+  left:8px;
+  background:none;
+  border:none;
   color:#fff;
   font-size:22px;
   cursor:pointer;
 }
 
-.final-popup__badge{
-  display:inline-block;
-  background:rgba(46,204,113,.18);
-  border:1px solid rgba(46,204,113,.4);
-  color:#2ecc71;
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:800;
-  margin-bottom:10px;
+.ask-popup h3{
+  margin:0 0 10px;
+  font-size:18px;
 }
 
-.final-popup__title{
-  margin:0 0 8px;
-  font-size:20px;
-  font-weight:800;
-}
-
-.final-popup__text{
-  margin:0 0 14px;
-  font-size:14.5px;
-  line-height:1.9;
-  color:rgba(255,255,255,.92);
-}
-
-.final-popup__gold{
-  color:#d4af37;
-  font-weight:800;
-}
-
-.final-popup__actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:12px;
-}
-
-.final-popup__btn{
-  border:0;
-  cursor:pointer;
-  border-radius:14px;
-  padding:12px;
-  font-weight:800;
+.ask-popup p{
   font-size:14px;
-  min-width:140px;
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.final-popup__btn--primary{
-  background:linear-gradient(135deg,#d4af37,#b98f17);
-  color:#111;
-}
-
-.final-popup__btn--info{
-  background:linear-gradient(135deg,#3498db,#1f6fb2);
-  color:#fff;
-}
-
-.final-popup__btn--ghost{
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  border:1px solid rgba(255,255,255,.15);
-}
-
-.final-popup__hint{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:14px;
-  padding:10px;
-  font-size:13.5px;
   line-height:1.8;
+  margin:0 0 10px;
 }
 
-.final-popup__dontshow{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:10px;
-  font-size:12.5px;
-  color:rgba(255,255,255,.8);
+.ask-popup a{
+  color:#d4af37;
+  font-weight:700;
+  text-decoration:none;
 }
 
-@media(max-width:420px){
-  .final-popup__btn{min-width:100%}
-  .final-popup__title{font-size:19px}
+.ask-popup .note{
+  font-size:13px;
+  color:#ddd;
+}
+
+.ask-popup__btn{
+  width:100%;
+  margin-top:8px;
+  padding:10px;
+  border:none;
+  border-radius:12px;
+  background:#d4af37;
+  color:#111;
+  font-weight:800;
+  cursor:pointer;
 }
 </style>
 
 <script>
-/* ===== منطق العرض ===== */
-(function(){
-  const popup = document.getElementById("finalPopup");
-  const STORAGE_KEY = "final_popup_hide_v1";
-  const dontShow = document.getElementById("fpDontShow");
-  if(!popup) return;
+function closeAskPopup()
 
-  if(localStorage.getItem(STORAGE_KEY)==="1") return;
-
-  function openPopup(){
-    popup.classList.add("is-open");
-    popup.setAttribute("aria-hidden","false");
-    document.documentElement.style.overflow="hidden";
-  }
-
-  function closePopup(){
-    popup.classList.remove("is-open");
-    popup.setAttribute("aria-hidden","true");
-    document.documentElement.style.overflow="";
-    if(dontShow && dontShow.checked){
-      localStorage.setItem(STORAGE_KEY,"1");
-    }
-  }
-
-  popup.addEventListener("click",e=>{
-    if(e.target.hasAttribute("data-fp-close")) closePopup();
-  });
-
-  document.addEventListener("keydown",e=>{
-    if(e.key==="Escape" && popup.classList.contains("is-open")){
-      closePopup();
-    }
-  });
-
-  /* يظهر بعد التحميل بثانيتين */
-  setTimeout(openPopup,1200);
-})();
-</script>
 </body>
 </html>
