@@ -450,7 +450,8 @@
   </div>
 
   <script>
-    const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90ZilPRwpQjRVUGJd2fOSqnw/exec";
+    // الرابط الأصلي من الكود السابق
+    const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
     let allLessons = [];
     
     // تعيين السنة الحالية في الفوتر
@@ -471,12 +472,30 @@
     function loadLessons() {
       fetch(API, {
         method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ action: "getPublic" })
       })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
+        // إذا كانت البيانات تحتوي على خصائص غير صحيحة
+        if (!Array.isArray(data)) {
+          console.error("Data is not an array:", data);
+          throw new Error("Invalid data format received from server");
+        }
+        
         // فرز الدروس حسب تاريخ النشر (الأحدث أولاً)
-        allLessons = data.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
+        allLessons = data.sort((a, b) => {
+          const dateA = a.publish_date ? new Date(a.publish_date) : new Date(0);
+          const dateB = b.publish_date ? new Date(b.publish_date) : new Date(0);
+          return dateB - dateA;
+        });
         render(allLessons);
       })
       .catch(error => {
@@ -485,6 +504,7 @@
           <div class="empty">
             <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 1rem; color: #ef4444;"></i>
             <p>حدث خطأ في تحميل الدروس. يرجى المحاولة مرة أخرى.</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem;">${error.message}</p>
           </div>
         `;
       });
@@ -507,30 +527,39 @@
       lessonsContainer.innerHTML = "";
       
       lessons.forEach(lesson => {
+        // التأكد من أن البيانات موجودة
+        const title = lesson.title || "عنوان غير متوفر";
+        const semester = lesson.semester || "1";
+        const author = lesson.author || "الأستاذ خليل";
+        const publishDate = lesson.publish_date || null;
+        const url = lesson.url || "#";
+        
         const div = document.createElement("div");
         div.className = "lesson-card";
         
         div.innerHTML = `
-          <span class="badge ${lesson.semester === "1" ? "sem1" : "sem2"}">
-            <i class="fas ${lesson.semester === "1" ? "fa-sun" : "fa-moon"}"></i>
-            ${lesson.semester === "1" ? "الفصل الأول" : "الفصل الثاني"}
+          <span class="badge ${semester === "1" ? "sem1" : "sem2"}">
+            <i class="fas ${semester === "1" ? "fa-sun" : "fa-moon"}"></i>
+            ${semester === "1" ? "الفصل الأول" : "الفصل الثاني"}
           </span>
           
-          <div class="lesson-title">${lesson.title}</div>
+          <div class="lesson-title">${title}</div>
           
           <div class="meta">
             <div class="meta-item">
               <i class="fas fa-user-graduate"></i>
-              <span>${lesson.author || "الأستاذ خليل"}</span>
+              <span>${author}</span>
             </div>
             
+            ${publishDate ? `
             <div class="meta-item">
               <i class="fas fa-calendar-alt"></i>
-              <span class="date">${formatDate(lesson.publish_date)}</span>
+              <span class="date">${formatDate(publishDate)}</span>
             </div>
+            ` : ''}
           </div>
           
-          <a class="btn-lesson" target="_blank" href="${lesson.url}">
+          <a class="btn-lesson" target="_blank" href="${url}">
             <i class="fas fa-play-circle"></i>
             ابدأ الشرح الآن
           </a>
@@ -579,16 +608,18 @@
       }
       
       // فلترة الدروس حسب نص البحث
-      const filteredLessons = allLessons.filter(lesson => 
-        lesson.title.toLowerCase().includes(searchTerm) ||
-        (lesson.author && lesson.author.toLowerCase().includes(searchTerm))
-      );
+      const filteredLessons = allLessons.filter(lesson => {
+        const title = lesson.title || "";
+        const author = lesson.author || "";
+        return title.toLowerCase().includes(searchTerm) || 
+               author.toLowerCase().includes(searchTerm);
+      });
       
       render(filteredLessons);
     }
 
     // تحميل الدروس عند فتح الصفحة
-    loadLessons();
+    window.addEventListener('DOMContentLoaded', loadLessons);
   </script>
 </body>
 </html>
