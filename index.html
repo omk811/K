@@ -5,220 +5,235 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>دروس الصف الخامس | الأستاذ خليل البلوشي</title>
 
-  <!-- استخدام خط Baloo Bhaijaan 2 -->
+  <!-- الخط -->
   <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --primary:#22c55e;
+      --secondary:#3b82f6;
+      --bg:#f1f5f9;
+      --glass:rgba(255,255,255,.65);
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --shadow:0 10px 25px rgba(0,0,0,.08);
+      --radius:18px;
     }
 
-    :root {
-      --primary: #22c55e;
-      --secondary: #3b82f6;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --muted: #94a3b8;
-      --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    body{
+      font-family:"Baloo Bhaijaan 2",sans-serif;
+      background:
+        radial-gradient(circle at top right,#e0f2fe,transparent 40%),
+        radial-gradient(circle at bottom left,#dcfce7,transparent 45%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      padding:20px;
     }
 
-    body {
-      font-family: "Baloo Bhaijaan 2", sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 20px;
-      line-height: 1.6;
+    .container{max-width:1200px;margin:auto}
+
+    /* ===== Header ===== */
+    header{
+      background:var(--glass);
+      backdrop-filter:blur(14px);
+      border-radius:24px;
+      padding:36px 22px;
+      text-align:center;
+      margin-bottom:32px;
+      box-shadow:var(--shadow);
+      animation:fadeDown .6s ease;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
+    header h1{
+      font-size:2.4em;
+      font-weight:700;
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      -webkit-background-clip:text;
+      color:transparent;
+      margin-bottom:10px;
     }
 
-    header {
-      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-      border-radius: 20px;
-      padding: 30px 20px;
-      text-align: center;
-      margin-bottom: 30px;
-      box-shadow: var(--shadow);
+    header p{
+      font-size:1.1em;
+      color:var(--muted);
+      font-weight:500;
     }
 
-    header h1 {
-      font-size: 2.2em;
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      color: transparent;
-      font-weight: 700;
+    /* ===== Admin Icon ===== */
+    .admin-icon{
+      position:fixed;
+      top:20px;
+      left:20px;
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      text-decoration:none;
+      box-shadow:0 8px 18px rgba(0,0,0,.15);
+      z-index:100;
+      transition:.3s;
     }
 
-    header p {
-      color: var(--muted);
-      font-size: 1.1em;
-      font-weight: 500;
+    .admin-icon:hover{
+      transform:scale(1.08) rotate(-5deg);
     }
 
-    .admin-icon {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      text-decoration: none;
-      box-shadow: var(--shadow);
-      z-index: 100;
+    /* ===== Filters ===== */
+    .filters{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      margin-bottom:30px;
+      flex-wrap:wrap;
     }
 
-    .filters {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
+    .filter-btn{
+      padding:10px 22px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.08);
+      background:rgba(255,255,255,.8);
+      backdrop-filter:blur(8px);
+      font-weight:600;
+      cursor:pointer;
+      transition:.25s;
     }
 
-    .filter-btn {
-      padding: 10px 20px;
-      border-radius: 50px;
-      border: 1px solid var(--muted);
-      background: #fff;
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s;
+    .filter-btn:hover{
+      transform:translateY(-2px);
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
     }
 
-    .filter-btn:hover {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
+    .filter-btn.active{
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      color:#fff;
+      border-color:transparent;
+      box-shadow:0 6px 14px rgba(0,0,0,.15);
     }
 
-    .filter-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
+    /* ===== Lessons Grid ===== */
+    .lessons-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:22px;
     }
 
-    .lessons-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+    .lesson-card{
+      background:var(--glass);
+      backdrop-filter:blur(10px);
+      border-radius:var(--radius);
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.4);
+      transition:.3s;
+      animation:fadeUp .4s ease both;
     }
 
-    .lesson-card {
-      background: var(--card);
-      border-radius: 15px;
-      padding: 20px;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: var(--shadow);
+    .lesson-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 18px 35px rgba(0,0,0,.15);
     }
 
-    .lesson-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    .badge{
+      font-size:12px;
+      font-weight:700;
+      padding:6px 14px;
+      border-radius:999px;
+      margin-bottom:14px;
+      width:fit-content;
+      color:#fff;
     }
 
-    .badge {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 5px 12px;
-      border-radius: 50px;
-      margin-bottom: 12px;
-      display: inline-block;
-      width: fit-content;
+    .sem1{background:linear-gradient(135deg,#22c55e,#16a34a)}
+    .sem2{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+
+    .lesson-title{
+      font-size:1.15em;
+      font-weight:700;
+      margin-bottom:10px;
+      line-height:1.6;
     }
 
-    .sem1 {
-      background: var(--primary);
-      color: #fff;
+    .meta{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:18px;
     }
 
-    .sem2 {
-      background: var(--secondary);
-      color: #fff;
+    .btn-lesson{
+      margin-top:auto;
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      border:none;
+      border-radius:14px;
+      padding:13px;
+      font-weight:700;
+      color:#fff;
+      text-decoration:none;
+      text-align:center;
+      transition:.3s;
     }
 
-    .lesson-title {
-      font-size: 1.1em;
-      font-weight: 600;
-      margin-bottom: 10px;
-      line-height: 1.5;
+    .btn-lesson:hover{
+      transform:scale(1.04);
+      box-shadow:0 8px 20px rgba(0,0,0,.18);
     }
 
-    .meta {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 15px;
+    .loading,.empty{
+      grid-column:1/-1;
+      text-align:center;
+      color:var(--muted);
+      padding:70px 0;
+      font-size:1.1em;
     }
 
-    .btn-lesson {
-      margin-top: auto;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border: none;
-      border-radius: 12px;
-      padding: 12px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      text-decoration: none;
-      text-align: center;
-      transition: all 0.3s;
+    footer{
+      margin-top:50px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+      padding:20px;
     }
 
-    .btn-lesson:hover {
-      opacity: 0.9;
-      transform: scale(1.02);
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(15px)}
+      to{opacity:1;transform:none}
     }
 
-    .loading, .empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      color: var(--muted);
-      padding: 60px 0;
-      font-size: 1.1em;
-    }
-
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-      padding: 20px;
+    @keyframes fadeDown{
+      from{opacity:0;transform:translateY(-15px)}
+      to{opacity:1;transform:none}
     }
   </style>
 </head>
 
 <body>
   <div class="container">
+
     <a href="admin.html" class="admin-icon" title="لوحة التحكم">
       <i class="fas fa-user-graduate"></i>
     </a>
 
     <header>
       <h1>دروس الصف الخامس</h1>
-      <p>منصة تعليمية مبسطة تساعدك على الفهم والتفوق</p>
+      <p>منصة تعليمية ذكية تساعدك على الفهم والتفوّق بثقة</p>
     </header>
 
     <div class="filters">
-      <button class="filter-btn active" onclick="filterLessons('all', this)">الكل</button>
-      <button class="filter-btn" onclick="filterLessons('1', this)">الفصل الأول</button>
-      <button class="filter-btn" onclick="filterLessons('2', this)">الفصل الثاني</button>
+      <button class="filter-btn active" onclick="filterLessons('all',this)">الكل</button>
+      <button class="filter-btn" onclick="filterLessons('1',this)">الفصل الأول</button>
+      <button class="filter-btn" onclick="filterLessons('2',this)">الفصل الثاني</button>
     </div>
 
     <div id="lessonsContainer" class="lessons-grid">
@@ -228,51 +243,49 @@
     <footer>
       © <span id="year"></span> الأستاذ خليل البلوشي
     </footer>
+
   </div>
 
   <script>
-    const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
-    let allLessons = [];
-    document.getElementById("year").textContent = new Date().getFullYear();
+    const API="https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
+    let allLessons=[];
+    document.getElementById("year").textContent=new Date().getFullYear();
 
-    function loadLessons() {
-      fetch(API, {
-        method: "POST",
-        body: JSON.stringify({ action: "getPublic" })
-      })
-      .then(r => r.json())
-      .then(data => {
-        allLessons = data.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
+    function loadLessons(){
+      fetch(API,{method:"POST",body:JSON.stringify({action:"getPublic"})})
+      .then(r=>r.json())
+      .then(data=>{
+        allLessons=data.sort((a,b)=>new Date(b.publish_date)-new Date(a.publish_date));
         render(allLessons);
       });
     }
 
-    function render(arr) {
-      const lessonsContainer = document.getElementById("lessonsContainer");
-      lessonsContainer.innerHTML = "";
-      if (!arr.length) {
-        lessonsContainer.innerHTML = '<div class="empty">لا توجد دروس حالياً</div>';
+    function render(arr){
+      const c=document.getElementById("lessonsContainer");
+      c.innerHTML="";
+      if(!arr.length){
+        c.innerHTML='<div class="empty">لا توجد دروس حالياً</div>';
         return;
       }
-      arr.forEach(l => {
-        const div = document.createElement("div");
-        div.className = "lesson-card";
-        div.innerHTML = `
-          <span class="badge ${l.semester === "1" ? "sem1" : "sem2"}">
-            ${l.semester === "1" ? "الفصل الأول" : "الفصل الثاني"}
+      arr.forEach(l=>{
+        const d=document.createElement("div");
+        d.className="lesson-card";
+        d.innerHTML=`
+          <span class="badge ${l.semester==="1"?"sem1":"sem2"}">
+            ${l.semester==="1"?"الفصل الأول":"الفصل الثاني"}
           </span>
           <div class="lesson-title">${l.title}</div>
-          <div class="meta">✍️ ${l.author || ""}</div>
+          <div class="meta">✍️ ${l.author||""}</div>
           <a class="btn-lesson" target="_blank" href="${l.url}">ابدأ الشرح ▶</a>
         `;
-        lessonsContainer.appendChild(div);
+        c.appendChild(d);
       });
     }
 
-    function filterLessons(f, el) {
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    function filterLessons(f,el){
+      document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
       el.classList.add("active");
-      render(f === "all" ? allLessons : allLessons.filter(l => l.semester === f));
+      render(f==="all"?allLessons:allLessons.filter(l=>l.semester===f));
     }
 
     loadLessons();
