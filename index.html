@@ -1,238 +1,281 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دروس الصف الخامس | الأستاذ خليل البلوشي</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دروس الصف الخامس | الأستاذ خليل البلوشي</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- استخدام خط Baloo Bhaijaan 2 -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-:root{
-  --primary:#22c55e;
-  --secondary:#3b82f6;
-  --bg:#020617;
-  --card:#0f172a;
-  --text:#e5e7eb;
-  --muted:#94a3b8;
-}
+    :root {
+      --primary: #22c55e;
+      --secondary: #3b82f6;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #94a3b8;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
 
-body{
-  font-family:"Cairo",sans-serif;
-  background:linear-gradient(180deg,#020617,#0f172a);
-  color:var(--text);
-  min-height:100vh;
-  padding:20px;
-}
+    body {
+      font-family: "Baloo Bhaijaan 2", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
+    }
 
-.container{max-width:1200px;margin:auto}
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
 
-header{
-  background:#020617;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;
-  padding:40px 20px;
-  text-align:center;
-  margin-bottom:35px;
-}
+    header {
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow);
+    }
 
-header h1{
-  font-size:2.4em;
-  margin-bottom:10px;
-  background:linear-gradient(135deg,#22c55e,#3b82f6);
-  -webkit-background-clip:text;
-  color:transparent;
-}
+    header h1 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
 
-header p{
-  color:var(--muted);
-  font-size:1.05em;
-}
+    header p {
+      color: var(--muted);
+      font-size: 1.1em;
+      font-weight: 500;
+    }
 
-.admin-icon{
-  position:absolute;
-  top:25px;
-  left:25px;
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#3b82f6,#2563eb);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  text-decoration:none;
-}
+    .admin-icon {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+      z-index: 100;
+    }
 
-.filters{
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  margin-bottom:30px;
-  flex-wrap:wrap;
-}
+    .filters {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
 
-.filter-btn{
-  padding:10px 22px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.1);
-  background:#020617;
-  color:#cbd5f5;
-  cursor:pointer;
-  font-weight:600;
-}
+    .filter-btn {
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: 1px solid var(--muted);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
 
-.filter-btn.active{
-  background:var(--primary);
-  color:#022c22;
-}
+    .filter-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
 
-.lessons-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:22px;
-}
+    .filter-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
 
-.lesson-card{
-  background:var(--card);
-  border-radius:18px;
-  padding:22px;
-  border:1px solid rgba(255,255,255,.08);
-  display:flex;
-  flex-direction:column;
-  transition:.3s;
-}
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
 
-.lesson-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 12px 30px rgba(0,0,0,.5);
-}
+    .lesson-card {
+      background: var(--card);
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: var(--shadow);
+    }
 
-.badge{
-  font-size:12px;
-  font-weight:700;
-  padding:4px 12px;
-  border-radius:999px;
-  margin-bottom:12px;
-  display:inline-block;
-}
+    .lesson-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
 
-.sem1{background:#2563eb}
-.sem2{background:#16a34a}
+    .badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+      display: inline-block;
+      width: fit-content;
+    }
 
-.lesson-title{
-  font-size:1.15em;
-  line-height:1.6;
-  margin-bottom:15px;
-}
+    .sem1 {
+      background: var(--primary);
+      color: #fff;
+    }
 
-.meta{
-  font-size:14px;
-  color:var(--muted);
-  margin-bottom:18px;
-}
+    .sem2 {
+      background: var(--secondary);
+      color: #fff;
+    }
 
-.btn-lesson{
-  margin-top:auto;
-  background:linear-gradient(135deg,#22c55e,#16a34a);
-  border:none;
-  border-radius:14px;
-  padding:14px;
-  font-weight:800;
-  color:#022c22;
-  cursor:pointer;
-  text-decoration:none;
-  text-align:center;
-}
+    .lesson-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
 
-.loading,.empty{
-  grid-column:1/-1;
-  text-align:center;
-  color:var(--muted);
-  padding:60px 0;
-}
-footer{
-  margin-top:50px;
-  text-align:center;
-  color:var(--muted);
-  font-size:14px;
-}
-</style>
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 15px;
+    }
+
+    .btn-lesson {
+      margin-top: auto;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .btn-lesson:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .loading, .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--muted);
+      padding: 60px 0;
+      font-size: 1.1em;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      padding: 20px;
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
+    <a href="admin.html" class="admin-icon" title="لوحة التحكم">
+      <i class="fas fa-user-graduate"></i>
+    </a>
 
-<a href="admin.html" class="admin-icon" title="لوحة التحكم">
-  <i class="fas fa-user-graduate"></i>
-</a>
+    <header>
+      <h1>دروس الصف الخامس</h1>
+      <p>منصة تعليمية مبسطة تساعدك على الفهم والتفوق</p>
+    </header>
 
-<header>
-  <h1>دروس الصف الخامس</h1>
-  <p>منصة تعليمية مبسطة تساعدك على الفهم والتفوق</p>
-</header>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterLessons('all', this)">الكل</button>
+      <button class="filter-btn" onclick="filterLessons('1', this)">الفصل الأول</button>
+      <button class="filter-btn" onclick="filterLessons('2', this)">الفصل الثاني</button>
+    </div>
 
-<div class="filters">
-  <button class="filter-btn active" onclick="filterLessons('all',this)">الكل</button>
-  <button class="filter-btn" onclick="filterLessons('1',this)">الفصل الأول</button>
-  <button class="filter-btn" onclick="filterLessons('2',this)">الفصل الثاني</button>
-</div>
+    <div id="lessonsContainer" class="lessons-grid">
+      <div class="loading">⏳ جاري تحميل الدروس...</div>
+    </div>
 
-<div id="lessonsContainer" class="lessons-grid">
-  <div class="loading">⏳ جاري تحميل الدروس...</div>
-</div>
+    <footer>
+      © <span id="year"></span> الأستاذ خليل البلوشي
+    </footer>
+  </div>
 
-<footer>
-  © <span id="year"></span> الأستاذ خليل البلوشي
-</footer>
+  <script>
+    const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
+    let allLessons = [];
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-</div>
+    function loadLessons() {
+      fetch(API, {
+        method: "POST",
+        body: JSON.stringify({ action: "getPublic" })
+      })
+      .then(r => r.json())
+      .then(data => {
+        allLessons = data.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
+        render(allLessons);
+      });
+    }
 
-<script>
-const API="https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
-let allLessons=[];
-year.textContent=new Date().getFullYear();
+    function render(arr) {
+      const lessonsContainer = document.getElementById("lessonsContainer");
+      lessonsContainer.innerHTML = "";
+      if (!arr.length) {
+        lessonsContainer.innerHTML = '<div class="empty">لا توجد دروس حالياً</div>';
+        return;
+      }
+      arr.forEach(l => {
+        const div = document.createElement("div");
+        div.className = "lesson-card";
+        div.innerHTML = `
+          <span class="badge ${l.semester === "1" ? "sem1" : "sem2"}">
+            ${l.semester === "1" ? "الفصل الأول" : "الفصل الثاني"}
+          </span>
+          <div class="lesson-title">${l.title}</div>
+          <div class="meta">✍️ ${l.author || ""}</div>
+          <a class="btn-lesson" target="_blank" href="${l.url}">ابدأ الشرح ▶</a>
+        `;
+        lessonsContainer.appendChild(div);
+      });
+    }
 
-function loadLessons(){
-  fetch(API,{method:"POST",body:JSON.stringify({action:"getPublic"})})
-  .then(r=>r.json())
-  .then(data=>{
-    allLessons=data.sort((a,b)=>new Date(b.publish_date)-new Date(a.publish_date));
-    render(allLessons);
-  });
-}
+    function filterLessons(f, el) {
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      render(f === "all" ? allLessons : allLessons.filter(l => l.semester === f));
+    }
 
-function render(arr){
-  lessonsContainer.innerHTML="";
-  if(!arr.length){
-    lessonsContainer.innerHTML='<div class="empty">لا توجد دروس حالياً</div>';
-    return;
-  }
-  arr.forEach(l=>{
-    const div=document.createElement("div");
-    div.className="lesson-card";
-    div.innerHTML=`
-      <span class="badge ${l.semester==="1"?"sem1":"sem2"}">
-        ${l.semester==="1"?"الفصل الأول":"الفصل الثاني"}
-      </span>
-      <div class="lesson-title">${l.title}</div>
-      <div class="meta">✍️ ${l.author||""}</div>
-      <a class="btn-lesson" target="_blank" href="${l.url}">ابدأ الشرح ▶</a>
-    `;
-    lessonsContainer.appendChild(div);
-  });
-}
-
-function filterLessons(f,el){
-  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-  el.classList.add("active");
-  render(f==="all"?allLessons:allLessons.filter(l=>l.semester===f));
-}
-
-loadLessons();
-</script>
+    loadLessons();
+  </script>
 </body>
 </html>
