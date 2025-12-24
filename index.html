@@ -5,72 +5,122 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>دروس الصف الخامس | الأستاذ خليل البلوشي</title>
 
-  <!-- الخط -->
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
 
     :root{
-      --primary:#22c55e;
-      --secondary:#3b82f6;
-      --bg:#f1f5f9;
-      --glass:rgba(255,255,255,.65);
-      --card:#ffffff;
-      --text:#0f172a;
-      --muted:#64748b;
-      --shadow:0 10px 25px rgba(0,0,0,.08);
-      --radius:18px;
+      --primary:#10b981;
+      --secondary:#6366f1;
+      --accent:#f59e0b;
+      --dark:#0f172a;
+      --darker:#020617;
+      --light:#f8fafc;
+      --glass:rgba(255,255,255,.75);
+      --glass-dark:rgba(15,23,42,.05);
     }
 
     body{
       font-family:"Baloo Bhaijaan 2",sans-serif;
-      background:
-        radial-gradient(circle at top right,#e0f2fe,transparent 40%),
-        radial-gradient(circle at bottom left,#dcfce7,transparent 45%),
-        var(--bg);
-      color:var(--text);
+      background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);
+      color:var(--light);
       min-height:100vh;
-      padding:20px;
+      padding:0;
+      overflow-x:hidden;
+      position:relative;
     }
 
-    .container{max-width:1200px;margin:auto}
+    body::before{
+      content:"";
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:
+        radial-gradient(circle at 20% 30%,rgba(16,185,129,.15),transparent 50%),
+        radial-gradient(circle at 80% 70%,rgba(99,102,241,.15),transparent 50%),
+        radial-gradient(circle at 50% 50%,rgba(245,158,11,.08),transparent 60%);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .container{
+      max-width:1400px;
+      margin:auto;
+      padding:20px;
+      position:relative;
+      z-index:1;
+    }
 
     /* ===== Header ===== */
     header{
-      background:var(--glass);
-      backdrop-filter:blur(14px);
-      border-radius:24px;
-      padding:36px 22px;
       text-align:center;
-      margin-bottom:32px;
-      box-shadow:var(--shadow);
-      animation:fadeDown .6s ease;
+      padding:80px 20px 60px;
+      position:relative;
+      margin-bottom:50px;
+    }
+
+    header::after{
+      content:"";
+      position:absolute;
+      bottom:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:120px;
+      height:4px;
+      background:linear-gradient(90deg,var(--primary),var(--secondary),var(--accent));
+      border-radius:10px;
+      box-shadow:0 0 20px rgba(16,185,129,.5);
+    }
+
+    .header-badge{
+      display:inline-block;
+      background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(99,102,241,.2));
+      border:1px solid rgba(16,185,129,.3);
+      padding:8px 20px;
+      border-radius:50px;
+      font-size:14px;
+      font-weight:600;
+      margin-bottom:20px;
+      color:var(--primary);
+      backdrop-filter:blur(10px);
     }
 
     header h1{
-      font-size:2.4em;
-      font-weight:700;
-      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      font-size:3.5em;
+      font-weight:800;
+      background:linear-gradient(135deg,#10b981,#6366f1,#f59e0b);
       -webkit-background-clip:text;
+      background-clip:text;
       color:transparent;
-      margin-bottom:10px;
+      margin-bottom:18px;
+      line-height:1.2;
+      animation:glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow{
+      0%,100%{filter:drop-shadow(0 0 20px rgba(16,185,129,.4))}
+      50%{filter:drop-shadow(0 0 35px rgba(99,102,241,.6))}
     }
 
     header p{
-      font-size:1.1em;
-      color:var(--muted);
+      font-size:1.3em;
+      color:rgba(248,250,252,.7);
       font-weight:500;
+      max-width:600px;
+      margin:auto;
     }
 
     /* ===== Admin Icon ===== */
     .admin-icon{
       position:fixed;
-      top:20px;
-      left:20px;
-      width:48px;
-      height:48px;
+      top:30px;
+      left:30px;
+      width:56px;
+      height:56px;
       border-radius:50%;
       background:linear-gradient(135deg,var(--primary),var(--secondary));
       display:flex;
@@ -78,142 +128,220 @@
       justify-content:center;
       color:#fff;
       text-decoration:none;
-      box-shadow:0 8px 18px rgba(0,0,0,.15);
-      z-index:100;
-      transition:.3s;
+      box-shadow:0 10px 30px rgba(16,185,129,.4);
+      z-index:1000;
+      transition:.4s cubic-bezier(.34,1.56,.64,1);
+      font-size:20px;
     }
 
     .admin-icon:hover{
-      transform:scale(1.08) rotate(-5deg);
+      transform:scale(1.15) rotate(360deg);
+      box-shadow:0 15px 40px rgba(99,102,241,.6);
     }
 
     /* ===== Filters ===== */
     .filters{
       display:flex;
       justify-content:center;
-      gap:12px;
-      margin-bottom:30px;
+      gap:16px;
+      margin-bottom:50px;
       flex-wrap:wrap;
     }
 
     .filter-btn{
-      padding:10px 22px;
-      border-radius:999px;
-      border:1px solid rgba(0,0,0,.08);
-      background:rgba(255,255,255,.8);
-      backdrop-filter:blur(8px);
-      font-weight:600;
+      padding:14px 32px;
+      border-radius:50px;
+      border:2px solid rgba(248,250,252,.15);
+      background:rgba(15,23,42,.6);
+      backdrop-filter:blur(10px);
+      font-weight:700;
       cursor:pointer;
-      transition:.25s;
+      transition:.3s cubic-bezier(.34,1.56,.64,1);
+      color:rgba(248,250,252,.8);
+      font-size:15px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .filter-btn::before{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:0;
+      height:0;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      transform:translate(-50%,-50%);
+      transition:.5s;
+      z-index:-1;
+    }
+
+    .filter-btn:hover::before{
+      width:300px;
+      height:300px;
     }
 
     .filter-btn:hover{
-      transform:translateY(-2px);
-      background:var(--primary);
-      color:#fff;
+      transform:translateY(-3px);
       border-color:var(--primary);
+      color:#fff;
+      box-shadow:0 10px 25px rgba(16,185,129,.3);
     }
 
     .filter-btn.active{
       background:linear-gradient(135deg,var(--primary),var(--secondary));
       color:#fff;
       border-color:transparent;
-      box-shadow:0 6px 14px rgba(0,0,0,.15);
+      box-shadow:0 10px 30px rgba(16,185,129,.5);
+      transform:scale(1.05);
     }
 
     /* ===== Lessons Grid ===== */
     .lessons-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-      gap:22px;
+      grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+      gap:30px;
+      padding:0 10px;
     }
 
     .lesson-card{
-      background:var(--glass);
-      backdrop-filter:blur(10px);
-      border-radius:var(--radius);
-      padding:20px;
+      background:rgba(15,23,42,.7);
+      backdrop-filter:blur(15px);
+      border-radius:24px;
+      padding:28px;
       display:flex;
       flex-direction:column;
-      box-shadow:var(--shadow);
-      border:1px solid rgba(255,255,255,.4);
-      transition:.3s;
-      animation:fadeUp .4s ease both;
+      box-shadow:0 15px 40px rgba(0,0,0,.3);
+      border:1px solid rgba(248,250,252,.1);
+      transition:.4s cubic-bezier(.34,1.56,.64,1);
+      position:relative;
+      overflow:hidden;
+      animation:fadeUp .6s ease both;
+    }
+
+    .lesson-card::before{
+      content:"";
+      position:absolute;
+      top:-50%;
+      right:-50%;
+      width:200%;
+      height:200%;
+      background:radial-gradient(circle,rgba(16,185,129,.1),transparent 70%);
+      opacity:0;
+      transition:.5s;
+    }
+
+    .lesson-card:hover::before{
+      opacity:1;
+      animation:rotate 8s linear infinite;
+    }
+
+    @keyframes rotate{
+      to{transform:rotate(360deg)}
     }
 
     .lesson-card:hover{
-      transform:translateY(-6px);
-      box-shadow:0 18px 35px rgba(0,0,0,.15);
+      transform:translateY(-10px) scale(1.02);
+      box-shadow:0 25px 60px rgba(16,185,129,.4);
+      border-color:rgba(16,185,129,.4);
     }
 
     .badge{
-      font-size:12px;
-      font-weight:700;
-      padding:6px 14px;
-      border-radius:999px;
-      margin-bottom:14px;
+      font-size:13px;
+      font-weight:800;
+      padding:8px 18px;
+      border-radius:50px;
+      margin-bottom:18px;
       width:fit-content;
       color:#fff;
+      position:relative;
+      z-index:1;
+      box-shadow:0 5px 15px rgba(0,0,0,.2);
     }
 
-    .sem1{background:linear-gradient(135deg,#22c55e,#16a34a)}
-    .sem2{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+    .sem1{
+      background:linear-gradient(135deg,#10b981,#059669);
+    }
+
+    .sem2{
+      background:linear-gradient(135deg,#6366f1,#4f46e5);
+    }
 
     .lesson-title{
-      font-size:1.15em;
+      font-size:1.3em;
       font-weight:700;
-      margin-bottom:10px;
-      line-height:1.6;
+      margin-bottom:14px;
+      line-height:1.5;
+      color:#fff;
+      position:relative;
+      z-index:1;
     }
 
     .meta{
-      font-size:13px;
-      color:var(--muted);
-      margin-bottom:18px;
+      font-size:14px;
+      color:rgba(248,250,252,.6);
+      margin-bottom:24px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      position:relative;
+      z-index:1;
     }
 
     .btn-lesson{
       margin-top:auto;
       background:linear-gradient(135deg,var(--primary),var(--secondary));
       border:none;
-      border-radius:14px;
-      padding:13px;
+      border-radius:16px;
+      padding:16px 24px;
       font-weight:700;
       color:#fff;
       text-decoration:none;
       text-align:center;
       transition:.3s;
+      position:relative;
+      z-index:1;
+      font-size:15px;
+      box-shadow:0 8px 20px rgba(16,185,129,.3);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
     }
 
     .btn-lesson:hover{
-      transform:scale(1.04);
-      box-shadow:0 8px 20px rgba(0,0,0,.18);
+      transform:scale(1.05);
+      box-shadow:0 12px 30px rgba(16,185,129,.5);
+      background:linear-gradient(135deg,var(--secondary),var(--primary));
     }
 
     .loading,.empty{
       grid-column:1/-1;
       text-align:center;
-      color:var(--muted);
-      padding:70px 0;
-      font-size:1.1em;
+      color:rgba(248,250,252,.6);
+      padding:100px 20px;
+      font-size:1.3em;
+      font-weight:600;
     }
 
     footer{
-      margin-top:50px;
+      margin-top:80px;
       text-align:center;
-      color:var(--muted);
-      font-size:14px;
-      padding:20px;
+      color:rgba(248,250,252,.5);
+      font-size:15px;
+      padding:30px;
+      border-top:1px solid rgba(248,250,252,.1);
     }
 
     @keyframes fadeUp{
-      from{opacity:0;transform:translateY(15px)}
+      from{opacity:0;transform:translateY(30px)}
       to{opacity:1;transform:none}
     }
 
-    @keyframes fadeDown{
-      from{opacity:0;transform:translateY(-15px)}
-      to{opacity:1;transform:none}
+    @media(max-width:768px){
+      header h1{font-size:2.5em}
+      .lessons-grid{grid-template-columns:1fr;gap:20px}
     }
   </style>
 </head>
@@ -226,21 +354,32 @@
     </a>
 
     <header>
+      <div class="header-badge">📚 منصة تعليمية متميزة</div>
       <h1>دروس الصف الخامس</h1>
-      <p> كل المواضيع التي تنشر في مدونة الأستاذ خليل البلوشي ستجدها هنا </p>
+      <p>كل المواضيع التي تنشر في مدونة الأستاذ خليل البلوشي ستجدها هنا</p>
     </header>
 
     <div class="filters">
-      <button class="filter-btn active" onclick="filterLessons('all',this)">الكل</button>
-      <button class="filter-btn" onclick="filterLessons('1',this)">الفصل الأول</button>
-      <button class="filter-btn" onclick="filterLessons('2',this)">الفصل الثاني</button>
+      <button class="filter-btn active" onclick="filterLessons('all',this)">
+        <i class="fas fa-th"></i> الكل
+      </button>
+      <button class="filter-btn" onclick="filterLessons('1',this)">
+        <i class="fas fa-book"></i> الفصل الأول
+      </button>
+      <button class="filter-btn" onclick="filterLessons('2',this)">
+        <i class="fas fa-book-open"></i> الفصل الثاني
+      </button>
     </div>
 
     <div id="lessonsContainer" class="lessons-grid">
-      <div class="loading">⏳ جاري تحميل الدروس...</div>
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin" style="font-size:2em;margin-bottom:15px"></i>
+        <br>جاري تحميل الدروس...
+      </div>
     </div>
 
     <footer>
+      <i class="fas fa-heart" style="color:#f59e0b"></i>
       © <span id="year"></span> الأستاذ خليل البلوشي
     </footer>
 
@@ -264,19 +403,27 @@
       const c=document.getElementById("lessonsContainer");
       c.innerHTML="";
       if(!arr.length){
-        c.innerHTML='<div class="empty">لا توجد دروس حالياً</div>';
+        c.innerHTML='<div class="empty"><i class="fas fa-inbox" style="font-size:3em;margin-bottom:15px;opacity:.5"></i><br>لا توجد دروس حالياً</div>';
         return;
       }
-      arr.forEach(l=>{
+      arr.forEach((l,i)=>{
         const d=document.createElement("div");
         d.className="lesson-card";
+        d.style.animationDelay=`${i*.1}s`;
         d.innerHTML=`
           <span class="badge ${l.semester==="1"?"sem1":"sem2"}">
+            <i class="fas fa-bookmark"></i>
             ${l.semester==="1"?"الفصل الأول":"الفصل الثاني"}
           </span>
           <div class="lesson-title">${l.title}</div>
-          <div class="meta">✍️ ${l.author||""}</div>
-          <a class="btn-lesson" target="_blank" href="${l.url}"> انتقل للموضوع ▶</a>
+          <div class="meta">
+            <i class="fas fa-user-circle"></i>
+            ${l.author||""}
+          </div>
+          <a class="btn-lesson" target="_blank" href="${l.url}">
+            انتقل للموضوع
+            <i class="fas fa-arrow-left"></i>
+          </a>
         `;
         c.appendChild(d);
       });
