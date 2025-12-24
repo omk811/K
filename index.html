@@ -449,177 +449,133 @@
     </footer>
   </div>
 
-  <script>
-   
-    const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
-    let allLessons = [];
-    
-    // تعيين السنة الحالية في الفوتر
-    document.getElementById("year").textContent = new Date().getFullYear();
-    
-    // تنسيق التاريخ لعرضه بشكل أفضل
-    function formatDate(dateString) {
-      if (!dateString) return "";
-      const date = new Date(dateString);
-      return date.toLocaleDateString('ar-EG', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-    }
+<script>
+  const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
+  let allLessons = [];
 
-    // تحميل الدروس من API
-    function loadLessons() {
-      fetch(API, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ action: "getPublic" })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
+  // سنة الفوتر
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // تنسيق التاريخ
+  function formatDate(dateString) {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    if (isNaN(date)) return "";
+    return date.toLocaleDateString("ar-EG", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+  }
+
+  // تحميل الدروس (✅ GET بدل POST)
+  function loadLessons() {
+    fetch(API + "?action=getPublic")
+      .then(res => {
+        if (!res.ok) throw new Error("فشل الاتصال بالخادم");
+        return res.json();
       })
       .then(data => {
-        // إذا كانت البيانات تحتوي على خصائص غير صحيحة
         if (!Array.isArray(data)) {
-          console.error("Data is not an array:", data);
-          throw new Error("Invalid data format received from server");
+          throw new Error("صيغة البيانات غير صحيحة");
         }
-        
-        // فرز الدروس حسب تاريخ النشر (الأحدث أولاً)
+
+        // فرز من الأحدث للأقدم
         allLessons = data.sort((a, b) => {
-          const dateA = a.publish_date ? new Date(a.publish_date) : new Date(0);
-          const dateB = b.publish_date ? new Date(b.publish_date) : new Date(0);
-          return dateB - dateA;
+          const da = a.publish_date ? new Date(a.publish_date) : new Date(0);
+          const db = b.publish_date ? new Date(b.publish_date) : new Date(0);
+          return db - da;
         });
+
         render(allLessons);
       })
-      .catch(error => {
-        console.error("Error loading lessons:", error);
+      .catch(err => {
         document.getElementById("lessonsContainer").innerHTML = `
           <div class="empty">
-            <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 1rem; color: #ef4444;"></i>
-            <p>حدث خطأ في تحميل الدروس. يرجى المحاولة مرة أخرى.</p>
-            <p style="font-size: 0.8rem; margin-top: 0.5rem;">${error.message}</p>
+            <p>⚠️ تعذّر تحميل الدروس</p>
+            <small>${err.message}</small>
           </div>
         `;
       });
+  }
+
+  // عرض الدروس
+  function render(lessons) {
+    const container = document.getElementById("lessonsContainer");
+    container.innerHTML = "";
+
+    if (!lessons.length) {
+      container.innerHTML = `
+        <div class="empty">
+          <p>لا توجد دروس حالياً</p>
+        </div>`;
+      return;
     }
 
-    // عرض الدروس في الصفحة
-    function render(lessons) {
-      const lessonsContainer = document.getElementById("lessonsContainer");
-      
-      if (!lessons || lessons.length === 0) {
-        lessonsContainer.innerHTML = `
-          <div class="empty">
-            <i class="fas fa-book-open fa-2x" style="margin-bottom: 1rem; color: var(--text-light);"></i>
-            <p>لا توجد دروس حالياً</p>
+    lessons.forEach(lesson => {
+      const semester = String(lesson.semester || "1");
+
+      const card = document.createElement("div");
+      card.className = "lesson-card";
+
+      card.innerHTML = `
+        <span class="badge ${semester === "1" ? "sem1" : "sem2"}">
+          <i class="fas ${semester === "1" ? "fa-sun" : "fa-moon"}"></i>
+          ${semester === "1" ? "الفصل الأول" : "الفصل الثاني"}
+        </span>
+
+        <div class="lesson-title">${lesson.title || "عنوان غير متوفر"}</div>
+
+        <div class="meta">
+          <div class="meta-item">
+            <i class="fas fa-user-graduate"></i>
+            <span>${lesson.author || "الأستاذ خليل"}</span>
           </div>
-        `;
-        return;
-      }
-      
-      lessonsContainer.innerHTML = "";
-      
-      lessons.forEach(lesson => {
-        // التأكد من أن البيانات موجودة
-        const title = lesson.title || "عنوان غير متوفر";
-        const semester = lesson.semester || "1";
-        const author = lesson.author || "الأستاذ خليل";
-        const publishDate = lesson.publish_date || null;
-        const url = lesson.url || "#";
-        
-        const div = document.createElement("div");
-        div.className = "lesson-card";
-        
-        div.innerHTML = `
-          <span class="badge ${semester === "1" ? "sem1" : "sem2"}">
-            <i class="fas ${semester === "1" ? "fa-sun" : "fa-moon"}"></i>
-            ${semester === "1" ? "الفصل الأول" : "الفصل الثاني"}
-          </span>
-          
-          <div class="lesson-title">${title}</div>
-          
-          <div class="meta">
-            <div class="meta-item">
-              <i class="fas fa-user-graduate"></i>
-              <span>${author}</span>
-            </div>
-            
-            ${publishDate ? `
-            <div class="meta-item">
-              <i class="fas fa-calendar-alt"></i>
-              <span class="date">${formatDate(publishDate)}</span>
-            </div>
-            ` : ''}
-          </div>
-          
-          <a class="btn-lesson" target="_blank" href="${url}">
-            <i class="fas fa-play-circle"></i>
-            أدخل للموضوع
-          </a>
-        `;
-        
-        lessonsContainer.appendChild(div);
-      });
-    }
 
-    // فلترة الدروس حسب الفصل الدراسي
-    function filterLessons(filter, button) {
-      // تحديث حالة الأزرار النشطة
-      document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
-      
-      // تطبيق الفلتر
-      let filteredLessons;
-      if (filter === "all") {
-        filteredLessons = allLessons;
-      } else {
-        filteredLessons = allLessons.filter(lesson => lesson.semester === filter);
-      }
-      
-      render(filteredLessons);
-    }
+          ${lesson.publish_date ? `
+          <div class="meta-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span class="date">${formatDate(lesson.publish_date)}</span>
+          </div>` : ""}
+        </div>
 
-    // بحث في الدروس
-    function searchLessons() {
-      const searchInput = document.getElementById("searchInput");
-      const searchTerm = searchInput.value.toLowerCase().trim();
-      
-      if (searchTerm === "") {
-        // إذا كان البحث فارغاً، عرض الدروس حسب الفلتر النشط
-        const activeFilter = document.querySelector(".filter-btn.active");
-        if (activeFilter) {
-          const filterText = activeFilter.textContent;
-          if (filterText.includes("الفصل الأول")) {
-            filterLessons('1', activeFilter);
-          } else if (filterText.includes("الفصل الثاني")) {
-            filterLessons('2', activeFilter);
-          } else {
-            filterLessons('all', activeFilter);
-          }
-        }
-        return;
-      }
-      
-      // فلترة الدروس حسب نص البحث
-      const filteredLessons = allLessons.filter(lesson => {
-        const title = lesson.title || "";
-        const author = lesson.author || "";
-        return title.toLowerCase().includes(searchTerm) || 
-               author.toLowerCase().includes(searchTerm);
-      });
-      
-      render(filteredLessons);
-    }
+        <a class="btn-lesson" href="${lesson.url || "#"}" target="_blank">
+          <i class="fas fa-play-circle"></i>
+          أدخل للموضوع
+        </a>
+      `;
 
-    // تحميل الدروس عند فتح الصفحة
-    window.addEventListener('DOMContentLoaded', loadLessons);
-  </script>
+      container.appendChild(card);
+    });
+  }
+
+  // فلترة حسب الفصل
+  function filterLessons(filter, btn) {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    if (filter === "all") {
+      render(allLessons);
+    } else {
+      render(allLessons.filter(l => String(l.semester) === filter));
+    }
+  }
+
+  // البحث
+  function searchLessons() {
+    const q = document.getElementById("searchInput").value.trim().toLowerCase();
+    if (!q) return render(allLessons);
+
+    render(
+      allLessons.filter(l =>
+        (l.title || "").toLowerCase().includes(q) ||
+        (l.author || "").toLowerCase().includes(q)
+      )
+    );
+  }
+
+  // تشغيل
+  window.addEventListener("DOMContentLoaded", loadLessons);
+</script>
 </body>
 </html>
