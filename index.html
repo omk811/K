@@ -17,21 +17,13 @@
     }
 
     :root {
-      --primary: #4f46e5;
-      --primary-light: #818cf8;
-      --secondary: #10b981;
-      --secondary-light: #34d399;
-      --bg: #f9fafb;
+      --primary: #22c55e;
+      --secondary: #3b82f6;
+      --bg: #f8fafc;
       --card: #ffffff;
-      --text: #1f2937;
-      --text-light: #6b7280;
-      --border: #e5e7eb;
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      --radius: 12px;
-      --radius-lg: 16px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --text: #1e293b;
+      --muted: #94a3b8;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
 
     body {
@@ -39,360 +31,175 @@
       background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      padding: 20px;
       line-height: 1.6;
     }
 
     .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 20px;
+      max-width: 1200px;
+      margin: auto;
     }
 
-    /* الهيدر الجديد */
     header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-      padding: 2rem 1.5rem 3.5rem;
-      color: white;
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+      border-radius: 20px;
+      padding: 30px 20px;
       text-align: center;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: -1.5rem;
-    }
-
-    header::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-      opacity: 0.1;
-    }
-
-    .header-content {
-      position: relative;
-      z-index: 2;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow);
     }
 
     header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 2.2em;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      color: transparent;
       font-weight: 700;
     }
 
     header p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-      max-width: 600px;
-      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.1em;
+      font-weight: 500;
     }
 
-    /* زر الإدارة */
     .admin-icon {
       position: fixed;
       top: 20px;
       left: 20px;
-      width: 56px;
-      height: 56px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
       text-decoration: none;
-      box-shadow: var(--shadow-lg);
-      z-index: 100;
-      transition: var(--transition);
-    }
-
-    .admin-icon:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 25px rgba(16, 185, 129, 0.3);
-    }
-
-    /* الفلاتر المحسنة */
-    .filters-container {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
       box-shadow: var(--shadow);
+      z-index: 100;
     }
 
     .filters {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
+      margin-bottom: 25px;
       flex-wrap: wrap;
     }
 
     .filter-btn {
-      padding: 0.75rem 1.5rem;
+      padding: 10px 20px;
       border-radius: 50px;
-      border: 2px solid var(--border);
-      background: var(--bg);
+      border: 1px solid var(--muted);
+      background: #fff;
       color: var(--text);
       cursor: pointer;
       font-weight: 600;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      transition: all 0.3s;
     }
 
     .filter-btn:hover {
-      border-color: var(--primary-light);
-      color: var(--primary);
-      transform: translateY(-2px);
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
     }
 
     .filter-btn.active {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      background: var(--primary);
       color: #fff;
-      border-color: transparent;
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-    }
-
-    /* بحث سريع */
-    .search-container {
-      margin-bottom: 2rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .search-box {
-      position: relative;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 1rem 1rem 1rem 3rem;
-      border: 2px solid var(--border);
-      border-radius: 50px;
-      font-family: "Baloo Bhaijaan 2", sans-serif;
-      font-size: 1rem;
-      transition: var(--transition);
-    }
-
-    .search-box input:focus {
-      outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
     }
 
-    .search-box i {
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-light);
-    }
-
-    /* بطاقات الدروس المحسنة */
     .lessons-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 24px;
-      margin-bottom: 3rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
     }
 
     .lesson-card {
       background: var(--card);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
-      transition: var(--transition);
+      transition: transform 0.3s, box-shadow 0.3s;
       box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .lesson-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      opacity: 0;
-      transition: var(--transition);
     }
 
     .lesson-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .lesson-card:hover::before {
-      opacity: 1;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
 
     .badge {
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.375rem 0.875rem;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
       border-radius: 50px;
-      margin-bottom: 1rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      margin-bottom: 12px;
+      display: inline-block;
       width: fit-content;
-      letter-spacing: 0.5px;
     }
 
     .sem1 {
-      background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+      background: var(--primary);
       color: #fff;
     }
 
     .sem2 {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      background: var(--secondary);
       color: #fff;
     }
 
     .lesson-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      line-height: 1.4;
-      color: var(--text);
-      flex-grow: 1;
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-bottom: 10px;
+      line-height: 1.5;
     }
 
     .meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.875rem;
-      color: var(--text-light);
-      margin-bottom: 1.25rem;
-      flex-wrap: wrap;
-    }
-
-    .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .date {
-      background: var(--bg);
-      padding: 0.25rem 0.5rem;
-      border-radius: 6px;
-      font-size: 0.75rem;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 15px;
     }
 
     .btn-lesson {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      margin-top: auto;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       border: none;
-      border-radius: var(--radius);
-      padding: 0.875rem 1rem;
+      border-radius: 12px;
+      padding: 12px;
       font-weight: 700;
       color: #fff;
       cursor: pointer;
       text-decoration: none;
       text-align: center;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: auto;
+      transition: all 0.3s;
     }
 
     .btn-lesson:hover {
-      opacity: 0.95;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
+      opacity: 0.9;
+      transform: scale(1.02);
     }
 
-    /* حالة التحميل */
     .loading, .empty {
       grid-column: 1 / -1;
       text-align: center;
-      color: var(--text-light);
-      padding: 4rem 0;
-      font-size: 1.1rem;
+      color: var(--muted);
+      padding: 60px 0;
+      font-size: 1.1em;
     }
 
-    .loading-spinner {
-      border: 4px solid rgba(79, 70, 229, 0.1);
-      border-radius: 50%;
-      border-top: 4px solid var(--primary);
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* الفوتر */
     footer {
-      background: var(--card);
-      padding: 2rem;
+      margin-top: 40px;
       text-align: center;
-      color: var(--text-light);
-      font-size: 0.875rem;
-      border-top: 1px solid var(--border);
-      margin-top: 2rem;
-    }
-
-    footer p {
-      margin-bottom: 0.5rem;
-    }
-
-    /* تصميم متجاوب */
-    @media (max-width: 768px) {
-      header {
-        padding: 1.5rem 1rem 3rem;
-      }
-      
-      header h1 {
-        font-size: 2rem;
-      }
-      
-      .lessons-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .filters {
-        justify-content: flex-start;
-        overflow-x: auto;
-        padding-bottom: 0.5rem;
-      }
-      
-      .admin-icon {
-        width: 50px;
-        height: 50px;
-        top: 15px;
-        left: 15px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 15px;
-      }
-      
-      header h1 {
-        font-size: 1.75rem;
-      }
-      
-      .filter-btn {
-        padding: 0.625rem 1.25rem;
-        font-size: 0.875rem;
-      }
+      color: var(--muted);
+      font-size: 14px;
+      padding: 20px;
     }
   </style>
 </head>
@@ -400,189 +207,75 @@
 <body>
   <div class="container">
     <a href="admin.html" class="admin-icon" title="لوحة التحكم">
-      <i class="fas fa-user-graduate fa-lg"></i>
+      <i class="fas fa-user-graduate"></i>
     </a>
 
     <header>
-      <div class="header-content">
-        <h1>دروس الصف الخامس</h1>
-        <p>منصة تعليمية شاملة تساعدك على الفهم والتفوق في جميع المواد الدراسية</p>
-      </div>
+      <h1>دروس الصف الخامس</h1>
+      <p>منصة تعليمية مبسطة تساعدك على الفهم والتفوق</p>
     </header>
 
-    <main>
-      <div class="filters-container">
-        <div class="filters">
-          <button class="filter-btn active" onclick="filterLessons('all', this)">
-            <i class="fas fa-layer-group"></i>
-            جميع الدروس
-          </button>
-          <button class="filter-btn" onclick="filterLessons('1', this)">
-            <i class="fas fa-book-open"></i>
-            الفصل الأول
-          </button>
-          <button class="filter-btn" onclick="filterLessons('2', this)">
-            <i class="fas fa-book"></i>
-            الفصل الثاني
-          </button>
-        </div>
-      </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterLessons('all', this)">الكل</button>
+      <button class="filter-btn" onclick="filterLessons('1', this)">الفصل الأول</button>
+      <button class="filter-btn" onclick="filterLessons('2', this)">الفصل الثاني</button>
+    </div>
 
-      <div class="search-container">
-        <div class="search-box">
-          <input type="text" id="searchInput" placeholder="ابحث عن درس معين..." onkeyup="searchLessons()">
-          <i class="fas fa-search"></i>
-        </div>
-      </div>
-
-      <div id="lessonsContainer" class="lessons-grid">
-        <div class="loading">
-          <div class="loading-spinner"></div>
-          <p>جاري تحميل الدروس...</p>
-        </div>
-      </div>
-    </main>
+    <div id="lessonsContainer" class="lessons-grid">
+      <div class="loading">⏳ جاري تحميل الدروس...</div>
+    </div>
 
     <footer>
-      <p>© <span id="year"></span> جميع الحقوق محفوظة - الأستاذ خليل البلوشي</p>
-      <p>منصة تعليمية مصممة لطلاب الصف الخامس لتحقيق أفضل النتائج</p>
+      © <span id="year"></span> الأستاذ خليل البلوشي
     </footer>
   </div>
 
-<script>
-  const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
-  let allLessons = [];
+  <script>
+    const API = "https://script.google.com/macros/s/AKfycbxuf794HZmIMIjofGEunan_GRJNH6Npn_fHcZsMZShss90Z4ilPRwpQjRVUGJd2fOSqnw/exec";
+    let allLessons = [];
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  // سنة الفوتر
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  // تنسيق التاريخ
-  function formatDate(dateString) {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    if (isNaN(date)) return "";
-    return date.toLocaleDateString("ar-EG", {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    });
-  }
-
-  // تحميل الدروس (✅ GET بدل POST)
-  function loadLessons() {
-    fetch(API + "?action=getPublic")
-      .then(res => {
-        if (!res.ok) throw new Error("فشل الاتصال بالخادم");
-        return res.json();
+    function loadLessons() {
+      fetch(API, {
+        method: "POST",
+        body: JSON.stringify({ action: "getPublic" })
       })
+      .then(r => r.json())
       .then(data => {
-
-  // 👇 الحل هنا
-  const lessons = Array.isArray(data)
-    ? data
-    : Array.isArray(data.data)
-      ? data.data
-      : [];
-
-  if (!lessons.length) {
-    throw new Error("لا توجد بيانات دروس");
-  }
-
-  allLessons = lessons.sort((a, b) => {
-    const da = a.publish_date ? new Date(a.publish_date) : new Date(0);
-    const db = b.publish_date ? new Date(b.publish_date) : new Date(0);
-    return db - da;
-  });
-
-  render(allLessons);
-})
-      .catch(err => {
-        document.getElementById("lessonsContainer").innerHTML = `
-          <div class="empty">
-            <p>⚠️ تعذّر تحميل الدروس</p>
-            <small>${err.message}</small>
-          </div>
-        `;
+        allLessons = data.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
+        render(allLessons);
       });
-  }
-
-  // عرض الدروس
-  function render(lessons) {
-    const container = document.getElementById("lessonsContainer");
-    container.innerHTML = "";
-
-    if (!lessons.length) {
-      container.innerHTML = `
-        <div class="empty">
-          <p>لا توجد دروس حالياً</p>
-        </div>`;
-      return;
     }
 
-    lessons.forEach(lesson => {
-      const semester = String(lesson.semester || "1");
-
-      const card = document.createElement("div");
-      card.className = "lesson-card";
-
-      card.innerHTML = `
-        <span class="badge ${semester === "1" ? "sem1" : "sem2"}">
-          <i class="fas ${semester === "1" ? "fa-sun" : "fa-moon"}"></i>
-          ${semester === "1" ? "الفصل الأول" : "الفصل الثاني"}
-        </span>
-
-        <div class="lesson-title">${lesson.title || "عنوان غير متوفر"}</div>
-
-        <div class="meta">
-          <div class="meta-item">
-            <i class="fas fa-user-graduate"></i>
-            <span>${lesson.author || "الأستاذ خليل"}</span>
-          </div>
-
-          ${lesson.publish_date ? `
-          <div class="meta-item">
-            <i class="fas fa-calendar-alt"></i>
-            <span class="date">${formatDate(lesson.publish_date)}</span>
-          </div>` : ""}
-        </div>
-
-        <a class="btn-lesson" href="${lesson.url || "#"}" target="_blank">
-          <i class="fas fa-play-circle"></i>
-          أدخل للموضوع
-        </a>
-      `;
-
-      container.appendChild(card);
-    });
-  }
-
-  // فلترة حسب الفصل
-  function filterLessons(filter, btn) {
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    if (filter === "all") {
-      render(allLessons);
-    } else {
-      render(allLessons.filter(l => String(l.semester) === filter));
+    function render(arr) {
+      const lessonsContainer = document.getElementById("lessonsContainer");
+      lessonsContainer.innerHTML = "";
+      if (!arr.length) {
+        lessonsContainer.innerHTML = '<div class="empty">لا توجد دروس حالياً</div>';
+        return;
+      }
+      arr.forEach(l => {
+        const div = document.createElement("div");
+        div.className = "lesson-card";
+        div.innerHTML = `
+          <span class="badge ${l.semester === "1" ? "sem1" : "sem2"}">
+            ${l.semester === "1" ? "الفصل الأول" : "الفصل الثاني"}
+          </span>
+          <div class="lesson-title">${l.title}</div>
+          <div class="meta">✍️ ${l.author || ""}</div>
+          <a class="btn-lesson" target="_blank" href="${l.url}">ابدأ الشرح ▶</a>
+        `;
+        lessonsContainer.appendChild(div);
+      });
     }
-  }
 
-  // البحث
-  function searchLessons() {
-    const q = document.getElementById("searchInput").value.trim().toLowerCase();
-    if (!q) return render(allLessons);
+    function filterLessons(f, el) {
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      render(f === "all" ? allLessons : allLessons.filter(l => l.semester === f));
+    }
 
-    render(
-      allLessons.filter(l =>
-        (l.title || "").toLowerCase().includes(q) ||
-        (l.author || "").toLowerCase().includes(q)
-      )
-    );
-  }
-
-  // تشغيل
-  window.addEventListener("DOMContentLoaded", loadLessons);
-</script>
+    loadLessons();
+  </script>
 </body>
 </html>
