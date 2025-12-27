@@ -394,8 +394,8 @@
       fetch(API,{method:"POST",body:JSON.stringify({action:"getPublic"})})
       .then(r=>r.json())
       .then(data=>{
-        // ترتيب المواضيع من الأحدث إلى الأقدم حسب تاريخ النشر
-        allLessons=data.sort((a,b)=>new Date(b.publish_date)-new Date(a.publish_date));
+        // عكس الترتيب ليكون من الأحدث إلى الأقدم
+        allLessons=data.reverse();
         render(allLessons);
       });
     }
